@@ -1,0 +1,112 @@
+django-cms is a complete portal for django. Key Features:
+
+- Categories
+- Articles
+- Support for menus (like in joomla system)
+- Calendarium
+- Galleries
+- Ads
+- Advertising
+- Directories
+- Independent of the django user system
+- Support for multiple languages (ndependent of the django)
+- Support for multiple sites
+- Support for templates
+- Support for modules
+- Own administration panel
+- Own system users
+- A system of entitlements
+
+At this point, works in 80% of the administration panel.
+
+INSTALLATION
+
+1st Download the repository from git@github.com: MobyDevel / django-portal.git
+2nd Set the data in config.py
+3rd load the data file from the directory sql database.sql
+4th Use
+
+The system supports multiple languages ​​and multiple pages. For each page there
+may be other data (categories, articles, etc.).. To have that many pages just
+in the settings instead of the server you point to another file config.py.
+
+One system, one database, multiple pages.
+
+There is still a lot of work, but much is already done. Administration panel
+can be "almost" peacefully use.
+
+DEPENDENCIES
+
+django-portal depends on several modules:
+
+- Django-pagination
+- Django-taggit
+- Django-ckeditor
+- Sorl-thumbnail
+- PIL
+- Django-extensions
+
+Have fun.
+
+If you want to help please contact me at mduniec (at) gmail.com - useful for
+any help
+
+PS. If the project you like or you think is useful you can help me in a more
+mundane way. To effectively work I need financial support.
+In such a situation ... please contact me. Thanks.
+
+
+POLISH:
+
+django-portal to kompletny cms dla django. Najważniejsze funkcje:
+
+- kategorie
+- artykuły
+- wsparcie dla menu (podobnie jak w joomla)
+- calendarium
+- galerie zdjęć
+- ogłoszenia
+- reklamy
+- katalogi firm
+- niezależny od django system użytkowników
+- wsparcie dla wielu języków (niezależny od django)
+- wsparcie dla szablonów
+- wsparcie dla modułów
+- własny panel administracyjny
+- własny system użytkowników
+- system uprawnień
+
+W tym momencie działa w 80% panel administracyjny.
+
+Instalacja
+
+1. Pobierz repozytorium z git@github.com:MobyDevel/django-portal.git
+2. Ustaw dane w config.py
+3. wczytaj dane z pliku database.sql z katalogu sql
+4. Używaj
+
+System obsługuje wiele języków i wiele stron. Dla każdej strony mogą być inne dane (kategorie, artykuły, etc.). Aby mieć wiele stron wystarczy że w ustawieniach serwera zamiast wskażesz inny plik config.py.
+
+Jeden system, jedna baza, wiele stron.
+
+Jeszcze jest dużo pracy, ale dużo jest już zrobione. Panel administracyjny można "prawie" spokojnie używać.
+
+Zależności
+
+django-portal zależy od kilku modułów:
+
+- django-pagination
+- django-taggit
+- django-ckeditor
+- sorl-thumbnail
+- PIL
+- django-extensions
+
+Miłej zabawy.
+
+Jeśli chcesz pomóc skontaktuj się ze mną na mduniec(at)gmail.com - przyda się
+każda pomoc
+
+PS. Jeśli projekt ci się podoba albo uważasz że jest przydatny możesz mi pomóc
+w bardziej przyziemny sposób. Aby sprawnie pracować potrzebuję wsparcia
+finansowego. W takiej sytuacji... skontaktuj się ze mną.

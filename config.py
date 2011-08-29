@@ -4,10 +4,10 @@
 SITE_ID = 1
 PORTALSHEETPATH = 'default'
 DEFAULTPORTALLANG = 'en'
-ENABLEDAFAULTADMIN = True
-DEVELDEBUG = True
-ADMINSITE = True
-ADMINALLSITES = True
+ENABLEDAFAULTADMIN = True # True if may be enabled default django admin
+DEVELDEBUG = True # this is for the independed of django debugger
+ADMINSITE = True # if this site may be managed
+ADMINALLSITES = True # if this admin site manage all the portal sites
 PROJECT_ROOT = '' # this is ABSOLUTE PATH to the project
 MEDIA_ROOT = PROJECT_ROOT + 'site_media/'
 MEDIA_URL = 'http://yourhost/site_media/' # change "yourhost" to... your host
