@@ -15,7 +15,7 @@ django-portal is a complete portal for django. Key Features:
 - Support for modules
 - Own administration panel
 - Own system users
-- A system of entitlements
+- A own permission system for all items
 
 At this point, works in 80% of the administration panel.
 
