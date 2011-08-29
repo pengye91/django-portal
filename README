@@ -26,9 +26,18 @@ INSTALLATION
 3rd load the data from file database.sql in directory sql
 4th Use
 
-The system supports multiple languages ​​and multiple pages. For each page there
-may be other data (categories, articles, etc.).. To have that many pages just
-in the settings instead of the server you point to another file config.py.
+The system supports multiple languages ​​and multiple portals. For each page there
+may be other data (categories, articles, etc.).. To have that just
+in the server settings (wsgi, fcgi, etc.) point to another file config.py.
+
+You may run this in development mode. Its useful if you want debugging portal.
+Don't forget to set DEVELDEBUG to True in the file config.py.
+Then it will be more notifications. To run portal in devel mode just type
+in your project directory:
+
+./manage.py runserver
+
+portal will start at http://localhost:8000/
 
 One system, one database, multiple portals.
 
@@ -85,7 +94,16 @@ Instalacja
 3. wczytaj dane z pliku database.sql z katalogu sql
 4. Używaj
 
-System obsługuje wiele języków i wiele stron. Dla każdej strony mogą być inne dane (kategorie, artykuły, etc.). Aby mieć wiele stron wystarczy że w ustawieniach serwera zamiast wskażesz inny plik config.py.
+System obsługuje wiele języków i wiele stron. Dla każdej strony mogą być inne
+dane (kategorie, artykuły, etc.). Aby mieć wiele stron wystarczy że w
+ustawieniach kontretnego serwera zamiast wskażesz odpowiedni plik config.py.
+
+Możesz uruchomić portal w tybie developera. Jest to korzystne aby móc w pełni
+debugować projekt. Aby to zrobić wpisz w katalogu projektu:
+
+./manage.py runserver
+
+Portal uruchomi się pod adresem http://localhost:8000/
 
 Jeden system, jedna baza, wiele stron.
 
