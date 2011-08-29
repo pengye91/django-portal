@@ -164,7 +164,7 @@ class AdminManager(BaseManager):
         else:
             return 1
 
-    def change_item(self, request, site):
+    def change_item(self, request, site, only_one = False):
         if request.method == 'POST':
             post = request.POST
             if post.has_key('type'):

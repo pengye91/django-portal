@@ -337,6 +337,7 @@ class Wiki(WikiModel):
 """
 
 class SitePortal(SitePortalModel):
+    active = models.ManyToManyField(Site, related_name='siteactives')
     site = models.ForeignKey(Site, blank=True, null=True)
     owner = models.ForeignKey(UserProfile, null=True, blank=True)
     permissions = models.ManyToManyField(PermisionGroup, null=True, blank=True)

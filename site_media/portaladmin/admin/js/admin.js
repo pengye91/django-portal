@@ -1,4 +1,10 @@
 
+function reload(url){
+    $.get(url,function(msg){
+        $('#contentblock').html(msg);
+    });
+}
+
 function progressbar(){
     $('#contentblock').hide();
     $('#footer').hide();

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Django settings for portal project.
 
-from dentoconfig import *
+from config import *
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -32,7 +32,7 @@ MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
 )
 
-ROOT_URLCONF = 'portal.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
 	PROJECT_ROOT + 'templates/portaladmin',

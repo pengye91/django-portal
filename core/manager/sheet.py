@@ -18,6 +18,7 @@ class SheetManager(BaseManager):
         super(SheetManager, self).__init__(*args, **kwargs)
         self.debugger = Debugger(__MNAME__,__FNAME__)
         self.sheet = None
+        self.sheets = None
         self.fullpath = None
         self.path = None
         self.order = 'name'
@@ -53,6 +54,7 @@ class SheetManager(BaseManager):
         try:
             sheets = Sheet.objects.filter(sites__id=settings.SITE_ID)
             self.sheet = sheets[0]
+            self.sheets = sheets
 
             if not sheets:
                 self.sheet = Sheet()
@@ -66,6 +68,12 @@ class SheetManager(BaseManager):
         self.path = self.sheet.sheetpath
         settings.TEMPLATE_DIRS = (self.fullpath,)
         settings.PORTALSHEETPATH = self.sheet.sheetpath
+
+    def fetch_sheets(self):
+        try:
+            self.sheets = Sheet.objects.filter(sites__id=settings.SITE_ID)
+        except Exception,e:
+            self.debugger.catch_error('fetch_sheet: ',e)
 
     def fetch_items(self):
         """Pobiera elementy

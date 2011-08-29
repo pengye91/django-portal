@@ -79,15 +79,20 @@ def copy_item(request, itemId):
     pass
 
 
-def change_item(request):
+def change_item(request, item_id):
     system = SystemObject(request)
     if system.permission.user is None:
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
-    if system.manager.change_item(request, system.portal.get_active_site()):
-        return HttpResponse('1');
-    else:
-        return HttpResponse('0');
-
+    try:
+        system.sheet.fetch_sheets()
+        for item in system.sheet.sheets:
+            for site in system.portal.sites:
+                item.active.remove(site)
+        system.manager.fetch_item(item_id)
+        system.manager.item.active.add(system.portal.activeSite)
+    except Exception,e:
+        print e
+    return HttpResponseRedirect(reverse('core.view.sheetadmin.show_items'))
 
 def delete_item(request):
     system = SystemObject(request)
