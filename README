@@ -23,7 +23,7 @@ INSTALLATION
 
 1st Download the repository from git@github.com:MobyDevel/django-portal.git
 2nd Set the data in config.py
-3rd load the data file from the directory sql database.sql
+3rd load the data from file database.sql in directory sql
 4th Use
 
 The system supports multiple languages ​​and multiple pages. For each page there
