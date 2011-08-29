@@ -21,7 +21,7 @@ At this point, works in 80% of the administration panel.
 
 INSTALLATION
 
-1st Download the repository from git@github.com: MobyDevel / django-portal.git
+1st Download the repository from git@github.com:MobyDevel/django-portal.git
 2nd Set the data in config.py
 3rd load the data file from the directory sql database.sql
 4th Use
