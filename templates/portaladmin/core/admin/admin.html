@@ -1,0 +1,46 @@
+{% extends "core/admin/adminmain.html" %}
+
+{% load portaltags %}
+
+{% block contentside %}
+    {% block topside %}
+        <div id="toppanel">
+            <div id="paneltitle">
+                <b>{% block paneltitle %}{% endblock %}</b>
+            </div>
+            {% block panelbuttons %}
+            {% endblock %}
+            <div class="clear"></div>
+        </div>
+    {% endblock %}
+    {% block toppanel2 %}
+        {% if toppanel %}
+            <div id="toppanel2">
+                <div id="panel2options">
+                    <ul>
+                        {% for link, name in toppanel.items %}
+                            <li>
+                                <a href="{{ link }}">{% getlang name %}</a>
+                            <li>
+                            {% if not forloop.last %}
+                                <li>|</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        {% endif %}
+    {% endblock %}
+    {% block maincontent %}
+    <div id="adminbiglist">
+        {% block leftside %}
+        {% endblock %}
+        {% block contentsideactive %}
+        {% endblock %}
+        {% block rightside %}
+        {% endblock %}
+        <div class="clear"></div>
+    </div>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "core/admin/list.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Galleries__'%}
+{% endblock %}
+
+{% block urladdbutton %}
+    {% url core.view.galleryadmin.add_item %}
+{% endblock %}
+
+{% block listheader %}
+    <th>{% getlang '__adm_Lp__' %}
+    <th>{% getlang '__adm_Name__' %}
+    <th>{% getlang '__adm_Active__' %}
+    <th>{% getlang '__adm_Site__' %}
+    <th>{% getlang '__adm_Create_date__' %}
+    <th>{% getlang '__adm_Id__' %}
+    <th>{% getlang '__adm_Delete__' %}
+{% endblock %}
+
+{% block listcontent %}
+    {% for item in data %}
+        <tr class="tablecontent" id="row{{ item.id }}">
+            <td class="tdlp">{{ forloop.counter }}
+            <td class="tdtitle"><a href="{% url core.view.galleryadmin.edit_item item.id %}" style="margin-left: {{ item.depth }}px; !important;">{% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.language.name }}</a>
+            <td class="tdactive">
+                {% if activesiteobject in item.active.all %}
+                    <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/yes.gif" width="24" id="imgyes{{ item.id }}" onclick="changeactivity({{ item.id }},0,'galleries')" />
+                    <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" onclick="changeactivity({{ item.id }},1,'galleries')" class="hiddenitem" />
+                {% else %}
+                    <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/yes.gif" width="24" id="imgyes{{ item.id }}" onclick="changeactivity({{ item.id }},0,'galleries')" class="hiddenitem" />
+                    <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" onclick="changeactivity({{ item.id }},1,'galleries')" />
+                {% endif %}
+            <td class="tdsites">
+                {% for site in item.sites.all %}
+                    {{ site.name }}<br />
+                {% endfor %}
+            <td class="tddate">{{ item.date|date:"d-m-Y H:i:s" }}
+            <td class="tdid">{{ item.id }}
+            <td class="tddelete"><img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/delete.gif" width="24" onclick="deleteitem({{ item.id }},'galleries')" />
+        </tr>
+    {% endfor %}
+{% endblock %}

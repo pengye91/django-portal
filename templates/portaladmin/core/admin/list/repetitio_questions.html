@@ -1,0 +1,58 @@
+{% extends "core/admin/list.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Repetitio__'%} - {% getlang '__adm_Questions__'%}
+{% endblock %}
+
+{% block urladdbutton %}
+    {% url core.view.repetitio_question_admin.add_item %}
+{% endblock %}
+
+{% block filter_1 %}
+    <div class="selectsearch">
+        <form action="{{ filter_1 }}" method="get">
+            <select name="selectedtest" id="testselect" onchange="form.submit()">
+                <option value="-1">{% getlang '__adm_Test__' %}</option>
+                {% for test in tests %}
+                    <option value="{{ test.id }}" {% if selectedtest == test.id %}selected="selected"{% endif %}>{{ test.language.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+{% endblock %}
+
+{% block listheader %}
+    <th>{% getlang '__adm_Lp__' %}
+    <th>{% getlang '__adm_Name__' %}
+    <th>{% getlang '__adm_Answers__' %}
+    <th>{% getlang '__adm_Create_date__' %}
+    <th>{% getlang '__adm_Id__' %}
+    <th>{% getlang '__adm_Delete__' %}
+{% endblock %}
+
+{% block listcontent %}
+    {% for item in data %}
+        <tr class="tablecontent" id="row{{ item.id }}">
+            <td class="tdlp">{{ forloop.counter }}
+            <td class="tdtitle">
+                {% if not item.noedit %}
+                <a href="{% url core.view.repetitio_question_admin.edit_item item.id %}" style="margin-left: {{ item.depth }}px; !important;">
+                    {% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.language.question }}
+                </a>
+                {% else %}
+                    {% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.language.question }}
+                {% endif %}
+            <td><a href="{% url core.view.repetitio_answer_admin.show_items %}?selectedquestion={{ item.id }}">{% getlang '__adm_Show_answers__' %}</a>
+            <td class="tddate">{{ item.date|date:"d-m-Y H:i:s" }}
+            <td class="tdid">{{ item.id }}
+            <td class="tddelete">
+                {% if not item.noedit %}
+                    <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/delete.gif" width="24" onclick="deleteitem({{ item.id }}, 'cms/categories', null, '{% getlang "__Are_you_sure?__" %}')" />
+                {% else %}
+                    -
+                {% endif %}
+        </tr>
+    {% endfor %}
+{% endblock %}

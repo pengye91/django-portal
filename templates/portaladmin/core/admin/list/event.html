@@ -1,0 +1,33 @@
+{% extends "core/admin/list.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Calendarium__'%} - {% getlang '__adm_Events__'%}
+{% endblock %}
+
+{% block urladdbutton %}
+    {% url core.view.calendarium_event_admin.add_item %}
+{% endblock %}
+
+{% block listheader %}
+    <th>{% getlang '__adm_Lp__' %}
+    <th>{% getlang '__adm_Name__' %}
+    <th>{% getlang '__adm_Start_Date__' %}
+    <th>{% getlang '__adm_End_Date__' %}
+    <th>{% getlang '__adm_Id__' %}
+    <th>{% getlang '__adm_Delete__' %}
+{% endblock %}
+
+{% block listcontent %}
+    {% for item in data %}
+    <tr class="tablecontent" id="row{{ item.id }}">
+        <td>{{ forloop.counter }}
+        <td class="tdtitle"><a href="{% url core.view.calendarium_event_admin.edit_item item.id %}">{{ item.language.title }}</a>
+        <td>{{ item.startdate|date:"d-m-Y H:i:s" }}
+        <td>{{ item.enddate|date:"d-m-Y H:i:s" }}
+        <td class="tdid">{{ item.id }}
+        <td class="tddelete"><img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/delete.gif" width="24" onclick="deleteitem({{ item.id }},'calendarium/events')" />
+    </tr>
+    {% endfor %}
+{% endblock %}

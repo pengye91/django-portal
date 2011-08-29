@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    {% block head %}
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+    {% endblock %}
+    {% block headcss %}
+        <link rel="stylesheet" type="text/css" href="/site_media/{{ PORTALSHEETPATH }}/admin/css/styl.css" />
+    {% endblock %}
+    {% block extraheadcss %}
+    {% endblock %}
+    {% block headjs %}
+        <script type="text/javascript" src="/site_media/{{ PORTALSHEETPATH }}/js/jquery-1.5.2.min.js"></script>
+        <script type="text/javascript" src="/site_media/{{ PORTALSHEETPATH }}/admin/js/admin.js"></script>
+    {% endblock %}
+    {% block extraheadjs %}
+    {% endblock %}
+</head>
+<body>
+    <div id="site">
+        <div id="contentblock">
+            <div id="loginbox">
+                <form action="{% url core.view.userprofileadmin.login %}" method="post" id="itemeditform">
+                    {% csrf_token %}
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                                <tr>
+                                                        <td><b>Użytkownik:</b>&nbsp;</td><td><input type="text" name="uname" /></td>
+                                                </tr>
+                                                <tr>
+                                                        <td><b>Hasło:</b>&nbsp;</td><td><input type="password" name="upasswd" /></td>
+                                                </tr>
+                                                <tr>
+                                                        <td></td><td style="float: right;"><input type="submit" value="Zaloguj" class="logujbutton" /></td>
+                                                </tr>
+                                        </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{% extends "core/admin/edit.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Modules__'%} - {% getlang '__adm_Positions__'%}
+{% endblock %}
+
+{% block formurl %}
+    {% url core.view.module_position_admin.edit_item data.id %}
+{% endblock %}
+
+{% block urlcopybutton %}
+    {% url core.view.module_position_admin.copy_item data.id %}
+{% endblock %}
+
+{% block urlcancelbutton %}
+    {% url core.view.module_position_admin.show_items %}
+{% endblock %}

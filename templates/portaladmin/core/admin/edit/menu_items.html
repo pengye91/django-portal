@@ -1,0 +1,25 @@
+{% extends "core/admin/edit.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Menu_items__'%}
+{% endblock %}
+
+{% block formurl %}
+    {% url core.view.menu_item_admin.edit_item data.id %}
+{% endblock %}
+
+{% block urlcopybutton %}
+    {% url core.view.menu_item_admin.copy_item data.id %}
+{% endblock %}
+
+{% block urlcancelbutton %}
+    {% url core.view.menu_item_admin.show_items %}
+{% endblock %}
+
+{% block formextrafields %}
+    {% if field.name == "module" %}
+       <a href="{% url core.view.menu_item_admin.edit_item data.id %}">{% getlang '__adm_Change__'%}</a>
+    {% endif %}
+{% endblock %}

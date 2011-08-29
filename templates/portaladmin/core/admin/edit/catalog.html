@@ -1,0 +1,19 @@
+{% extends "core/admin/edit.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Catalogs__'%} - {% getlang '__adm_Catalog_item__'%}
+{% endblock %}
+
+{% block formurl %}
+    {% url core.view.catalog_admin.edit_item data.id %}
+{% endblock %}
+
+{% block urlcopybutton %}
+    {% url core.view.catalog_admin.copy_item data.id %}
+{% endblock %}
+
+{% block urlcancelbutton %}
+    {% url core.view.catalog_admin.show_items %}
+{% endblock %}

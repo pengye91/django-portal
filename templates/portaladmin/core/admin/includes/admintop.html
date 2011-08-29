@@ -1,0 +1,107 @@
+{% load portaltags %}
+<div id="top">
+    <div id="toplogoline">
+        <div id="logo"></div>
+        <div id="languageselection">
+            {% getlang '__adm_Selectlanguage__' %}:
+            <form method="get">
+                <select name="lang" onchange="form.submit()" {% if nochanges %}disabled="disabled"{% endif %}>
+                {% for lang in languages %}
+                    <option value="{{ lang.symbol }}" {% if lang.symbol == activelanguage %}selected=selected{% endif %}>{{ lang.name }}</option>
+                {% endfor %}
+                </select>
+            </form>
+        </div>
+        {% if adminall %}
+        <div id="siteselection">
+            {% getlang '__adm_Selectactivesite__' %}:
+            <form method="get">
+                <select name="activesite" onchange="form.submit()" {% if nochanges %}disabled="disabled"{% endif %}>
+                {% for site in sites %}
+                    <option value="{{ site.id }}" {% if site.id == activesite %}selected=selected{% endif %}>{{ site.name }}</option>
+                {% endfor %}
+                </select>
+            </form>
+			&nbsp;
+        </div>
+        {% endif %}
+    </div>
+    <div id="topmenuline">
+        <ul>
+            <li class="tnav">
+                    <a href="{% url core.view.portaladmin.show_items %}">{% getlang '__adm_Portal__' %}</a>
+                    <ul class="subnav">
+                            <li><a href="">{% getlang '__adm_Stats__' %}</a></li>
+                            {% if adminall %}
+                                {% if all_permissions.SitePortal %}<li><a href="{% url core.view.siteadmin.show_items %}" onclick="progressbar()">{% getlang '__adm_Sites__' %}</a></li>{% endif %}
+                            {% endif %}
+                            {% if all_permissions.Sheet %}<li><a href="{% url core.view.sheetadmin.show_items %}" onclick="progressbar()">{% getlang '__adm_Sheets__' %}</a></li>{% endif %}
+                            {% if all_permissions.RegisteredModule %}<li><a href="{% url core.view.module_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Modules__' %}</a></li>{% endif %}
+                            {% if all_permissions.UserProfile %}<li><a href="{% url core.view.userprofileadmin.show_items %}" onclick="progressbar()">{% getlang '__adm_Users__' %}</a></li>{% endif %}
+                            <li><a href="{% url core.view.userprofileadmin.logout %}" onclick="progressbar()">{% getlang '__adm_Logout__' %}</a></li>
+                    </ul>
+            </li>
+            {% if all_permissions.Menu or all_permissions.MenuItem or all_permissions.MegaMenu %}
+            <li class="tnav">
+                    <a href="">{% getlang '__adm_Menu__' %}</a>
+                    <ul class="subnav">
+                        {% if all_permissions.Menu %}<li><a href="{% url core.view.menu_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Menu__' %}</a></li>{% endif %}
+                        {% if all_permissions.MenuItem %}<li><a href="{% url core.view.menu_item_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Menu_items__' %}</a></li>{% endif %}
+                        {% if all_permissions.MegaMenu %}<li><a href="{% url core.view.megamenu_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_TopMenu__' %}</a></li>{% endif %}
+                    </ul>
+            </li>
+            {% endif %}
+            {% if all_permissions.Category or all_permissions.Article or all_permissions.Gallery or all_permissions.Image %}
+            <li class="tnav">
+                    <a href="{% url core.view.cmsadmin.show_items %}">{% getlang '__adm_CMS__' %}</a>
+                    <ul class="subnav">
+                        {% if all_permissions.Category %}<li><a href="{% url core.view.categoryadmin.show_items %}" onclick="progressbar()">{% getlang '__adm_Categories__' %}</a></li>{% endif %}
+                        {% if all_permissions.Article %}<li><a href="{% url core.view.articleadmin.show_items %}" onclick="progressbar()">{% getlang '__adm_Articles__' %}</a></li>{% endif %}
+                        {% if all_permissions.Gallery %}<li><a href="{% url core.view.galleryadmin.show_items %}" onclick="progressbar()">{% getlang '__adm_Galeries__' %}</a></li>{% endif %}
+                        {% if all_permissions.Image %}<li><a href="{% url core.view.imageadmin.show_items %}" onclick="progressbar()">{% getlang '__adm_Images__' %}</a></li>{% endif %}
+                    </ul>
+            </li>
+            {% endif %}
+            {% if all_permissions.Calendar or all_permissions.CalendarEvent or all_permissions.CalendarEventType %}
+            <li class="tnav">
+                <a href="">{% getlang '__adm_Calendarium__' %}</a>
+                <ul class="subnav">
+                    {% if all_permissions.Calendar %}<li><a href="{% url core.view.calendarium_calendar_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Calendars__' %}</a></li>{% endif %}
+                    {% if all_permissions.CalendarEventType %}<li><a href="{% url core.view.calendarium_eventtype_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Eventtypes__' %}</a></li>{% endif %}
+                    {% if all_permissions.CalendarEvent %}<li><a href="{% url core.view.calendarium_event_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Events__' %}</a></li>{% endif %}
+                </ul>
+            </li>
+            {% endif %}
+            {% if all_permissions.Ad or all_permissions.AdCategory or all_permissions.AdImage %}
+            <li>
+                <a>{% getlang '__adm_Ads__' %}</a>
+                <ul class="subnav">
+                    {% if all_permissions.AdCategory %}<li><a href="{% url core.view.ads_category_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Ads_categories__' %}</a></li>{% endif %}
+                    {% if all_permissions.Ad %}<li><a href="{% url core.view.ads_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Ads__' %}</a></li>{% endif %}
+                    {% if all_permissions.AdImage %}<li><a href="{% url core.view.ads_image_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Ads_images__' %}</a></li>{% endif %}
+                </ul>
+            </li>
+            {% endif %}
+            {% if all_permissions.CatalogItem or all_permissions.CatalogCategory or all_permissions.CatalogImage %}
+            <li>
+                <a>{% getlang '__adm_Catalogs__' %}</a>
+                <ul class="subnav">
+                    {% if all_permissions.CatalogItem %}<li><a href="{% url core.view.catalog_category_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Catalogs_categories__' %}</a></li>{% endif %}
+                    {% if all_permissions.CatalogCategory %}<li><a href="{% url core.view.catalog_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Catalog_items__' %}</a></li>{% endif %}
+                    {% if all_permissions.CatalogImage %}<!-- li><a href="{% url core.view.ads_image_admin.show_items %}">{% getlang '__adm_Catalogs_images__' %}</a></li -->{% endif %}
+                </ul>
+            </li>
+            {% endif %}
+            {% if all_permissions.Wiki %}<li><a href="{% url core.view.wiki_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Wiki__' %}</a></li>{% endif %}
+            <!-- li><a href="">{% getlang '__adm_Shop__' %}</a></li -->
+            <!-- li class="tnav">
+                <a href="">{% getlang '__adm_Advertisement__' %}</a>
+				<ul class="subnav">
+					<li><a href="">{% getlang '__adm_Advertisement__' %}</a></li>
+            		<li><a href="">{% getlang '__adm_Mailing__' %}</a></li>
+				</ul>
+			</li -->
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>

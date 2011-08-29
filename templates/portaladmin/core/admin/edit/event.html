@@ -1,0 +1,19 @@
+{% extends "core/admin/edit.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Calendarium__'%} - {% getlang '__adm_Event__'%}
+{% endblock %}
+
+{% block formurl %}
+    {% url core.view.calendarium_event_admin.edit_item data.id %}
+{% endblock %}
+
+{% block urlcopybutton %}
+    {% url core.view.calendarium_event_admin.copy_item data.id %}
+{% endblock %}
+
+{% block urlcancelbutton %}
+    {% url core.view.calendarium_event_admin.show_items %}
+{% endblock %}

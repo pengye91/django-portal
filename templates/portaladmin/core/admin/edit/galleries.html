@@ -1,0 +1,19 @@
+{% extends "core/admin/edit.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Galleries__'%}
+{% endblock %}
+
+{% block formurl %}
+    {% url core.view.galleryadmin.edit_item data.id %}
+{% endblock %}
+
+{% block urlcopybutton %}
+    {% url core.view.galleryadmin.copy_item data.id %}
+{% endblock %}
+
+{% block urlcancelbutton %}
+    {% url core.view.galleryadmin.show_items %}
+{% endblock %}

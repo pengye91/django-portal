@@ -1,0 +1,31 @@
+{% extends "core/admin/list.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Sites__'%}
+{% endblock %}
+
+{% block urladdbutton %}
+    {% url core.view.siteadmin.add_item %}
+{% endblock %}
+
+{% block listheader %}
+    <th>{% getlang '__adm_Lp__' %}
+    <th>{% getlang '__adm_Name__' %}
+    <th>{% getlang '__adm_Address__' %}
+    <th>{% getlang '__adm_Id__' %}
+    <th>{% getlang '__adm_Delete__' %}
+{% endblock %}
+
+{% block listcontent %}
+    {% for item in data %}
+    <tr class="tablecontent" id="row{{ item.id }}">
+        <td class="tdlp">{{ forloop.counter }}
+        <td class="tdtitle"><a href="{% url core.view.siteadmin.edit_item item.id %}" style="margin-left: {{ item.depth }}px; !important;">{% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.name }}</a>
+        <td class="tddate">{{ item.domain }}
+        <td class="tdid">{{ item.id }}
+        <td class="tddelete"><img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/delete.gif" width="24" onclick="deleteitem({{ item.id }},'sites')" />
+    </tr>
+    {% endfor %}
+{% endblock %}

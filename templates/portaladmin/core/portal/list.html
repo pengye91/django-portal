@@ -1,0 +1,17 @@
+{% extends "core/portal/index.html" %}
+
+{% load portaltags %}
+
+{% block content %}
+    {% if data %}
+        {% for item in data %}
+            {% block listitem %}
+            {% endblock %}
+        {% endfor %}
+        <div class="clear"></div>
+    {% else %}
+        {% getlang '__adm_No_items__' %}
+        <div class="clear"></div>
+    {% endif %}
+{% endblock %}
+

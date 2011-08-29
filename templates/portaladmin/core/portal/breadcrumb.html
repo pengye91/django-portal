@@ -1,0 +1,10 @@
+<span class="breadcrumbs pathway">
+    {% for pathitem in path %}
+        {% if pathitem.id != 1 %}<a href="{{ pathitem.url }}/" class="pathway">{% endif %}
+            {{ pathitem.name }}
+        {% if pathitem.id != 1 %}</a>{% endif %}
+        {% if not forloop.last %}
+            <img src="/site_media/portaladmin/portal/images/arrow.png" alt=""  />
+        {% endif %}
+    {% endfor %}
+</span>

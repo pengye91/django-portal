@@ -1,0 +1,87 @@
+{% extends "core/admin/admin.html" %}
+
+{% load portaltags %}
+
+{% block panelbuttons %}
+    <div id="paneloptions">
+        <ul>
+            {% if addbutton %}
+                {% if admin_permissions.add %}
+                <li>
+                    <a href="{% block urladdbutton %}{% endblock %}">
+                        <center>
+                            <div id="addicon"></div>
+                            <span>{% getlang '__adm_Add__' %}</span>
+                        </center>
+                    </a>
+                <li>
+                {% endif %}
+            {% endif %}
+            <div class="vspacer10"></div>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block contentsideactive %}
+    {% if not all_permissions|hash:model|hash:'read' %}
+        {% getlang '__adm_No_permissions__' %}
+    {% else %}
+        <div id="adminbiglist">
+            {% if filter_search %}
+                <div class="filtersearch">
+                    <form id="filter-form">
+                        {% csrf_token %}
+                        {% getlang '__adm_Filter__' %}:&nbsp;&nbsp;<input name="filter" id="filter" value="" type="text" />
+                    </form>
+                </div>
+            {% endif %}
+            {% if filter_activity %}
+                <div class="selectsearch">
+                    <form action="{{ filter_activity }}" method="get">
+                        <select name="selectedactivity" id="activityselect" onchange="progressbar(); form.submit()">
+                            <option value="-1">{% getlang '__adm_Activity__' %}</option>
+                            <option value="0" {% if selectedactivity == "0" %}selected="selected"{% endif %}>{% getlang '__adm_All__' %}</option>
+                            <option value="1" {% if selectedactivity == "1" %}selected="selected"{% endif %}>{% getlang '__adm_Active__' %}</option>
+                            <option value="2" {% if selectedactivity == "2" %}selected="selected"{% endif %}>{% getlang '__adm_no_Active__' %}</option>
+                        </select>
+                    </form>
+                </div>
+            {% endif %}
+            <div class="selectsearch">&nbsp;</div>
+            {% if filter_1 %}
+                {% block filter_1 %}
+                {% endblock %}
+            {% endif %}
+            <div class="selectsearch">&nbsp;</div>
+            {% if filter_2 %}
+                {% block filter_2 %}
+                {% endblock %}
+            {% endif %}
+            <div class="selectsearch">&nbsp;</div>
+            {% if filter_3 %}
+                {% block filter_3 %}
+                {% endblock %}
+            {% endif %}
+            <div class="selectsearch">&nbsp;</div>
+            {% if filter_4 %}
+                {% block filter_4 %}
+                {% endblock %}
+            {% endif %}
+        {% if data %}
+            <table cellpadding="0" cellspacing="0" id="tablelist">
+                <tr class="tablehead">
+                    {% block listheader %}
+                    {% endblock %}
+                </tr>
+                {% block listcontent %}
+                {% endblock %}
+            </table>
+            {% include 'core/admin/paginationlinks.html' %}
+            <div class="clear"></div>
+        </div>
+        {% else %}
+            {% getlang '__adm_No_items__' %}
+            <div class="clear"></div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

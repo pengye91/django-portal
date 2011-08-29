@@ -1,0 +1,31 @@
+{% extends "core/admin/list.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Modules__'%} - {% getlang '__adm_Positions__ '%}
+{% endblock %}
+
+{% block urladdbutton %}
+    {% url core.view.module_position_admin.add_item %}
+{% endblock %}
+
+{% block listheader %}
+    <th>{% getlang '__adm_Lp__' %}
+    <th>{% getlang '__adm_Name__' %}
+    <th>{% getlang '__adm_File__' %}
+    <th>{% getlang '__adm_Id__' %}
+    <th>{% getlang '__adm_Delete__' %}
+{% endblock %}
+
+{% block listcontent %}
+    {% for item in data %}
+        <tr class="tablecontent" id="row{{ item.id }}">
+            <td class="tdlp">{{ forloop.counter }}
+            <td class="tdtitle"><a href="{% url core.view.module_position_admin.edit_item item.id %}" style="margin-left: {{ item.depth }}px; !important;">{% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.name }}</a>
+            <td class="tdsites">{{ item.path }}
+            <td class="tdid">{{ item.id }}
+            <td class="tddelete"><img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/delete.gif" width="24" onclick="deleteitem({{ item.id }},'modules/positions')" />
+        </tr>
+    {% endfor %}
+{% endblock %}

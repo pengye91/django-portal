@@ -1,0 +1,30 @@
+{% extends "core/portal/index.html" %}
+
+{% load portaltags %}
+
+{% block tops %}
+
+{% endblock %}
+
+{% block middlecontent %}
+    <!-- data -->
+
+    <!-- end data -->
+{% endblock %}
+
+{% block navigator %}
+    {% if data %}
+        {% if data.category %}
+        <!-- navigator -->
+        <div id="navhelper-top">
+            <div class="breadcrums">
+                <a href="javascript: history.go(-1)" class="back-btn" title="Go back one page!"><span></span></a>
+                <span class="breadcrumbs pathway">
+                    {% category_path data.category.id activelang %}
+                </span>
+            </div>
+        </div>
+        <!-- end navigator -->
+        {% endif %}
+    {% endif %}
+{% endblock %}

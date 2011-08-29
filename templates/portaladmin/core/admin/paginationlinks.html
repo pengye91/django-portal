@@ -1,0 +1,33 @@
+{% load portaltags %}
+
+<div id="paginationnumitems">
+    {% getlang '__adm_Numberofitems__' %}:
+    <form action="" method="get">
+        <select name="pni" onchange="progressbar(); form.submit()">
+            <option value="10" {% if pni == 10 %}selected="selected"{% endif %}>10</option>
+            <option value="25" {% if pni == 25 %}selected="selected"{% endif %}>25</option>
+            <option value="50" {% if pni == 50 %}selected="selected"{% endif %}>50</option>
+            <option value="100" {% if pni == 100 %}selected="selected"{% endif %}>100</option>
+            <option value="150" {% if pni == 150 %}selected="selected"{% endif %}>150</option>
+        </select>
+    </form>
+</div>
+<div id="paginationlinks">
+    {% if ppage %}
+        <a href="?page={{ ppage }}">&#171;</a>
+    {% endif %}
+    {% for pagenum in pages %}
+        {% if pagenum %}
+            {% if pagenum|sub:1 == page %}
+                <a href="?page={{ pagenum|sub:1 }}" style="font-size: 13px;"><b>{{ pagenum }}</b></a>
+            {% else %}
+                <a href="?page={{ pagenum|sub:1 }}">{{ pagenum }}</a>
+            {% endif %}
+        {% else %}
+            &nbsp;...&nbsp;
+        {% endif %}
+    {% endfor %}
+    {% if nextpage %}
+        <a href="?page={{ nextpage }}">&#187;</a>
+    {% endif %}
+</div>

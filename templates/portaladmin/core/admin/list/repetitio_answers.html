@@ -1,0 +1,75 @@
+{% extends "core/admin/list.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Repetitio__'%} - {% getlang '__adm_Answers__'%}
+{% endblock %}
+
+{% block urladdbutton %}
+    {% url core.view.repetitio_answer_admin.add_item %}
+{% endblock %}
+
+{% block filter_1 %}
+    <div class="selectsearch">
+        <form action="{{ filter_1 }}" method="get">
+            <select name="selectedquestion" id="questionselect" onchange="form.submit()">
+                <option value="-1">{% getlang '__adm_Question__' %}</option>
+                {% for question in questions %}
+                    <option value="{{ question.id }}" {% if selectedquestion == question.id %}selected="selected"{% endif %}>{{ question.language.question }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+{% endblock %}
+
+{% block filter_2 %}
+    <div class="selectsearch">
+        <form action="{{ filter_2 }}" method="get">
+            <select name="selectedtest" id="testselect" onchange="form.submit()">
+                <option value="-1">{% getlang '__adm_Test__' %}</option>
+                {% for test in tests %}
+                    <option value="{{ test.id }}" {% if selectedtest == test.id %}selected="selected"{% endif %}>{{ test.language.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+{% endblock %}
+
+{% block listheader %}
+    <th>{% getlang '__adm_Lp__' %}
+    <th>{% getlang '__adm_Answer__' %}
+    <th>{% getlang '__adm_Question__' %}
+    <th>{% getlang '__adm_Test__' %}
+    <th>{% getlang '__adm_Course__' %}
+    <th>{% getlang '__adm_Create_date__' %}
+    <th>{% getlang '__adm_Id__' %}
+    <th>{% getlang '__adm_Delete__' %}
+{% endblock %}
+
+{% block listcontent %}
+    {% for item in data %}
+        <tr class="tablecontent" id="row{{ item.id }}">
+            <td class="tdlp">{{ forloop.counter }}
+            <td class="tdtitle">
+                {% if not item.noedit %}
+                <a href="{% url core.view.repetitio_answer_admin.edit_item item.id %}" style="margin-left: {{ item.depth }}px; !important;">
+                    {% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.language.answer }}
+                </a>
+                {% else %}
+                    {% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.language.answer }}
+                {% endif %}
+            <td>{{ item.question|getlang:activelang.id }}</a>
+            <td>{{ item.question.test|getlang:activelang.id }}</a>
+            <td>{{ item.question.test.course|getlang:activelang.id }}</a>
+            <td class="tddate">{{ item.date|date:"d-m-Y H:i:s" }}
+            <td class="tdid">{{ item.id }}
+            <td class="tddelete">
+                {% if not item.noedit %}
+                    <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/delete.gif" width="24" onclick="deleteitem({{ item.id }}, 'cms/categories', null, '{% getlang "__Are_you_sure?__" %}')" />
+                {% else %}
+                    -
+                {% endif %}
+        </tr>
+    {% endfor %}
+{% endblock %}

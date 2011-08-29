@@ -1,0 +1,19 @@
+{% extends "core/admin/edit.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Sheets__'%}
+{% endblock %}
+
+{% block formurl %}
+    {% url core.view.sheetfileadmin.edit_item data.id %}
+{% endblock %}
+
+{% block urlcopybutton %}
+    {% url core.view.sheetfileadmin.copy_item data.id %}
+{% endblock %}
+
+{% block urlcancelbutton %}
+    {% url core.view.sheetfileadmin.show_items %}
+{% endblock %}
