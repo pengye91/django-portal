@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Django settings for portal project.
 
-from dentoconfig import *
+from config import *
 
 DEBUG = True
 TEMPLATE_DEBUG = True
