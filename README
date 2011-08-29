@@ -30,7 +30,7 @@ The system supports multiple languages ​​and multiple pages. For each page t
 may be other data (categories, articles, etc.).. To have that many pages just
 in the settings instead of the server you point to another file config.py.
 
-One system, one database, multiple pages.
+One system, one database, multiple portals.
 
 There is still a lot of work, but much is already done. Administration panel
 can be "almost" peacefully use.
