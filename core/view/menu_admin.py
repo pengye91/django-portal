@@ -38,7 +38,7 @@ def show_items(request):
     system = SystemObject(request)
     if system.permission.user is None:
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
-    system.show_items(request, admin=True)
+    system.show_items(request, admin=True, allow_tree=True)
     system.template = loader.get_template(system.sheet.get_sheet_file('admin_menu_list'))
 
     c = RequestContext(request, system.get_context())
@@ -108,6 +108,9 @@ def edit_item(request, itemId):
         system.manager.options_item.save()
         return result
 
+    if system.manager.form is not None:
+        system.manager.form.choices(system, 'parent')
+
     system.template = loader.get_template(system.sheet.get_sheet_file('admin_menu_edit'))
     c = RequestContext(request, system.get_context())
     return HttpResponse(system.template.render(c))
@@ -118,7 +121,7 @@ def add_item(request):
     if system.permission.user is None:
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
     system.new()
-    
+
     rootmenuitem = MenuItem()
     rootmenuitem.noedit = True
     rootmenuitem.save()

@@ -1,7 +1,313 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb" >
 <head>
-  <title>In progress</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="joomla, pcj1x5y2z" />
+  <meta name="description" content="Joomla! - dynamiczny system portalowy i system zarządzania treścią" />
+  <meta name="generator" content="Joomla! 1.5 - Open Source Content Management" />
+  <title>Welcome to the Frontpage</title>
+  <link href="/joo/index.php?format=feed&amp;type=rss" rel="alternate" type="application/rss+xml" title="RSS 2.0" />
+  <link href="/joo/index.php?format=feed&amp;type=atom" rel="alternate" type="application/atom+xml" title="Atom 1.0" />
+  <link href="/joo/templates/youbizz/favicon.ico" rel="shortcut icon" type="image/x-icon" />
   <link rel="stylesheet" href="http://localhost:8888/joo/modules/mod_yj_newsflash/stylesheet.css" type="text/css" />
+  <link rel="stylesheet" href="http://localhost:8888/joo/modules/mod_yj_newsflash5/stylesheet.css" type="text/css" />
+  <link rel="stylesheet" href="http://localhost:8888/joo/plugins/content/bot_mb/css/yjmmbox.css" type="text/css" />
+  <script type="text/javascript" src="/joo/media/system/js/mootools.js"></script>
+  <script type="text/javascript" src="/joo/media/system/js/caption.js"></script>
+  <script type="text/javascript" src="http://localhost:8888/joo/modules/mod_yj_newsflash5/lib/YJNF5.js"></script>
+  <script type="text/javascript" src="http://localhost:8888/joo/plugins/content/bot_mb/js/yjmmbox.js"></script>
+  <script type="text/javascript">
+
+	window.addEvent('domready', function(){
+		new YJNF5({
+			outerContainer: 'yjnf5_co',
+			innerContainer: 'yjnf5_ci',
+			innerElements: '.yjnewsflash5',
+			navLinks: {
+				upLink: 'up',
+				downLink: 'down'
+			},
+			highlightClass: 'yjnf5_h'
+		});
+	})
+
+  </script>
+  <!--[if lte IE 6]>
+<link href="http://localhost:8888/joo/plugins/content/bot_mb/css/ie6fixes.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://localhost:8888/joo/plugins/content/bot_mb/js/ie6minmax.js"></script>
+<![endif]-->
+
+
+<link href="http://localhost:8888/joo/templates/youbizz/css/template.php" rel="stylesheet" type="text/css" />
+<link href="http://localhost:8888/joo/templates/youbizz/css/blue.php" rel="stylesheet" type="text/css" />
+
+<link rel="shortcut icon" href="http://localhost:8888/joo/templates/youbizz/favicon.ico" />
+<script type="text/javascript">
+window.addEvent('domready', function(){
+	activeTab = 'tab_link4';
+	activeLink = 'link4';
+var initialise=$(activeTab).setStyles({display:'block',opacity:0});new Fx.Style(initialise,'opacity',{duration:1}).set(1);$(activeLink).className="active";$('tab-nav').getElements('a').addEvent('click',function(e){new Event(e).stop();$(activeLink).className="";this.className="active";activeLink=this.id;var newTab="tab_"+this.id;transitionTabs(activeTab,newTab)})});function transitionTabs(oldTab,newTab){var fadeOut=function(){var div=$(oldTab).setStyles({opacity:1});new Fx.Style(div,'opacity',{duration:700}).start(0);fadeIn()};var fadeIn=function(){var div2=$(newTab).setStyles({display:'block',opacity:0});new Fx.Style(div2,'opacity',{duration:700}).start(1)};if(newTab!=activeTab){fadeOut();activeTab=newTab}}
+</script>
+
+<script type="text/javascript">
+window.addEvent('domready', function() {
+new SmoothScroll({duration: 1000});
+});
+</script>
+<script type="text/javascript" src="http://localhost:8888/joo/templates/youbizz/src/sve.js"></script>
+<!-- login -->
+<script type="text/javascript">
+window.addEvent('domready', function() {
+$('showHideLogin').addEvent('click', function(){
+if($('inset').status =='show'){
+$('showHideLogin').innerHTML = 'Close'; // Login Close
+}else if ($('inset').status =='hide'){
+$('showHideLogin').innerHTML = 'Customer Login';
+}
+return true;
+});
+});
+</script>
+<!--[if IE 6]>
+<link href="http://localhost:8888/joo/templates/youbizz/css/ifie.php" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#horiznav_d ul li ul{
+width:1000px;
+}
+</style>
+<![endif]-->
+<!--[if IE 8]>
+<style type="text/css">
+
+}
+</style>
+
+
+<![endif]-->
+<!--[if lte IE 8]>
+		<script type="text/javascript">
+		sfHover = function() {
+			var sfEls = document.getElementById("horiznav").getElementsByTagName("LI");
+			for (var i=0; i<sfEls.length; i++) {
+				sfEls[i].onmouseover=function() {
+					this.className+=" sfHover";
+				}
+				sfEls[i].onmouseout=function() {
+					this.className=this.className.replace(new RegExp(" sfHover\\b"), "");
+				}
+			}
+		}
+		if (window.attachEvent) window.attachEvent("onload", sfHover);
+		</script>
+<![endif]-->
+ <script type="text/javascript" src="http://localhost:8888/joo/templates/youbizz/src/mouseover.js"></script>
 </head>
-<body>
+
+<body id="color">
+
+
+<div id="centertop" style="font-size:11px; width:1000px;">
+
+<!-- notices -->
+<!--end  notices -->
+
+
+<!--header-->
+<div id="header">
+<div id="smallshelf">
+<div id="login"><a href="javascript:;" onclick="this.blur();showThem('inset');return false;" id="showHideLogin">Customer Login</a></div>
+<div id="inset" style="display:none;">		<div class="yjsquare">
+
+
+
+								<h3><span>Please</span> Login</h3>
+
+
+
+
+						<div class="yjsquare_in"><form action="/joo/index.php" method="post" name="login" id="form-login" >
+		<fieldset class="input">
+	<p id="form-login-username">
+		<label for="modlgn_username">Username</label><br />
+		<input id="modlgn_username" type="text" name="username" class="inputbox" alt="username" size="18" />
+	</p>
+	<p id="form-login-password">
+		<label for="modlgn_passwd">Password</label><br />
+		<input id="modlgn_passwd" type="password" name="passwd" class="inputbox" size="18" alt="password" />
+	</p>
+		<p id="form-login-remember">
+		<label for="modlgn_remember">Remember Me</label>
+		<input id="modlgn_remember" type="checkbox" name="remember" class="inputbox" value="yes" alt="Remember Me" />
+	</p>
+		<input type="submit" name="Submit" class="button" value="Login" />
+	</fieldset>
+	<ul>
+		<li>
+			<a href="/joo/index.php?option=com_user&amp;view=reset">
+			Forgot your password?</a>
+		</li>
+		<li>
+			<a href="/joo/index.php?option=com_user&amp;view=remind">
+			Forgot your username?</a>
+		</li>
+				<li>
+			<a href="/joo/index.php?option=com_user&amp;view=register">
+				Create an account</a>
+		</li>
+			</ul>
+
+	<input type="hidden" name="option" value="com_user" />
+	<input type="hidden" name="task" value="login" />
+	<input type="hidden" name="return" value="L2pvby8=" />
+	<input type="hidden" name="cf0aa84fa9f5ee9001f105e007419008" value="1" /></form>
+</div>
+
+		</div>
+
+
+
+	</div></div>
+
+
+
+<div id="logo">
+
+<div id="tags"><h1>
+<a href="/joo/index.php" title="Joomla Templates by Youjoomla, Joomla Template Club, Youjoomla">Joomla 1.5 Template By Youjoomla.com</a>
+</h1></div><!-- end tags -->
+
+</div><!-- end logo -->
+
+
+<!--top menu-->
+<div id="top_menu" style="font-size:11px; width:752px;">
+  <div id="horiznav">
+	<ul class="menunav"><li id="current" class="active"><a href="http://localhost:8888/joo/"><span>Home</span></a></li><li class="haschild"><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=19&amp;Itemid=27" class="haschild"><span>Joomla Overview</span></a><ul><li><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=22&amp;Itemid=34"><span>What's New in 1.5?</span></a></li><li><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=5&amp;Itemid=2"><span>Joomla! License</span></a></li><li><a href="/joo/index.php?option=com_content&amp;view=section&amp;id=3&amp;Itemid=41"><span>FAQ</span></a></li><li class="haschild"><a href="/joo/index.php?option=com_content&amp;view=section&amp;id=4&amp;Itemid=37" class="child"><span>More about Joomla!</span></a><ul><li><a href="/joo/index.php?option=com_weblinks&amp;view=categories&amp;Itemid=48"><span>Web Links</span></a></li><li><a href="/joo/index.php?option=com_content&amp;view=category&amp;layout=blog&amp;id=1&amp;Itemid=50"><span>The News</span></a></li></ul></li><li><a href="/joo/index.php?option=com_newsfeeds&amp;view=categories&amp;Itemid=49"><span>News Feeds</span></a></li></ul></li><li class="haschild"><a href="/joo/index.php?option=com_content&amp;view=category&amp;id=34&amp;Itemid=53" class="haschild"><span>Extras</span></a><ul><li class="haschild"><a href="http://www.youjoomla.com/joomla-installation-tutorials.html" class="child"><span>Joomla Tutorials</span></a><ul><li><a href="http://www.youjoomla.com/how-to-install-joomla-1.5-video-tutorial.html"><span>Joomla Installation</span></a></li><li><a href="http://www.youjoomla.com/how-to-install-joomla-template.html"><span>Template Installation</span></a></li><li><a href="http://www.youjoomla.com/how-to-setup-suckerfish-in-joomla-video-tutorial.html"><span>Dropdown menu setup</span></a></li></ul></li><li><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=46&amp;Itemid=54"><span>Typography</span></a></li><li><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=49&amp;Itemid=59"><span>Template Settings</span></a></li><li><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=48&amp;Itemid=61"><span>Module styles</span></a></li><li><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=47&amp;Itemid=60"><span>Module Positions</span></a></li><li><a href="http://joomla1.5.youjoomla.info/youmovies/index.php?option=com_content&amp;view=article&amp;id=65&amp;Itemid=96" target="_blank"><span>Multi Media Box 2.0</span></a></li><li><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=57&amp;Itemid=77"><span>YJ Newsflash 5.0</span></a></li><li><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=58&amp;Itemid=78"><span>YJ Tabs Setup</span></a></li></ul></li><li class="haschild"><a href="http://www.youjoomla.com/join" class="haschild"><span>Purchase</span></a><ul><li><a href="http://www.youjoomla.com/join/signup.php?product_id=3"><span>Club Memberships</span></a></li><li><a href="http://www.youjoomla.com/shop/_catalog/joomla_templates_only/_youbizz_-_joomla_business_template"><span>Single License</span></a></li></ul></li><li class="haschild"><a href="/joo/index.php?option=com_content&amp;view=article&amp;id=35&amp;Itemid=65" class="haschild"><span>Menu Types</span></a><ul><li><a href="/joo/index.php?change_menu=dropdown&amp;Itemid=1&amp;option=com_content"><span>CSS Dropdown Menu</span></a></li><li><a href="/joo/index.php?change_menu=sdropdown&amp;Itemid=1&amp;option=com_content"><span>Smooth Dropdown Menu</span></a></li><li><a href="/joo/index.php?change_menu=dropline&amp;Itemid=1&amp;option=com_content"><span>CSS Dropline Menu</span></a></li><li><a href="/joo/index.php?change_menu=sdropline&amp;Itemid=1&amp;option=com_content"><span>Smooth Dropline Menu</span></a></li><li><a href="/joo/index.php?change_menu=split&amp;Itemid=1&amp;option=com_content"><span>Split Menu</span></a></li></ul></li><li class="haschild"><a href="#" class="haschild"><span>Styles</span></a><ul><li><a href="/joo/index.php?change_css=blue&amp;Itemid=1&amp;option=com_content"><span>Blue</span></a></li><li><a href="/joo/index.php?change_css=red&amp;Itemid=1&amp;option=com_content"><span>Red</span></a></li><li><a href="/joo/index.php?change_css=lime&amp;Itemid=1&amp;option=com_content"><span>Lime</span></a></li><li><a href="/joo/index.php?change_css=brown&amp;Itemid=1&amp;option=com_content"><span>Brown</span></a></li></ul></li><li><a href="/joo/index.php?option=com_contact&amp;view=contact&amp;id=1&amp;Itemid=75"><span>Contact us</span></a></li></ul></div>
+</div><!-- end top menu -->
+
+
+</div><!-- end header -->
+
+</div><!-- end centartop-->
+
+<!-- Tabs -->
+<div id="adverttabs">
+   <!-- yj tabs-->
+   <div id="tabswrap" style="font-size:11px; width:1000px;">
+     <div id="tabs_holder">
+
+        <div id="tab_link1" class="sirina"><div id="tabin1">		<div class="moduletable">
+					<p><a href="http://www.youjoomla.com/join/" title="Join Us"><img class="png" src="/joo/images/stories/tab1.png" border="0" alt="tab1" /></a></p>		</div>
+	</div></div>
+        <div id="tab_link2" class="sirina"><div id="tabin2">		<div class="moduletable">
+					<p><a href="http://www.youjoomla.com/join/" title="Unique Joomla Templates"><img class="png" src="/joo/images/stories/tab2.png" border="0" alt="tab2" /></a></p>		</div>
+	</div></div>
+        <div id="tab_link3" class="sirina"><div id="tabin3">		<div class="moduletable">
+					<p><a href="http://www.youjoomla.com/join/" title="Joomla Templates Club"><img class="png" src="/joo/images/stories/tab3.png" border="0" alt="tab3" /></a></p>		</div>
+	</div></div>
+        <div id="tab_link4" class="sirina"><div id="tabin4">		<div class="moduletable">
+					<p><a href="http://www.youjoomla.com/join/" title="Huge Collection of Profesional Joomla Templates"><img class="png" src="/joo/images/stories/tab4.png" border="0" alt="tab4" /></a></p>		</div>
+	</div></div>
+
+        <!-- tabs navigation -->
+        <div id="tab-nav">
+        	<ul>
+                <li><a href="#1" id="link1">Be in controll of your Joomla Website</a></li>
+                <li><a href="#2" id="link2">Save time with our quick Demo installs</a></li>
+                <li><a href="#3" id="link3">Instant downloads up on successful payment</a></li>
+                <li><a href="#4" id="link4">Joomla installation and usage instructions</a></li>
+            </ul>
+        </div>
+        <!-- end tabs navigation -->
+
+      </div>
+ </div>
+    <!-- yj tabs end-->
+</div>
+<!-- end Tabs --><!-- BOTTOM PART OF THE SITE LAYOUT -->
+<div id="ifadvert">
+<!-- top 3 -->
+<!-- user 1 2 3 -->
+<div id="tops" style="font-size:11px; width:1000px;">
+<div id="user1" style="width:33.3%;"><div class="inside">		<div class="yjsquare">
+
+
+
+								<h3><span>Yousimplicity</span> Joomla Template</h3>
+
+
+
+
+						<div class="yjsquare_in"><div class="mboxin"><a href="http://joomla1.5.youjoomla.info/yousimplicity/index.php" title="Yousimplicity Joomla Template"   rel="mediabox[1020 550]"><img class="margin" src="/joo/images/stories/yousimplicity.gif" border="0" alt="" />With just few images used in production we believe that this is one of our fastest Joomla Templates. Equipped with our standard Joomla Template features like, Demo Installation , 3 additional color styles, nicely spread 16 module positions , sleek module slider , this Joomla template will soon become one of your favorite Joomla Themes.</a>
+</div></div>
+
+		</div>
+
+
+
+	</div></div><div id="user2" style="width:33.3%;"><div class="inside">		<div class="yjsquare">
+
+
+
+								<h3><span>Youhostit</span> Joomla Hosting Enterprise</h3>
+
+
+
+
+						<div class="yjsquare_in"><div class="mboxin"><a href="http://joomla1.5.youjoomla.info/youhostit/index.php" title="You Hostit Joomla Hosting Enterprise"   rel="mediabox[1020 550]"><img class="margin" src="/joo/images/stories/youhostit.gif" border="0" alt="" /> With unique colors and Web 2.0 style You!Hostit! is very fast loading  and  enhanced with YJ default styling features, 4 amazing color variations , demo content , new Title menu.New Joomla Extensions like  YJ Whois 2.0 ,Yj Newsflash 3.0 ,YJ Multitabs , will take care of all your extra content and give your visitors unique experience.</a>
+</div></div>
+
+		</div>
+
+
+
+	</div></div><div id="user3" style="width:33.3%;"><div class="inside">		<div class="yjsquare">
+
+
+
+								<h3><span>Yoututorials</span> Joomla Tutorials Template</h3>
+
+
+
+
+						<div class="yjsquare_in"><div class="mboxin"><a href="http://joomla1.5.youjoomla.info/yoututorials/" title="Yoututorials Joomla Template"   rel="mediabox[1020 550]"><img class="margin" src="/joo/images/stories/yoututorials.gif" border="0" alt="" />You Tutorials Joomla Personal Blogger template is available for download. Enhanced with new Mootools sliding tabs , 3 amazing color styles, 19 module positions and more.We adopted new and advanced Joomla frontpage styling that takes off the standard Joomla template look and gives your more flexibility and uniqueness.</a>
+</div></div>
+
+		</div>
+
+
+
+	</div></div>
+</div>
+<!-- end user1 2 3 --><!-- end top 3 -->
+<div id="centerbottom" style="font-size:11px; width:1000px;">
+<div id="wrapblank">
+<div id="insidewrapblank">
+<!-- pathway -->
+<!-- end pathway -->
+<!--MAIN LAYOUT HOLDER -->
+<div id="holder">
+<!-- messages -->
+
+<!-- end messages -->
+<!-- MID BLOCK WITH TOP AND BOTTOM MODULE POSITION -->
+<div id="midblock" style="width:100%;">
+<div class="insidem">
+<!-- component -->
+<div class="frontpage_default">
+<table class="blog" cellpadding="0" cellspacing="0">
+<tr>
+	<td valign="top">
+				</td>
+</tr>
+
+
+</table>
+</div>
+<!-- end component -->
+</div><!-- end mid block insidem class -->
+</div><!-- end mid block div -->
+<!-- END MID BLOCK -->
+<!-- user4 and 5 -->
+<!-- end holder div -->

@@ -1,5 +1,222 @@
 {% load portaltags %}
 {% load thumbnail %}
 <!-- megamenu -->
+<div id="ja-mainnav" class="wrap">
+    <div class="main clearfix">
+        <div class="ja-megamenu clearfix" id="ja-megamenu">
+            <ul class="megamenu level0">
+                <!-- menuitem -->
+                <li class="mega first haschild home">
+                    <a href="/joo1/"  class="mega first haschild home" id="menu371" title="Home">
+                        <span class="menu-title">Home</span>
+                    </a>
+                    <div class="childcontent cols4 ">
+                        <div class="childcontent-inner-wrap">
+                            <div class="childcontent-inner clearfix" style="width: 980px;">
+                                <div class="megacol column1 first" style="width: 200px;">
+                                    <ul class="megamenu level1">
+                                        <li  class="mega first group">
+                                            <div class="group">
+                                                <div class="group-title">
+                                                    <a href="/joo1/25"  class="mega first group" id="menu425" title="News">
+                                                        <span class="menu-title">News</span>
+                                                    </a>
+                                                </div>
+                                                <div class="group-content">
+                                                    <ul class="megamenu level1">
+                                                        <li  class="mega first group">
+                                                            <div class="group">
+                                                                <div class="group-title">
+                                                                    <a href="/joo=27&amp;Itemid=431" class="mega first group" id="menu431" title="New to Joomla!">
+                                                                        <span class="menu-title">New to Joomla!</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="group-content">
+                                                                    <ul class="megamenu level1">
+                                                                        <li  class="mega first">
+                                                                            <a href="/j=b439"  class="mega first" id="menu439" title="The CMS">
+                                                                                <span class="menu-title">The CMS</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li  class="mega">
+                                                                            <a href="" class="mega" id="" title="">
+                                                                                <span class="menu-title">About the T3 v2 Framework</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li  class="mega last"><a href="#"  class="mega last" id="menu504" title="About JA Teline iv"><span class="menu-title">About JA Teline iv</span></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li  class="mega last group">
+                                                            <div class="group">
+                                                                <div class="group-title">
+                                                                    <a href="#"  class="mega last group" id="menu475" title="Menu showcase">
+                                                                        <span class="menu-title">Menu showcase</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="group-content">
+                                                                    <ul class="megamenu level1">
+                                                                        <li  class="mega first">
+                                                                            <a href="/joo1/?menu=split"  class="mega first" id="menu502" title="JA Split menu">
+                                                                                <span class="menu-title">JA Split menu</span></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- end menuitem -->
 
+                {% for item in mod.data.megamenu_items %}
+                <!-- menuitem -->
+                <li class="mega first haschild home">{{activerootmenu.id}} == {{item.rootmenu.id}}
+                    <a href="/joo1/"  class="mega first haschild {% if activerootmenu.id == item.rootmenu.id %}megamenusel{% endif %}" id="menu371" title="Home" >
+                        <span class="menu-title">{{ item.language.name }}</span>
+                    </a>
+                    <div class="childcontent cols4 ">
+                        <div class="childcontent-inner-wrap">
+                            <div class="childcontent-inner clearfix" style="width: {{ item.width }}px;">
+                                {% if item.menu %}
+                                <div class="megacol column1 first" style="width: 200px;">
+                                    <ul class="megamenu level1">
+                                        <li class="mega first group">
+                                            <div class="group">
+                                                {% if item.menu.altname %}
+                                                    <div class="group-title">
+                                                        <a href="/joo1/25"  class="mega first group" id="menu425" title="News">
+                                                            <span class="menu-title">{{ item.menu.altname }}</span>
+                                                        </a>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="group-title">
+                                                        <a href="/joo1/25"  class="mega first group" id="menu425" title="News">
+                                                            <span class="menu-title">{{ item.menu.name }}</span>
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
+                                                <div class="group-content">
+                                                    <ul class="megamenu level1">
+                                                        <li  class="mega first group">
+                                                            <div class="group">
+                                                                <div class="group-content">
+                                                                    <ul class="megamenu level1">
+                                                                        {% if item.menu.menuitems %}
+                                                                            {% for it in item.menu.menuitems %}
+                                                                                <li class="mega {% if forloop.first %}first{% endif %}{% if forloop.last %}last{% endif %}">
+                                                                                    <a href="/{{ it.url_prefix }}/m/{{ it.id }}/r/{{ it.module.id }}/o/{{ it.object_id }}/s/{{ it.slug }}/"  class="mega {% if forloop.first %}first{% endif %}{% if forloop.last %}last{% endif %}" id="menu439" title="{{ it.language.name }}">
+                                                                                        <span class="menu-title">{{ it.language.name }}</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                {% if item.category %}
+                                    <div class="megacol column2" style="width: 310px;">
+                                        <ul class="megamenu level1">
+                                            <li  class="mega first group">
+                                                <div class="group">
+                                                    <div class="group-title">
+                                                        <a href="#"  class="mega first group" id="menu510" title="Latest News">
+                                                            <span class="menu-title">{{ item.category.language.name }}</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="group-content">
+                                                        <div class="ja-moduletable moduletable_mega  clearfix" id="Mod184">
+                                                            <div class="ja-box-ct clearfix">
+                                                                <div class="ja-bulletin-wrap">
+                                                                    <ul class="ja-bulletin_mega clearfix">
+                                                                        {% if item.articles %}
+                                                                            {% for it in item.articles %}
+                                                                                <li class="clearfix">
+                                                                                    {% if it.mainimage %}
+                                                                                        <div class="box-left">
+                                                                                            <a href="" class="mostread-image">
+                                                                                                {% thumbnail it.mainimage "30x30" crop="center" as im %}
+                                                                                                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+                                                                                                {% endthumbnail %}
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    {% endif %}
+                                                                                    <div style="{% if it.mainimage %}padding-left:40px{% endif %}" class="box-right">
+                                                                                        <a href="" class="mostread">
+                                                                                            {{ it.language.title }}
+                                                                                        </a>
+                                                                                        <br />
+                                                                                        <span class="post-date">
+                                                                                            <span class="createdate">{{ it.date|date:"j F Y, H:i" }}</span>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        {% else %}
+                                                                            {% getlang '__adm_No_items__' %}
+                                                                        {% endif %}
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                                    <div class="megacol column3" style="width: 250px;">
+                                        <div style="width:250px;height:250px;">
+                                                <object type="application/x-shockwave-flash" data="http://files.bannersnack.net/site/examples/31.swf" width="250" height="250">
+                                                        <param name="movie" value="http://files.bannersnack.net/site/examples/31.swf">
+                                                        <param name="wmode" value="opaque">
+                                                        <param name="flashvars" value="direct_link=true">
+                                                        <embed src="http://files.bannersnack.net/site/examples/31.swf" width="250" height="250" wmode="opaque" flashvars="direct_link=true" />
+                                                </object>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- endmenuitem -->
+                {% endfor %}
+            </ul>
+        </div>
+        <script type="text/javascript">
+                                var megamenu = new jaMegaMenuMoo ('ja-megamenu', {
+                                        'bgopacity': 0,
+                                        'delayHide': 300,
+                                        'slide': 0,
+                                        'fading': 0,
+                                        'direction':'down',
+                                        'action':'mouseover',
+                                        'tips': false,
+                                        'duration': 300,
+                                        'hidestyle': 'fastwhenshow'
+                                });
+                                </script>
+                                <!-- jdoc:include type="menu" level="0" / -->
+        <ul class="no-display">
+            <li><a href="#ja-content" title="Skip to content">Skip to content</a></li>
+        </ul>
+    </div>
+</div>
 <!-- end megamenu -->

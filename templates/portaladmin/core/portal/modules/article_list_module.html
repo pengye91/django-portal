@@ -1,3 +1,66 @@
 <!-- article list -->
+<div class="item {{ mod.data.options.class_prefix }}article-column column1 col-first" style="width: 33.3%">
+    <div class="{{ mod.data.options.class_prefix }}ja-box column ja-zintheme ja-box-first">
 
+        <div class="{{ mod.data.options.class_prefix }}ja-box-inner clearfix">
+            <div class="{{ mod.data.options.class_prefix }}ja-zincat clearfix">
+                <h3>
+                    <a href="" title="">
+                        <span>What Ails You</span>
+                    </a>
+                </h3>
+            </div>
+            {% if mod.data.items %}
+                {% for item in mod.data.items %}
+                    {% if forloop.first %}
+                        {% if not mod.data.options.exposefirst %}
+                            <div class="{{ mod.data.options.class_prefix }}ja-zincontent clearfix">
+                                <h4 class="{{ mod.data.options.class_prefix }}ja-zintitle">
+                                    <a href="/cms/article/{{ item.id }}/" title="">{{ item.language.title }}</a>
+                                </h4>
+                                <img class="right" src="" alt="" align="right" />
+                                <p>
+                                    {{ item.language.text|truncatewords_html:"30"|striptags|safe }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="{{ mod.data.options.class_prefix }}ja-zinlinks clearfix">
+                                <ul class="jazin-links">
+                                    <li>
+                                        <span  class="editlinktip jahasTip" title="{{ item.language.title }}::&lt;img class=&quot;right&quot; src={{ img }}&quot;&quot; alt=&quot;&quot; align=&quot;right&quot; /&gt;&lt;p&gt;{{ item.language.text|truncatewords_html:"30"|striptags|safe }}&lt;/p&gt;">
+                                            <a href="">
+                                                {{ item.language.title }}
+                                            </a>
+                                            <p>
+                                                {{ item.language.text|truncatewords_html:"30"|striptags|safe }}
+                                            </p>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="{{ mod.data.options.class_prefix }}ja-zinlinks clearfix">
+                            {% if not mod.data.options.exposefirst %}
+                                <strong>Więcej:</strong>
+                            {% endif %}
+                            <ul class="jazin-links">
+                                <li>
+                                    <span  class="editlinktip jahasTip" title="{{ item.language.title }}::&lt;img class=&quot;right&quot; src={{ img }}&quot;&quot; alt=&quot;&quot; align=&quot;right&quot; /&gt;&lt;p&gt;{{ item.language.text|truncatewords_html:"30"|striptags|safe }}&lt;/p&gt;">
+                                        <a href="">
+                                            {{ item.language.title }}
+                                        </a>
+                                        <p>
+                                            {{ item.language.text|truncatewords_html:"30"|striptags|safe }}
+                                        </p>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
 <!-- end article list -->

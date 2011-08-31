@@ -1,0 +1,193 @@
+<!-- top1 -->
+{% load portaltags %}
+{% load thumbnail %}
+<div id="ja-topsl1" class="wrap ">
+    <div class="main clearfix">
+        <!-- SPOTLIGHT -->
+        <div class="ja-box-wrap column ja-box-left" style="width: 66%;">
+            <div class="ja-box clearfix">
+                <div class="ja-moduletable moduletable-newsfp  clearfix" id="Mod105">
+                    <div class="ja-box-ct clearfix">
+                    <script type="text/javascript" src="/site_media/{{ PORTALSHEETPATH }}/portal/js/jtiv.js"></script><!--  -->
+                    <div id="ja-zinfp-wrap-105" class="ja-zinfp-wrap default">
+                        <div id="ja-zinfp-105" class="ja-zinfp clearfix">
+                            <div class="ja-zinfp-main-wrap">
+                                <div class="ja-zinfp-main clearfix">
+                                    <div class="ja-zinfp-featured-wrap column">
+                                        <div class="ja-zinfp-featured-border">
+                                            <div class="ja-zinfp-featured clearfix">
+                                                <!-- bignews -->
+                                                {% for item in arts %}
+                                                <div class="ja-zincontent-wrap active show">
+                                                    <div class="ja-zincontent clearfix">
+                                                        <div class="ja-zincontent-img clearfix">
+                                                            <center>
+                                                            {% thumbnail item.mainimage "160x160" crop="center" as im %}
+                                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+                                                            {% endthumbnail %}
+                                                        </center>
+                                                        </div>
+                                                        <h2 class="ja-zintitle">
+                                                            <a href="/ja_teline_iv/index.php?option=com_content&amp;view=article&amp;id=767:as-glaciers-melt-science-seeks-data-on-rising-seas&amp;catid=88:science&amp;Itemid=462" title="As Glaciers Melt, Science Seeks Data on Rising Seas">
+                                                                {{ item.language.title|truncatewords_html:"5"|striptags|safe }}
+                                                            </a>
+                                                        </h2>
+                                                        <p>{{ item.language.text|truncatewords_html:"30"|striptags|safe }}</p>
+							<p class="readmore">
+                                                            <a href="" class="readon" title="Czytaj więcej..."><span>Czytaj więcej...</span></a>
+                                                        </p>
+						    </div>
+                                                </div>
+                                                {% endfor %}
+                                                <!-- endbignews -->
+                                            </div>
+                                            <!-- licznik -->
+                                            <div class="ja-zinfp-links-actions">
+                                                <span class="box-counter">
+                                                    <span class="counter">1</span>
+                                                    of 6
+                                                </span>
+                                                <a href="javascript:void(0)" class="ja-zinfp-links-actions-next next">
+                                                    <span>Next</span>
+                                                </a>
+                                                <a href="javascript:void(0)" class="ja-zinfp-links-actions-prev prev">
+                                                    <span>Prev</span>
+                                                </a>
+                                                <span class="next">
+                                                    <img src="/ja_teline_iv/modules/mod_janews_fp/tmpl/default/loading.gif" alt="Loading"/>
+                                                </span>
+                                            </div>
+                                            <!-- endlicznik -->
+					</div>
+                                    </div>
+                                    <div class="ja-zinfp-normal-wrap column">
+                                        <div class="ja-zinfp-normal clearfix">
+                                            <!-- smallnews -->
+                                            {% for item in arts %}
+                                            <div class="ja-zincontent-wrap">
+                                                <div class="ja-zincontent clearfix " >
+                                                    <div class="ja-zincontent-img">
+                                                        {% thumbnail item.mainimage "50x50" crop="center" as im %}
+                                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+                                                        {% endthumbnail %}
+                                                    </div>
+                                                    <h4 class="ja-zintitle">
+                                                        <a href="" title="">
+                                                            {{ item.language.title|truncatewords_html:"5"|striptags|safe }}
+                                                        </a>
+                                                    </h4>
+                                                    <div class="ja-zinintro">
+                                                        <p>{{ item.language.text|truncatewords_html:"8"|striptags|safe }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            <!-- endsmallnews -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <script type="text/javascript">
+                        /* <![CDATA[ */
+                                window.addEvent('load', function() {
+                                        new JANEWSFP_DEFAULT({'moduleid': 105, 'animType': 'animNewsMoveHor', 'duration': 500, 'autoplay':1, 'autoplay_duration':10000});
+                                        $$('.ja-zincontent-wrap').removeClass('hide').removeClass('show');
+                                });
+                        /* ]]> */
+                        </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- prawakolumna -->
+    <div class="ja-box-wrap column ja-box-right" style="width: 34%;">
+	<div class="ja-box clearfix">
+	    <div class="ja-moduletable moduletable-tabs  clearfix" id="Mod100">
+		<div class="ja-box-ct clearfix">
+                    <div class="ja-tabswrap teline_iv" style="width:100%;">
+                        <div  id="myTab-1009678691" class="container" >
+                            <div class="ja-tabs-title-top" style="">
+				<ul class="ja-tabs-title">
+                                    <li title="Photo gallery"><h3><span>Zakładka 1</span></h3></li>
+                                    <li title="Bookmark pages"><h3><span>Zakładka 2</span></h3></li>
+                                </ul>
+                            </div>
+			    <div class="ja-tab-panels-top" >
+                                <div  class="ja-tab-content">
+				    <div class="ja-tab-subcontent">
+                                        <div class="ja-video-thumb">
+                                            <!-- glleryimage -->
+                                            <a  class="fancybox7174" href="" title="Sample image" >
+                                                <img src="http://templates.joomlart.com/ja_teline_iv/images/stories/demo/gallery/gl-1.jpg"  width="100" alt="Sample image" />
+                                            </a>
+                                            <script language="javascript" type="text/javascript">
+                                            /* <![CDATA[ */
+                                            jQuery(document).ready(function() {
+                                            if( ! jQuery("a.fancybox7174").fancybox({
+                                                            imageScale:1,
+                                                                                            centerOnScroll: 1}) )
+                                                    { document.write(''); }
+                                            });
+                                            /* ]]> */
+                                            </script>
+                                            <!-- end galleryimage -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="ja-tab-content">
+                                    <div class="ja-tab-subcontent">
+                                        <ul class="bookmark-links">
+                                            <li><a  class="fancybox6501 iframe"  href="http://www.joomlart.com" title="" >Tytuł 1</a>
+                                            <script language="javascript" type="text/javascript">
+                                                    /* <![CDATA[ */
+                                                    jQuery(document).ready(function() {
+                                                    jQuery("a.fancybox6501").fancybox({
+                                                                            hideOnContentClick: false,
+                                                                            zoomSpeedIn: 500,
+                                                                            zoomSpeedOut: 500,
+                                                                            overlayShow: 1,
+                                                                            overlayOpacity: 0.7,
+                                                                            centerOnScroll: 1,
+                                                                            frameWidth: 1024,
+                                                                            frameHeight: 600 })
+                                                    });
+                                                    /* ]]> */
+                                                    </script>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+		    </div>
+                    <script type="text/javascript" charset="utf-8">
+						window.addEvent("load", function(){
+							new JATabs("myTab-1009678691", {animType:'animNone',style:'teline_iv',position:'top',width:'100%',height:'auto',mouseType:'click',duration:1000,colors:10,useAjax:false,ids:'113,115',skipAnim:false});
+						});
+		    </script>
+                </div>
+            </div>
+	    <div class="ja-moduletable moduletable  clearfix" id="Mod186">
+		<div class="ja-box-ct clearfix">
+                    <img src="http://templates.joomlart.com//ja_teline_iv/images/stories/demo/other/partners.gif" alt="Our partners" />
+                </div>
+            </div>
+	    <div class="ja-moduletable moduletable  clearfix" id="Mod154">
+		<h3><span>Subscribe</span></h3>
+		<div class="ja-box-ct clearfix">
+                    <div style="text-align: center; margin-bottom: -8px;">
+                        <img src="http://templates.joomlart.com//ja_teline_iv/images/stories/demo/site-launch.jpg" alt="Site Launch" />
+                    </div>
+                </div>
+            </div>
+	</div>
+    </div>
+    <!-- endprawakolumna -->
+    <script type="text/javascript">
+            window.addEvent('load', function (){ equalHeight ('#ja-topsl1 .ja-box') });
+    </script>
+    </div>
+</div>
+<!-- endtop1 -->

@@ -19,20 +19,21 @@ class ModuleManager(object):
     def get_data(self, lang):
         self.language = lang
         self.fetch_megamenu()
+        if self.megamenu_items:
+            for item in self.megamenu_items:
+                item.get_language(lang.id)
+                self.prepare_menu(item, lang)
+                self.prepare_category(item, lang)
 
-        for item in self.megamenu_items:
-            item.get_language(lang.id)
-            self.prepare_menu(item, lang)
-            self.prepare_category(item, lang)
+                width = 3
+                if item.category is not None:
+                    width = width + 310
+                if item.menu is not None:
+                    width = width + 200
+                width = width + 250
 
-            width = 3
-            if item.category is not None:
-                width = width + 310
-            if item.menu is not None:
-                width = width + 200
-            width = width + 250
+                item.width = width
 
-            item.width = width
 
     def prepare_category(self, item, lang):
         if item.category is not None:
@@ -40,11 +41,14 @@ class ModuleManager(object):
             item.articles = self.get_articles(item.category, lang)
 
     def prepare_menu(self, item, lang):
+        safemenuitems = []
         if item.menu is not None:
-            #item.menu.get_language(lang.id)
+            item.menu.get_language(lang.id)
             item.menu.menuitems = self.get_menu_items(item.menu)
             for it in item.menu.menuitems:
+                err = 0
                 it.get_language(lang.id)
+
                 it.module_model = get_module_options_model(it.module.id)
                 try:
                     options = it.module_model.__class__.objects.filter(menuitem=it)
@@ -53,21 +57,25 @@ class ModuleManager(object):
                     else:
                         options = None
                 except Exception, e:
+                    err = 1
                     options = None
                     self.debugger.catch_error('get_data: ', e)
 
                 if options is not None:
-                    it.options = options
-                    it.slug = it.options.get_slug(lang.id)
-                    it.url_prefix = it.options.get_url_prefix()
-                    it.object_id = it.options.get_object_id()
-                    it.module_id = it.options.module.id
+                    try:
+                        it.options = options
+                        it.slug = it.options.get_slug(lang.id)
+                        it.url_prefix = it.options.get_url_prefix()
+                        it.object_id = it.options.get_object_id()
+                        it.module_id = it.options.module.id
+                    except Exception, e:
+                        self.debugger.catch_error('get_data: ', e)
+                        err = 1
                 else:
-                    it.options = options
-                    it.slug = ''
-                    it.url_prefix = ''
-                    it.object_id = None
-
+                    err = 1
+            if err == 0:
+                safemenuitems.append(it)
+            item.menu.menuitems = safemenuitems
 
     def fetch_registered_module(self, rid):
         try:
@@ -77,7 +85,7 @@ class ModuleManager(object):
 
     def fetch_megamenu(self):
         try:
-            self.megamenu_items = MegaMenu.objects.all()
+            self.megamenu_items = MegaMenu.objects.all().order_by('order')
         except Exception, e:
             self.debugger.catch_error('fetch_megamenu: ', e)
 
@@ -117,7 +125,8 @@ class ModuleManager(object):
         manager.moduleName = '__adm_Articles__'
         manager.fetch_items(default_filter=False)
 
-        for item in manager.items:
-            item.get_language(lang.id)
+        if manager.items:
+            for item in manager.items:
+                item.get_language(lang.id)
 
         return manager.items

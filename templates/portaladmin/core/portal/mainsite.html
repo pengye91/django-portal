@@ -4,9 +4,10 @@
 {% load portaltags %}
 
 {% block tops %}
-    Top is here
+
 {% endblock %}
 
-{% block content %}
-    Content is here
+{% block maincontent %}
+    {% include 'core/portal/top1.html' %}
+    {% include 'core/portal/maincontent.html' %}
 {% endblock %}

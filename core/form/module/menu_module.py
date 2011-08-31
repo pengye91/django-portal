@@ -22,8 +22,7 @@ class MenuOptionForm(forms.ModelForm):
         items = manager.get_items()
         choices = []
         if items is not None:
+            manager.set_language(system.language.currentLanguage)
             for il in items:
-                manager.set_language(system.language.currentLanguage)
                 choices.append((il.id,il.language))
-                print il.language
         self.fields['menu'].choices = choices

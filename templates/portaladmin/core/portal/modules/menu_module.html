@@ -1,3 +1,46 @@
 <!-- menu -->
-
+{% load portaltags %}
+{% load thumbnail %}
+{% if mod.data.options.show_images %}
+    {% for menuitem in mod.data.menuitems %}
+    <div class="ja-box-wrap column ja-box-left" style="width: 20%;">
+	<div class="ja-box clearfix">
+	    <div class="ja-moduletable moduletable  clearfix" id="Mod78">
+		<div class="ja-box-ct clearfix">
+                    <div class="class-box-wrap1 class-box-style{{ forloop.counter }}">
+                        <div class="class-box-wrap2">
+                            <div class="class-box">
+                                <div class="class-box-inner">
+                                    <div class="title">
+                                        <a href="/{{ menuitem.url_prefix }}/m/{{ menuitem.id }}/r/{{ menuitem.module.id }}/o/{{ menuitem.object_id }}/s/{{ menuitem.slug }}/">
+                                            <h3>{{ menuitem.language.name }}</h3>
+                                        </a>
+                                    </div>
+                                    <div class="image">
+                                        {% thumbnail menuitem.image "153x145" crop="center" as im %}
+                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+                                        {% endthumbnail %}
+                                    </div>
+                                    <span>{{ menuitem.language.info|safe }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    {% if mod.data.options.show_name %}
+        <h3><span>{{ mod.data.menu.name }}</span></h3>
+    {% endif %}
+    <div class="ja-box-ct clearfix">
+        <ul class="{{ mod.data.options.class_prefix }}menu">
+            {% for menuitem in mod.data.menuitems %}
+                <li{% if menuitem.depth > 0 %} style="margin-left: {{ menuitem.depth }}px; !important;"{% endif %}><a href="/{{ menuitem.url_prefix }}/m/{{ menuitem.id }}/r/{{ menuitem.module.id }}/o/{{ menuitem.object_id }}/s/{{ menuitem.slug }}/">{{ menuitem.language.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
 <!-- end menu -->

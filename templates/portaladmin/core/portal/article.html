@@ -3,12 +3,51 @@
 {% load portaltags %}
 
 {% block tops %}
-
+    <center>
+        <img src="/site_media/portaladmin/portal/images/reklama/r2.gif" />
+    </center>
 {% endblock %}
 
 {% block middlecontent %}
     <!-- data -->
-
+    {% if data %}
+        --- {{ data }} ---
+    <div class="item-page">
+        <h1 class="contentheading clearfix">
+            <a href="" class="contentpagetitle">{{ data.language.title }}</a>
+        </h1>
+        <div class="article-tools clearfix">
+            <dl class="article-info clearfix">
+                <dd class="create">{{ data.date|date:"j F Y, H:i" }}</dd>
+                <!-- dd class="createdby">autor</dd -->
+            </dl>
+        </div>
+        <div class="article-content">
+            <div class="ja-thumbnailwrap thumb-right" style="width: 200px;">
+                <div class="ja-thumbnail clearfix">
+                    <div class="thumbnail" style="position:relative;z-index:2">
+                        <!-- a  rel ="jagroupgroup" class="fancyboxgroup"  href="http://localhost:8888/joo1/images/stories/demo/other/st.jpg" title="" >
+                            <img src="http://localhost:8888/joo1/images/resized/images/stories/demo/other/st_200_200.jpg" alt="Sampel image" />
+                        </a -->
+                        <script language="javascript" type="text/javascript">
+                        /* <![CDATA[ */
+                        jQuery(document).ready(function() {
+                        if( ! jQuery("a.fancyboxgroup").fancybox({
+                                        imageScale:1,
+                                                                        centerOnScroll: 1}) )
+                                { document.write(''); }
+                        });
+                        /* ]]> */
+                        </script>
+                    </div>
+                </div>
+            </div>
+            {{ data.language.text|safe }}
+        </div>
+    </div>
+    {% else %}
+        {% getlang '__adm_No_items__' %}
+    {% endif %}
     <!-- end data -->
 {% endblock %}
 
@@ -16,9 +55,9 @@
     {% if data %}
         {% if data.category %}
         <!-- navigator -->
-        <div id="navhelper-top">
-            <div class="breadcrums">
-                <a href="javascript: history.go(-1)" class="back-btn" title="Go back one page!"><span></span></a>
+        <div id="ja-navhelper-top">
+            <div class="ja-breadcrums">
+                <a href="javascript: history.go(-1)" class="ja-back-btn" title="Go back one page!"><span>Back</span></a>
                 <span class="breadcrumbs pathway">
                     {% category_path data.category.id activelang %}
                 </span>

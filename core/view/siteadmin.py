@@ -54,6 +54,7 @@ def edit_item(request, itemId):
         system.portal.set_site_for_portal(system.items)
         return result
 
+
     system.template = loader.get_template(system.sheet.get_sheet_file('admin_sites_edit'))
     c = RequestContext(request, system.get_context())
     return HttpResponse(system.template.render(c))

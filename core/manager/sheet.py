@@ -25,6 +25,8 @@ class SheetManager(BaseManager):
         self.model = Sheet()
         self.modelName = 'Sheet'
         self.moduleName = '__adm_Sheets__'
+        self.request = None
+        self.reqsite = None
 
     def get_sheet_file(self, templatename):
         self.fetch_sheet()
@@ -51,18 +53,43 @@ class SheetManager(BaseManager):
 
 
     def fetch_sheet(self):
+        if self.request is not None:
+            try:
+                if self.request.method == 'GET':
+                    if self.request.GET.has_key('reqsite'):
+                        self.reqsite = self.request.GET['reqsite']
+                        self.request.session['reqsite'] = self.reqsite
+                    else:
+                        self.reqsite = self.request.session['reqsite']
+                elif self.request.method == 'POST':
+                    if rself.equest.POST.has_key('reqsite'):
+                        self.reqsite = self.request.POST['reqsite']
+                        self.request.session['reqsite'] = self.reqsite
+                    else:
+                        self.reqsite = self.request.session['reqsite']
+                else:
+                    self.reqsite = self.request.session['reqsite']
+            except Exception,e:
+                self.debugger.catch_error('fetch_sheet: ',e)
+                self.request.session['reqsite'] = settings.SITE_ID
+                self.reqsite = settings.SITE_ID
+        else:
+            self.reqsite = settings.SITE_ID
         try:
-            sheets = Sheet.objects.filter(sites__id=settings.SITE_ID)
-            self.sheet = sheets[0]
-            self.sheets = sheets
-
-            if not sheets:
-                self.sheet = Sheet()
-                self.sheet.sheetpath = 'default'
+            sheets = Sheet.objects.filter(sites__id=self.reqsite, default=1)
         except Exception,e:
             self.sheet = Sheet()
             self.sheet.sheetpath = 'default'
             self.debugger.catch_error('fetch_sheet: ',e)
+
+        if len(sheets) >0:
+            self.sheet = sheets[0]
+            self.sheets = sheets
+        else:
+            self.sheet = Sheet()
+            self.sheet.sheetpath = 'default'
+
+
 
         self.fullpath = settings.PROJECT_ROOT + "/templates/" + self.sheet.sheetpath
         self.path = self.sheet.sheetpath
@@ -70,10 +97,16 @@ class SheetManager(BaseManager):
         settings.PORTALSHEETPATH = self.sheet.sheetpath
 
     def fetch_sheets(self):
-        try:
-            self.sheets = Sheet.objects.filter(sites__id=settings.SITE_ID)
-        except Exception,e:
-            self.debugger.catch_error('fetch_sheet: ',e)
+        if self.reqsite is None:
+            try:
+                self.sheets = Sheet.objects.filter(sites__id=self.reqsite)
+            except Exception,e:
+                self.debugger.catch_error('fetch_sheet: ',e)
+        else:
+            try:
+                self.sheets = Sheet.objects.filter(sites__id=self.reqsite)
+            except Exception,e:
+                self.debugger.catch_error('fetch_sheet: ',e)
 
     def fetch_items(self):
         """Pobiera elementy

@@ -13,6 +13,7 @@ from core.manager.requester import Requester
 from core.manager.permission import PermissionManager
 from core.debug.debug import Debugger
 from core.utils import ranged_pages
+from core.models import Menu
 
 class UrlContener(object):
 
@@ -28,12 +29,14 @@ class SystemManager(object):
         self.manager = None
         self.extramanager = None
         self.sheet = SheetManager()
+        self.sheet.request = request
         self.language = LanguageManager(request)
         self.requester = Requester(request)
         self.data = dict()
         self.items = None
         self.urls = UrlContener()
         self.template = None
+        self.activerootmenu = None
         self.debugger = Debugger(__MNAME__,__FNAME__)
         self.portal.fetch_data()
         self.language.fetch_active_languages()
@@ -44,8 +47,16 @@ class SystemManager(object):
         self.portal.fetch_modules()
         self.permission = PermissionManager()
 
+        #self.get_active_root_menu()
         self.permission.check_logged_user(request)
 
+    """ Dont need
+    def get_active_root_menu(self):
+        try:
+            self.activerootmenu = Menu.objects.get(id=self.requester.rData['rm'])
+        except Exception, e:
+            self.debugger.catch_error('get_active_root_menu: ', e)
+    """
 
     def get_context(self, block=False):
         self.data.update(self.sheet.get_context())
@@ -55,6 +66,7 @@ class SystemManager(object):
         self.data.update(self.requester.get_context())
         self.data.update(self.portal.get_context())
         self.data.update(self.permission.get_context())
+        self.data.update({ 'activerootmenu': self.activerootmenu })
         self.data.update({ 'urls': self.urls })
         self.data.update({ 'data': self.items })
         if block is True:
@@ -104,6 +116,11 @@ class SystemManager(object):
                 self.manager.rangeItemsStart = None
                 self.manager.rangeItemsEnd = None
 
+        if self.requester.rData['selectedmenu'] is None:
+            if self.requester.rData['selectedmenu'] == -1:
+                self.manager.rangeItemsStart = None
+                self.manager.rangeItemsEnd = None
+
         if default_filter is False:
             self.manager.fetch_items(default_filter=False)
         else:
@@ -116,16 +133,24 @@ class SystemManager(object):
 
         if allow_tree is True:
             if int(self.requester.rData['selectedactivity']) == -1:
-                self.items = self.manager.get_items_as_tree(request)
+                if self.requester.rData['selectedmenu'] is None:
+                    self.items = self.manager.get_items_as_tree(request)
+                else:
+                    if self.requester.rData['selectedmenu'] == -1:
+                        self.items = self.manager.get_items_as_tree(request)
+                    else:
+                        self.items = self.manager.get_items()
             else:
                 self.items = self.manager.get_items()
         else:
             self.items = self.manager.get_items()
 
+        print self.items
+
         self.permission.compare_permissions(None, self.manager.model.__class__.__name__, admin)
 
 
-    def edit_item(self, request, itemId):
+    def edit_item(self, request, itemId, set_owner=True):
         self.manager.fetch_item(itemId)
         self.manager.fetch_items()
         self.items = self.manager.item
@@ -139,6 +164,8 @@ class SystemManager(object):
         if self.manager.edit_item(request):
 
             self.portal.fetch_active_site(self.requester.rData['activesite'])
+            if set_owner is True:
+                self.manager.item.owner = self.permission.user
             try:
                 self.manager.item.sites.add(self.portal.get_active_site())
             except Exception,e:
@@ -152,6 +179,7 @@ class SystemManager(object):
                 return HttpResponseRedirect(reverse(self.urls.add)) # wracamy do nowego elementu
             else:
                 return HttpResponseRedirect(reverse(self.urls.show_items)) # wracamy do listy
+
 
         return None
 

@@ -434,6 +434,10 @@ class Menu(MenuModel):
     module = models.ForeignKey(RegisteredModule, null=True, blank=True, related_name='menu_module')
     owner = models.ForeignKey(UserProfile, null=True, blank=True)
     permissions = models.ManyToManyField(PermisionGroup, null=True, blank=True)
+    parent = models.ForeignKey('self', null=True, blank=True)
+
+    def get_parent(self):
+        return self.parent
 
     def get_permissions(self):
         return self.permissions
@@ -465,6 +469,7 @@ class MegaMenu(MegaMenuItemModel):
     languages = models.ManyToManyField(MegaMenuLanguage, blank=True, null=True)
     module = models.ForeignKey(RegisteredModule, null=True, blank=True)
     menu = models.ForeignKey(Menu, null=True, blank=True)
+    rootmenu = models.ForeignKey(Menu, null=True, blank=True, related_name='rel_menu', verbose_name=u'Powiązane menu główne')
     category = models.ForeignKey(Category, null=True, blank=True)
     adv_id = models.CharField(verbose_name=u'Reklama (w przygotowaniu)', max_length=255, null=True, blank=True)
     owner = models.ForeignKey(UserProfile, null=True, blank=True)
@@ -550,6 +555,41 @@ class ModuleVisibility(BaseModel):
     def __unicode__(self):
         return "ModuleVisibility"
 
+
+from core.model.imp.imp import ImpModel, ImpCat, ImpArtImage, ImpEvent, ImpEventSpecial, ImpEventType
+
+""" Forum
+"""
+
+class ForumPost(ForumPostModel):
+    pass
+
+class ForumPostText(ForumPostTextModel):
+    pass
+
+class ForumTopic(ForumTopicModel):
+    pass
+
+""" Dento
+"""
+
+class DentoData(ImpModel):
+    pass
+
+class DentoCat(ImpCat):
+    pass
+
+class DentoArtImage(ImpArtImage):
+    pass
+
+class DentoEventType(ImpEventType):
+    pass
+
+class DentoEventSpecial(ImpEventSpecial):
+    pass
+
+class DentoEvent(ImpEvent):
+    pass
 
 if settings.ENABLEDAFAULTADMIN:
     from django.contrib import admin

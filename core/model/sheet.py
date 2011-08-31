@@ -42,6 +42,7 @@ class SheetModel(BaseModel):
     name = models.CharField(max_length=150, verbose_name=u'Nazwa')
     sheetpath = models.CharField(max_length=150, verbose_name=u'Katalog z szablonem')
     info = RichTextField(config_name='full_ck', verbose_name=u'Info', blank=True, null=True)
+    default = models.BooleanField(verbose_name=u'Domyślny?', default = False)
     objects = SheetManager()
 
     class Meta:

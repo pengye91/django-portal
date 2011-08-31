@@ -88,6 +88,9 @@ def load_from_file(filepath, expected_class):
 
 def get_modules(string, lang):
     pos = None
+    posmod = []
+    modules = None
+
     try:
         pos = ModulePosition.objects.filter(name=string)[0]
     except Exception, e:
@@ -99,17 +102,17 @@ def get_modules(string, lang):
         except Exception,e:
             modules = None
 
-    posmod = []
-    for mod in modules:
-        if mod.type.menu is False:
-            mod.incl = 'core/portal/modules/' + mod.type.filetemplate + '.html'
-            imod = load_from_file(settings.PROJECT_ROOT + '/core/manager/modules/' + mod.type.fileview + '.py', 'ModuleManager')
-            module = imod()
-            module.fetch_registered_module(mod.id)
-            module.get_data(lang)
-            mod.data = module
-            mod.options = module.fetch_options()
-            posmod.append(mod)
+    if modules is not None:
+        for mod in modules:
+            if mod.type.menu is False:
+                mod.incl = 'core/portal/modules/' + mod.type.filetemplate + '.html'
+                imod = load_from_file(settings.PROJECT_ROOT + '/core/manager/modules/' + mod.type.fileview + '.py', 'ModuleManager')
+                module = imod()
+                module.fetch_registered_module(mod.id)
+                module.get_data(lang)
+                mod.data = module
+                mod.options = module.fetch_options()
+                posmod.append(mod)
 
     return { 'posmodules': posmod }
 

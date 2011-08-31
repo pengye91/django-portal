@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 
 class AdmItemForm(forms.ModelForm):
 
-    id = forms.ModelChoiceField(queryset=SitePortal.objects.all(), widget=forms.HiddenInput())
+    id = forms.ModelChoiceField(queryset=SitePortal.objects.all())
     site = forms.ModelChoiceField(queryset=Site.objects.all())
 
     class Meta:

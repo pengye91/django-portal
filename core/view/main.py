@@ -35,6 +35,20 @@ def main_site(request):
     system.show_items(request)
     t = loader.get_template(system.sheet.get_sheet_file('mainsite'))
 
+    arts = []
+    """
+    arts.append(Article.objects.get(id=3410))
+    arts.append(Article.objects.get(id=3412))
+    arts.append(Article.objects.get(id=3413))
+    arts.append(Article.objects.get(id=3414))
+    arts.append(Article.objects.get(id=3415))
+    arts1 = Article.objects.filter()[:10]
+
+    for item in arts:
+        item.get_language(system.language.currentLanguage.id)
+        #print item.id, item.mainimage.path
+    """
+    system.data.update({ 'arts': arts })
     system.data.update({ 'mainsite': True })
     system.data.update(system.get_context())
     c = RequestContext(request, system.data)

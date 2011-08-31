@@ -14,7 +14,7 @@
     <th>{% getlang '__adm_Lp__' %}
     <th>{% getlang '__adm_Name__' %}
     <th>{% getlang '__adm_Active__' %}
-    <th>{% getlang '__adm_Module__' %}
+    <th>{% getlang '__adm_Menu__' %}
     <th>{% getlang '__adm_Create_date__' %}
     <th>{% getlang '__adm_Id__' %}
     <th>{% getlang '__adm_Delete__' %}
@@ -49,7 +49,7 @@
                         <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" />
                     {% endif %}
                 {% endif %}
-            <td class="tdsites">{% if item.module %}{{ item.module }}{% endif %}
+            <td class="tdsites">{% if item.menu %}{{ item.menu }}{% endif %}
             <td class="tddate">{{ item.date|date:"d-m-Y H:i:s" }}
             <td class="tdid">{{ item.id }}
             <td class="tddelete">

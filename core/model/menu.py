@@ -34,6 +34,10 @@ class MenuManager(models.Manager):
         if options.has_key('temp'):
             kwargs['temp'] = options['temp']
 
+        if options.has_key('menu'):
+            if int(options['menu']) != -1:
+                kwargs['menu__id'] = options['menu']
+
         if options.has_key('extra'):
             kwargs.update(options['extra'])
 

@@ -40,6 +40,9 @@ class ArticleManager(models.Manager):
             if options['site'] != None:
                 kwargs['sites__id'] = int(options['site'])
 
+        if options.has_key('date_gte'):
+            kwargs['date__gte'] = options['date_gte']
+
         if options.has_key('temp'):
             kwargs['temp'] = options['temp']
 

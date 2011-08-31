@@ -8,7 +8,7 @@ from django.conf import settings
 
 from core.manager.baseadmin import AdminManager
 from core.manager.system import SystemManager
-from core.models import MenuItem, MenuItemLanguage
+from core.models import Menu, MenuItem, MenuItemLanguage
 from core.form.menu import AdmItemForm, AdmItemLanguageForm
 from core.form.modules import get_module_options
 from core.models import get_module_options_model
@@ -21,7 +21,7 @@ class SystemObject(SystemManager):
         self.urls.edit = 'core.view.menu_item_admin.edit_item'
         self.urls.show_items = 'core.view.menu_item_admin.show_items'
         self.manager = AdminManager()
-        self.manager.fetchOptions = { 'site': self.portal.activeSite.id, 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
+        self.manager.fetchOptions = { 'menu': self.requester.rData['selectedmenu'], 'site': self.portal.activeSite.id, 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
         self.manager.model = MenuItem()
         self.manager.modelLanguage = MenuItemLanguage()
         self.manager.form_class = AdmItemForm().__class__
@@ -30,17 +30,25 @@ class SystemObject(SystemManager):
         self.manager.debugger.filename = 'menu_item_admin.py'
         self.manager.moduleName = '__adm_Categories__'
         self.data.update({ 'filter_activity': reverse('core.view.menu_item_admin.show_items') })
+        self.data.update({ 'filter_1': reverse('core.view.menu_item_admin.show_items') })
         toppanel = {}
         self.data.update({ 'toppanel': toppanel })
         self.data.update({ 'savebutton': 1, 'saveaddbutton': 1, 'copybutton': 1, 'addbutton': 1 })
+
+        self.menu = AdminManager()
+        self.menu.model = Menu()
+        self.menu.order = 'name'
+        self.menu.fetchOptions = { 'site': self.portal.activeSite.id, 'active': 1, 'activesite': self.portal.activeSite.id }
 
 def show_items(request):
     system = SystemObject(request)
     if system.permission.user is None:
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
-    system.show_items(request, allow_tree=True, admin=True)
-    print system.manager.items
+    system.show_items(request, allow_tree=True, admin=True, default_filter=False)
+
     system.template = loader.get_template(system.sheet.get_sheet_file('admin_menu_items_list'))
+    system.menu.fetch_items(for_select=True)
+    system.data.update({ 'menus': system.menu.items })
     c = RequestContext(request, system.get_context())
     return HttpResponse(system.template.render(c))
 
@@ -113,11 +121,7 @@ def edit_item(request, itemId):
             return result
 
         if system.manager.form is not None:
-            items = system.manager.get_items()
-            choices = []
-            for il in items:
-                choices.append((il.id,il.language))
-            system.manager.form.fields['parent'].choices = choices
+            system.manager.form.choices(system, 'menu')
 
         system.manager.options_form.choices(system)
 

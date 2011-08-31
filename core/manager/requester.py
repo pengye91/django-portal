@@ -30,6 +30,8 @@ class Requester(object):
             'pnext': 1,
             'pagesinfo': {},
             #'paginateni': 10,
+            'rm': None,
+            'selectedmenu': None,
             'selectedcategory': None,
             'selectedtest': None,
             'selectedcourse': None,
@@ -84,11 +86,13 @@ class Requester(object):
         self.get_option('page', request)
         self.get_option('pprev', request)
         self.get_option('pnext', request)
+        self.get_option('selectedmenu', request, True)
         self.get_option('selectedactivity', request)
         self.get_option('selectedtest', request, True)
         self.get_option('selectedcourse', request, True)
         self.get_session_active_site(request)
         self.set_session_values(request)
+        self.get_option('rm', request)
 
     def get_page(self, request):
         if rData['page'] == 1:

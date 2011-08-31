@@ -13,7 +13,8 @@ from core.model.modules.module import ModelModuleManager
 class MenuOptionsModel(models.Model):
     show_name = models.BooleanField(default = True)
     show_info = models.BooleanField(default = True)
-    page_title = models.CharField(max_length=255, verbose_name=u'Tytuł strony',null=True, blank = True)
+    show_images = models.BooleanField(default = False, verbose_name=u'Menu obrazkowe')
+    page_title = models.CharField(max_length=255, verbose_name=u'Tytuł strony', null=True, blank = True)
     show_page_title = models.BooleanField(default = False)
     class_prefix = models.CharField(max_length=255, verbose_name=u'prefix stylu',null=True, blank = True)
     date = models.DateTimeField(blank=True, verbose_name=u'Data dodania',default=datetime.now)

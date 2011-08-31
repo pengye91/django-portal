@@ -19,6 +19,7 @@ class PortalManager(object):
         self.modules = None
         self.module = None
         self.fetchOptions = dict()
+        self.reqsite = None
 
     def fetch_data(self):
         try:

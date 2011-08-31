@@ -31,30 +31,41 @@ class ModuleManager(object):
                 newitems.append(item)
         self.menuitems = newitems
 
-        for item in self.menuitems:
-            item.get_language(lang.id)
-            item.module_model = get_module_options_model(item.module.id)
-            try:
-                options = item.module_model.__class__.objects.filter(menuitem=item)
-                if len(options) > 0:
-                    options = options[0]
-                else:
-                    options = None
-            except Exception, e:
-                options = None
-                self.debugger.catch_error('get_data', e)
+        safemenuitems = []
+        if self.menuitems is not None:
+            for item in self.menuitems:
+                err = 0
+                if item is not None:
+                    item.get_language(lang.id)
+                    item.module_model = get_module_options_model(item.module.id)
 
-            if options is not None:
-                item.options = options
-                item.slug = item.options.get_slug(lang.id)
-                item.url_prefix = item.options.get_url_prefix()
-                item.object_id = item.options.get_object_id()
-                item.module_id = item.options.module.id
-            else:
-                item.options = options
-                item.slug = ''
-                item.url_prefix = ''
-                item.object_id = None
+                    options = None
+                    try:
+                        options = item.module_model.__class__.objects.filter(menuitem=item)
+                        if len(options) > 0:
+                            options = options[0]
+                        else:
+                            options = None
+                    except Exception, e:
+                        err = 1
+                        options = None
+                        self.debugger.catch_error('get_data: ', e)
+
+                    if options is not None:
+                        item.options = options
+                        try:
+                            item.slug = item.options.get_slug(lang.id)
+                            item.url_prefix = item.options.get_url_prefix()
+                            item.object_id = item.options.get_object_id()
+                            item.module_id = item.options.module.id
+                        except Exception, e:
+                            err = 1
+                            self.debugger.catch_error('get_data: ', e)
+                    else:
+                        err = 1
+                if err == 0:
+                    safemenuitems.append(item)
+            self.menuitems = safemenuitems
 
         newitems = []
         for item in self.treemenuitems:
@@ -62,18 +73,23 @@ class ModuleManager(object):
                 newitems.append(item)
         self.treemenuitems = newitems
 
+
     def fetch_registered_module(self, rid):
         try:
             self.registered_module = RegisteredModule.objects.get(id=rid)
         except Exception, e:
-            self.debugger.catch_error('fetch_registered_module', e)
+            self.debugger.catch_error('fetch_registered_module: ', e)
 
 
     def fetch_options(self):
         try:
-            self.options = MenuModuleOption.objects.get(module=self.registered_module)
+            self.options = MenuModuleOption.objects.filter(module=self.registered_module)
+            if self.options > 0:
+                self.options = self.options[0]
+            else:
+                self.options = None
         except Exception, e:
-            self.debugger.catch_error('fetch_options', e)
+            self.debugger.catch_error('fetch_options: ', e)
 
     def fetch_menu_items(self):
         try:
@@ -83,16 +99,16 @@ class ModuleManager(object):
             for item in items:
                 self.menuitems.append(item)
         except Exception, e:
-            self.debugger.catch_error('fetch_options', e)
+            self.debugger.catch_error('fetch_options: ', e)
 
     def fetch_menu(self):
         try:
             self.menu = Menu.objects.filter(id=self.options.menu.id)[0]
         except Exception, e:
-            self.debugger.catch_error('fetch_menu', e)
+            self.debugger.catch_error('fetch_menu: ', e)
 
     def get_items(self):
-        return self.menuitems
+        return None #self.menuitems
 
     def get_items_as_tree(self, items = None, parentId = None, depth = -15, result = None):
         """ Zwraca obiekty jako drzewo - hierarhia zalezy od pola 'parent'
@@ -106,7 +122,7 @@ class ModuleManager(object):
                 self.debugger.catch_error('get_items_as_tree: ',e)
                 items = ''
 
-        if items:
+        if items is not None:
             for cat in items:
                 if cat.parent_id == parentId:
                     cat.depth = depth

@@ -35,7 +35,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-	PROJECT_ROOT + 'templates/portaladmin',
+	PROJECT_ROOT + 'templates/default',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
