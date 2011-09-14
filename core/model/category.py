@@ -34,6 +34,12 @@ class CategoryManager(models.Manager):
         if options.has_key('temp'):
             kwargs['temp'] = options['temp']
 
+        if options.has_key('category__id'):
+            kwargs['category__id'] = options['category__id']
+
+        if options.has_key('parent__id'):
+            kwargs['parent__id'] = options['parent__id']
+
         if options.has_key('extra'):
             kwargs.update(options['extra'])
 

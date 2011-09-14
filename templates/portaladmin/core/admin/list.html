@@ -27,6 +27,8 @@
         {% getlang '__adm_No_permissions__' %}
     {% else %}
         <div id="adminbiglist">
+            {% block extrainfo %}
+            {% endblock %}
             {% if filter_search %}
                 <div class="filtersearch">
                     <form id="filter-form">

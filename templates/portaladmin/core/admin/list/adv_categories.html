@@ -1,0 +1,60 @@
+{% extends "core/admin/list.html" %}
+
+{% load portaltags %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Groups__'%}
+{% endblock %}
+
+{% block urladdbutton %}
+    {% url core.view.adv_category_admin.add_item %}
+{% endblock %}
+
+{% block listheader %}
+    <th>{% getlang '__adm_Lp__' %}
+    <th>{% getlang '__adm_Name__' %}
+    <th>{% getlang '__adm_Active__' %}
+    <th>{% getlang '__adm_Create_date__' %}
+    <th>{% getlang '__adm_Id__' %}
+    <th>{% getlang '__adm_Delete__' %}
+{% endblock %}
+
+{% block listcontent %}
+    {% for item in data %}
+        <tr class="tablecontent" id="row{{ item.id }}">
+            <td class="tdlp">{{ forloop.counter }}
+            <td class="tdtitle">
+                {% if not item.noedit %}
+                <a href="{% url core.view.adv_category_admin.edit_item item.id %}" style="margin-left: {{ item.depth }}px; !important;">
+                    {% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.name }}
+                </a>
+                {% else %}
+                    {% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.name }}
+                {% endif %}
+            <td class="tdactive">
+                {% if not item.noedit %}
+                    {% if activesiteobject in item.active.all %}
+                        <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/yes.gif" width="24" id="imgyes{{ item.id }}" onclick="changeactivity({{ item.id }},0,'adv/groups')" />
+                        <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" onclick="changeactivity({{ item.id }},1,'adv/groups')" class="hiddenitem" />
+                    {% else %}
+                        <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/yes.gif" width="24" id="imgyes{{ item.id }}" onclick="changeactivity({{ item.id }},0,'adv/groups')" class="hiddenitem" />
+                        <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" onclick="changeactivity({{ item.id }},1,'adv/groups')" />
+                    {% endif %}
+                {% else %}
+                    {% if activesiteobject in item.active.all %}
+                        <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/yes.gif" width="24" id="imgyes{{ item.id }}" />
+                    {% else %}
+                        <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" />
+                    {% endif %}
+                {% endif %}
+            <td class="tddate">{{ item.date|date:"d-m-Y H:i:s" }}
+            <td class="tdid">{{ item.id }}
+            <td class="tddelete">
+                {% if not item.noedit %}
+                    <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/delete.gif" width="24" onclick="deleteitem({{ item.id }}, 'adv/groups', null, '{% getlang "__Are_you_sure?__" %}')" />
+                {% else %}
+                    -
+                {% endif %}
+        </tr>
+    {% endfor %}
+{% endblock %}

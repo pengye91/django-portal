@@ -41,6 +41,7 @@ class PermissionGroupModel(models.Model):
     add = models.BooleanField(default = True)
     own_only = models.BooleanField(default = True)
     model = models.CharField(max_length=255)
+    login = models.BooleanField(default = True)
     parent = models.ForeignKey('self', blank=True, null=True, related_name='perm_child')
     objects = ModelManager()
 

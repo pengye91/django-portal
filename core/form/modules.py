@@ -7,6 +7,7 @@ from django import forms
 from django.forms.widgets import SplitDateTimeWidget
 from ckeditor.widgets import CKEditorWidget
 from core.models import RegisteredModule, ModulePosition, ModuleVisibility, MenuItem
+from core.models import Language, PermisionGroup
 from core.debug.debug import *
 from taggit.forms import *
 from django.utils.safestring import mark_safe
@@ -35,14 +36,14 @@ class AdmItemForm(forms.ModelForm):
 
     class Meta:
         model = RegisteredModule
-        fields = ('id', 'name', 'type', 'position', 'permissions')
+        fields = ('id', 'name', 'type', 'order', 'position', 'permissions')
 
     def __init__(self, *args, **kwargs):
         super(AdmItemForm, self).__init__(*args, **kwargs)
         try:
             root_pgroup = PermisionGroup.objects.filter(model='RegisteredModule')
         except Exception, e:
-            print 'form/repetitio.py: ', e
+            print 'form/modules.py: ', e
             root_pgroup = None
 
         self.fields['permissions'].label = u'Uprawnienia - pozostaw puste jeśli mają być domyślne'
@@ -115,7 +116,37 @@ def get_module_options(moduleId):
 
     imod = load_from_file(settings.PROJECT_ROOT + '/core/form/module/' + module.type.fileform + '.py', module.type.options_formname)
 
-    if imod() is None:
+    try:
+        if imod() is None:
+            return None
+    except Exception, e:
+        print 'form/modules.py, get_module_options: ', e
+        return None
+
+    return imod()
+
+def get_module_type_options(module_type):
+    #print settings.PROJECT_ROOT + '/core/form/module/' + module_type.fileform + '.py', module_type.options_formname
+    imod = load_from_file(settings.PROJECT_ROOT + '/core/form/module/' + module_type.fileform + '.py', module_type.options_formname)
+
+    try:
+        if imod() is None:
+            return None
+    except Exception, e:
+        print 'form/modules.py, get_module_type_options: ', e
+        return None
+
+    return imod()
+
+
+def get_module_options_form_by_type(module_type):
+    imod = load_from_file(settings.PROJECT_ROOT + '/core/form/module/' + module_type.fileform + '.py', module_type.options_formname)
+
+    try:
+        if imod() is None:
+            return None
+    except Exception, e:
+        print 'form/modules.py, get_module_options_form_by_type: ', e
         return None
 
     return imod()

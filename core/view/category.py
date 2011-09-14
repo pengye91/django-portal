@@ -73,3 +73,36 @@ def show_item_by_id(request, itemId):
     system.data.update(system.get_context())
     c = RequestContext(request, system.data)
     return HttpResponse(t.render(c))
+
+def show_item_by_slug(request, slug):
+    system = SystemObject(request)
+    system.show_item_by_slug(request, slug, system.language.currentLanguage)
+    system.manager.options = {
+        'show_title': system.manager.item.show_title,
+        'link_title': system.manager.item.link_title,
+        'exposefirst': system.manager.item.exposefirst,
+        'show_footer': system.manager.item.show_footer,
+        'show_info': system.manager.item.show_info,
+        'page_title': system.manager.item.page_title,
+        'show_page_title': system.manager.item.show_page_title,
+        'show_mainimage': system.manager.item.show_mainimage,
+        'class_prefix': system.manager.item.class_prefix
+    }
+
+    articles = None
+    try:
+        articles = Article.objects.filter(category=system.manager.item)
+        for item in articles:
+            item.get_language(system.language.currentLanguage.id)
+    except Exception, e:
+        print e
+
+    system.manager.items = articles
+
+    t = loader.get_template(system.sheet.get_sheet_file('articles_list'))
+
+    system.data.update({ 'category': system.manager.item })
+    system.data.update({ 'mod': system.manager })
+    system.data.update(system.get_context())
+    c = RequestContext(request, system.data)
+    return HttpResponse(t.render(c))

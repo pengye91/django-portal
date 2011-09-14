@@ -46,6 +46,156 @@ CREATE TABLE `ads_image_lang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
+DROP TABLE IF EXISTS `adv`;
+CREATE TABLE `adv` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `temp` tinyint(1) NOT NULL,
+  `required` tinyint(1) NOT NULL,
+  `order` int(11) NOT NULL,
+  `visits` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `code` longtext,
+  `link` varchar(255) DEFAULT NULL,
+  `info` longtext,
+  `datestart` datetime DEFAULT NULL,
+  `dateend` datetime DEFAULT NULL,
+  `mainimage` varchar(100) DEFAULT NULL,
+  `pathinfo` varchar(255) NOT NULL,
+  `clicks` int(11) DEFAULT NULL,
+  `views` int(11) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `in_main` tinyint(1) NOT NULL,
+  `default` tinyint(1) NOT NULL,
+  `group_id` int(11) DEFAULT NULL,
+  `file` text,
+  `clickcount` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `adv_bda51c3c` (`group_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+
+DROP TABLE IF EXISTS `adv_active`;
+CREATE TABLE `adv_active` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `adv_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `adv_id` (`adv_id`,`site_id`),
+  KEY `adv_active_f1d84fd4` (`adv_id`),
+  KEY `adv_active_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
+
+
+DROP TABLE IF EXISTS `adv_clients`;
+CREATE TABLE `adv_clients` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `temp` tinyint(1) NOT NULL,
+  `required` tinyint(1) NOT NULL,
+  `order` int(11) NOT NULL,
+  `visits` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `info` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+
+DROP TABLE IF EXISTS `adv_clients_active`;
+CREATE TABLE `adv_clients_active` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `advclient_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `advclient_id` (`advclient_id`,`site_id`),
+  KEY `adv_clients_active_4fb4fcd7` (`advclient_id`),
+  KEY `adv_clients_active_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+
+DROP TABLE IF EXISTS `adv_clients_sites`;
+CREATE TABLE `adv_clients_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `advclient_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `advclient_id` (`advclient_id`,`site_id`),
+  KEY `adv_clients_sites_4fb4fcd7` (`advclient_id`),
+  KEY `adv_clients_sites_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+
+DROP TABLE IF EXISTS `adv_groups`;
+CREATE TABLE `adv_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `temp` tinyint(1) NOT NULL,
+  `required` tinyint(1) NOT NULL,
+  `order` int(11) NOT NULL,
+  `visits` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `info` longtext,
+  `image` varchar(100) DEFAULT NULL,
+  `pathinfo` varchar(255) NOT NULL,
+  `noedit` tinyint(1) NOT NULL,
+  `class_prefix` varchar(255) DEFAULT NULL,
+  `dentoid` int(11) DEFAULT NULL,
+  `width` int(11) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+
+DROP TABLE IF EXISTS `adv_groups_active`;
+CREATE TABLE `adv_groups_active` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `advgroup_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `advgroup_id` (`advgroup_id`,`site_id`),
+  KEY `adv_groups_active_22f4d8cc` (`advgroup_id`),
+  KEY `adv_groups_active_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=65 ;
+
+
+DROP TABLE IF EXISTS `adv_groups_sites`;
+CREATE TABLE `adv_groups_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `advgroup_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `advgroup_id` (`advgroup_id`,`site_id`),
+  KEY `adv_groups_sites_22f4d8cc` (`advgroup_id`),
+  KEY `adv_groups_sites_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=65 ;
+
+
+DROP TABLE IF EXISTS `adv_menuitem`;
+CREATE TABLE `adv_menuitem` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `adv_id` int(11) NOT NULL,
+  `menuitem_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `adv_id` (`adv_id`,`menuitem_id`),
+  KEY `adv_menuitem_f1d84fd4` (`adv_id`),
+  KEY `adv_menuitem_f8c10b8c` (`menuitem_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+DROP TABLE IF EXISTS `adv_sites`;
+CREATE TABLE `adv_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `adv_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `adv_id` (`adv_id`,`site_id`),
+  KEY `adv_sites_f1d84fd4` (`adv_id`),
+  KEY `adv_sites_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
+
+
 DROP TABLE IF EXISTS `ad_active`;
 CREATE TABLE `ad_active` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -280,11 +430,8 @@ CREATE TABLE `articlelanguages` (
   PRIMARY KEY (`id`),
   KEY `language_id_refs_id_fc54b360` (`language_id`),
   KEY `articlelanguages_a951d5d6` (`slug`(255))
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8411 ;
 
-INSERT INTO `articlelanguages` (`id`, `title`, `text`, `foot`, `slug`, `info`, `meta`, `language_id`) VALUES
-(1, 'test', '<p>\r\n	asdfret tuty gjhjyu yuiyi</p>\r\n', '', '2368945-test', '', '', 1),
-(2, NULL, NULL, NULL, '', NULL, '', 2);
 
 DROP TABLE IF EXISTS `articles`;
 CREATE TABLE `articles` (
@@ -302,15 +449,14 @@ CREATE TABLE `articles` (
   `gallery_id` int(11) DEFAULT NULL,
   `event_id` int(11) DEFAULT NULL,
   `owner_id` int(11) DEFAULT NULL,
+  `dentomainimage` text,
   PRIMARY KEY (`id`),
   KEY `articles_42dc49bc` (`category_id`),
   KEY `articles_cb7c733d` (`gallery_id`),
   KEY `articles_e9b82f95` (`event_id`),
   KEY `articles_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4206 ;
 
-INSERT INTO `articles` (`id`, `date`, `temp`, `required`, `order`, `visits`, `author`, `mainimage`, `mimage_info`, `pathinfo`, `category_id`, `gallery_id`, `event_id`, `owner_id`) VALUES
-(1, '2011-08-30 19:01:05', 0, 0, 0, 0, NULL, 'http://dentonet.pl/imagesArticles/Tired_doc11.jpg', NULL, '2011/8', 2, NULL, NULL, NULL);
 
 DROP TABLE IF EXISTS `articles_active`;
 CREATE TABLE `articles_active` (
@@ -321,10 +467,8 @@ CREATE TABLE `articles_active` (
   UNIQUE KEY `article_id` (`article_id`,`site_id`),
   KEY `articles_active_30525a19` (`article_id`),
   KEY `articles_active_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4204 ;
 
-INSERT INTO `articles_active` (`id`, `article_id`, `site_id`) VALUES
-(1, 1, 1);
 
 DROP TABLE IF EXISTS `articles_languages`;
 CREATE TABLE `articles_languages` (
@@ -335,11 +479,8 @@ CREATE TABLE `articles_languages` (
   UNIQUE KEY `article_id` (`article_id`,`articlelanguage_id`),
   KEY `articles_languages_30525a19` (`article_id`),
   KEY `articles_languages_1b93cd79` (`articlelanguage_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8411 ;
 
-INSERT INTO `articles_languages` (`id`, `article_id`, `articlelanguage_id`) VALUES
-(1, 1, 1),
-(2, 1, 2);
 
 DROP TABLE IF EXISTS `articles_permissions`;
 CREATE TABLE `articles_permissions` (
@@ -362,10 +503,8 @@ CREATE TABLE `articles_sites` (
   UNIQUE KEY `article_id` (`article_id`,`site_id`),
   KEY `articles_sites_30525a19` (`article_id`),
   KEY `articles_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4204 ;
 
-INSERT INTO `articles_sites` (`id`, `article_id`, `site_id`) VALUES
-(1, 1, 1);
 
 DROP TABLE IF EXISTS `auth_group`;
 CREATE TABLE `auth_group` (
@@ -648,7 +787,7 @@ CREATE TABLE `auth_user` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 INSERT INTO `auth_user` (`id`, `username`, `first_name`, `last_name`, `email`, `password`, `is_staff`, `is_active`, `is_superuser`, `last_login`, `date_joined`) VALUES
-(1, 'admin', '', '', 'admin@amaa.pl', 'sha1$154fe$2f76bab1bb2cebbc2cdc2b59837da4f630ea1058', 1, 1, 1, '2011-08-30 14:34:53', '2011-08-30 13:56:08');
+(1, 'admin', '', '', 'admin@amaa.pl', 'sha1$154fe$2f76bab1bb2cebbc2cdc2b59837da4f630ea1058', 1, 1, 1, '2011-09-14 08:34:51', '2011-08-30 13:56:08');
 
 DROP TABLE IF EXISTS `auth_user_groups`;
 CREATE TABLE `auth_user_groups` (
@@ -684,7 +823,7 @@ CREATE TABLE `calendareventlanguages` (
   `language_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `calendareventlanguages_7ab48146` (`language_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23041 ;
 
 
 DROP TABLE IF EXISTS `calendarevents`;
@@ -719,12 +858,16 @@ CREATE TABLE `calendarevents` (
   `state_id` int(11) DEFAULT NULL,
   `calendar_id` int(11) DEFAULT NULL,
   `owner_id` int(11) DEFAULT NULL,
+  `textcolor` varchar(255) DEFAULT NULL,
+  `dentois` text,
+  `dentoim` text,
+  `dentoih` text,
   PRIMARY KEY (`id`),
   KEY `calendarevents_777d41c8` (`type_id`),
   KEY `calendarevents_b9608dc2` (`state_id`),
   KEY `calendarevents_447205e2` (`calendar_id`),
   KEY `calendarevents_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11521 ;
 
 
 DROP TABLE IF EXISTS `calendarevents_active`;
@@ -736,7 +879,7 @@ CREATE TABLE `calendarevents_active` (
   UNIQUE KEY `calendarevent_id` (`calendarevent_id`,`site_id`),
   KEY `calendarevents_active_bcb39b1d` (`calendarevent_id`),
   KEY `calendarevents_active_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11521 ;
 
 
 DROP TABLE IF EXISTS `calendarevents_languages`;
@@ -748,7 +891,7 @@ CREATE TABLE `calendarevents_languages` (
   UNIQUE KEY `calendarevent_id` (`calendarevent_id`,`calendareventlanguage_id`),
   KEY `calendarevents_languages_bcb39b1d` (`calendarevent_id`),
   KEY `calendarevents_languages_569dbb8d` (`calendareventlanguage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23041 ;
 
 
 DROP TABLE IF EXISTS `calendarevents_permissions`;
@@ -772,7 +915,7 @@ CREATE TABLE `calendarevents_sites` (
   UNIQUE KEY `calendarevent_id` (`calendarevent_id`,`site_id`),
   KEY `calendarevents_sites_bcb39b1d` (`calendarevent_id`),
   KEY `calendarevents_sites_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11521 ;
 
 
 DROP TABLE IF EXISTS `calendareventtypelanguages`;
@@ -783,7 +926,7 @@ CREATE TABLE `calendareventtypelanguages` (
   `language_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `calendareventtypelanguages_7ab48146` (`language_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=155 ;
 
 
 DROP TABLE IF EXISTS `calendarlanguages`;
@@ -814,7 +957,7 @@ CREATE TABLE `calendars` (
   `owner_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `calendars_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 DROP TABLE IF EXISTS `calendars_active`;
@@ -826,7 +969,7 @@ CREATE TABLE `calendars_active` (
   UNIQUE KEY `calendar_id` (`calendar_id`,`site_id`),
   KEY `calendars_active_447205e2` (`calendar_id`),
   KEY `calendars_active_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 DROP TABLE IF EXISTS `calendars_languages`;
@@ -838,7 +981,7 @@ CREATE TABLE `calendars_languages` (
   UNIQUE KEY `calendar_id` (`calendar_id`,`calendarlanguage_id`),
   KEY `calendars_languages_447205e2` (`calendar_id`),
   KEY `calendars_languages_a93315c0` (`calendarlanguage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 
 DROP TABLE IF EXISTS `calendars_permissions`;
@@ -862,7 +1005,7 @@ CREATE TABLE `calendars_sites` (
   UNIQUE KEY `calendar_id` (`calendar_id`,`site_id`),
   KEY `calendars_sites_447205e2` (`calendar_id`),
   KEY `calendars_sites_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 DROP TABLE IF EXISTS `calendartypes`;
@@ -877,7 +1020,7 @@ CREATE TABLE `calendartypes` (
   `owner_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `calendartypes_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=79 ;
 
 
 DROP TABLE IF EXISTS `calendartypes_active`;
@@ -889,7 +1032,7 @@ CREATE TABLE `calendartypes_active` (
   UNIQUE KEY `calendareventtype_id` (`calendareventtype_id`,`site_id`),
   KEY `calendartypes_active_5ec8c85f` (`calendareventtype_id`),
   KEY `calendartypes_active_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=78 ;
 
 
 DROP TABLE IF EXISTS `calendartypes_languages`;
@@ -901,7 +1044,7 @@ CREATE TABLE `calendartypes_languages` (
   UNIQUE KEY `calendareventtype_id` (`calendareventtype_id`,`calendareventtypelanguage_id`),
   KEY `calendartypes_languages_5ec8c85f` (`calendareventtype_id`),
   KEY `calendartypes_languages_17162c91` (`calendareventtypelanguage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=155 ;
 
 
 DROP TABLE IF EXISTS `calendartypes_permissions`;
@@ -925,7 +1068,7 @@ CREATE TABLE `calendartypes_sites` (
   UNIQUE KEY `calendareventtype_id` (`calendareventtype_id`,`site_id`),
   KEY `calendartypes_sites_5ec8c85f` (`calendareventtype_id`),
   KEY `calendartypes_sites_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=78 ;
 
 
 DROP TABLE IF EXISTS `catalogs_cat`;
@@ -1118,7 +1261,7 @@ CREATE TABLE `catalogs_item` (
   KEY `catalogs_item_b9608dc2` (`state_id`),
   KEY `catalogs_item_534dd89` (`country_id`),
   KEY `catalogs_item_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 DROP TABLE IF EXISTS `catalogs_item_active`;
@@ -1130,7 +1273,7 @@ CREATE TABLE `catalogs_item_active` (
   UNIQUE KEY `catalogitem_id` (`catalogitem_id`,`site_id`),
   KEY `catalogs_item_active_8d975423` (`catalogitem_id`),
   KEY `catalogs_item_active_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 DROP TABLE IF EXISTS `catalogs_item_images`;
@@ -1154,7 +1297,7 @@ CREATE TABLE `catalogs_item_languages` (
   UNIQUE KEY `catalogitem_id` (`catalogitem_id`,`catalogitemlanguage_id`),
   KEY `catalogs_item_languages_8d975423` (`catalogitem_id`),
   KEY `catalogs_item_languages_66c758e5` (`catalogitemlanguage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 
 DROP TABLE IF EXISTS `catalogs_item_permissions`;
@@ -1178,7 +1321,7 @@ CREATE TABLE `catalogs_item_sites` (
   UNIQUE KEY `catalogitem_id` (`catalogitem_id`,`site_id`),
   KEY `catalogs_item_sites_8d975423` (`catalogitem_id`),
   KEY `catalogs_item_sites_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 DROP TABLE IF EXISTS `catalogs_lang`;
@@ -1193,7 +1336,7 @@ CREATE TABLE `catalogs_lang` (
   PRIMARY KEY (`id`),
   KEY `language_id_refs_id_8a5613fb` (`language_id`),
   KEY `catalogs_lang_a951d5d6` (`slug`(255))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 
 DROP TABLE IF EXISTS `categories`;
@@ -1225,11 +1368,10 @@ CREATE TABLE `categories` (
   PRIMARY KEY (`id`),
   KEY `categories_63f17a16` (`parent_id`),
   KEY `categories_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=204 ;
 
 INSERT INTO `categories` (`id`, `date`, `temp`, `required`, `order`, `visits`, `parent_id`, `image`, `pathinfo`, `noedit`, `show_title`, `show_footer`, `show_info`, `show_more`, `fetch_subcategories`, `subcategories_depth`, `link_title`, `show_mainimage`, `exposefirst`, `page_title`, `show_page_title`, `class_prefix`, `dentoid`, `owner_id`) VALUES
-(1, '2011-08-30 14:38:57', 1, 1, 0, 0, NULL, '', '2011/8', 1, 1, 1, 1, 1, 0, NULL, 1, 1, 1, '', 0, '', NULL, NULL),
-(2, '2011-08-30 15:08:12', 0, 0, 0, 0, 1, '', '2011/8', 0, 1, 1, 1, 1, 0, NULL, 1, 1, 1, '', 0, '', NULL, NULL);
+(203, '2011-09-14 08:34:55', 1, 1, 0, 0, NULL, '', '2011/9', 1, 1, 1, 1, 1, 0, NULL, 1, 1, 1, '', 0, '', NULL, NULL);
 
 DROP TABLE IF EXISTS `categories_active`;
 CREATE TABLE `categories_active` (
@@ -1240,13 +1382,13 @@ CREATE TABLE `categories_active` (
   UNIQUE KEY `category_id` (`category_id`,`site_id`),
   KEY `categories_active_42dc49bc` (`category_id`),
   KEY `categories_active_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=214 ;
 
 INSERT INTO `categories_active` (`id`, `category_id`, `site_id`) VALUES
-(5, 1, 1),
-(6, 1, 2),
-(7, 1, 3),
-(8, 2, 1);
+(210, 203, 1),
+(211, 203, 2),
+(212, 203, 3),
+(213, 203, 4);
 
 DROP TABLE IF EXISTS `categories_galleries`;
 CREATE TABLE `categories_galleries` (
@@ -1269,13 +1411,11 @@ CREATE TABLE `categories_languages` (
   UNIQUE KEY `category_id` (`category_id`,`categorylanguage_id`),
   KEY `categories_languages_42dc49bc` (`category_id`),
   KEY `categories_languages_c246ffe6` (`categorylanguage_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=411 ;
 
 INSERT INTO `categories_languages` (`id`, `category_id`, `categorylanguage_id`) VALUES
-(5, 1, 1),
-(6, 1, 2),
-(7, 2, 3),
-(8, 2, 4);
+(409, 203, 405),
+(410, 203, 406);
 
 DROP TABLE IF EXISTS `categories_permissions`;
 CREATE TABLE `categories_permissions` (
@@ -1298,13 +1438,13 @@ CREATE TABLE `categories_sites` (
   UNIQUE KEY `category_id` (`category_id`,`site_id`),
   KEY `categories_sites_42dc49bc` (`category_id`),
   KEY `categories_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=211 ;
 
 INSERT INTO `categories_sites` (`id`, `category_id`, `site_id`) VALUES
-(3, 1, 1),
-(4, 1, 2),
-(5, 1, 3),
-(6, 2, 1);
+(207, 203, 1),
+(208, 203, 2),
+(209, 203, 3),
+(210, 203, 4);
 
 DROP TABLE IF EXISTS `categorylanguages`;
 CREATE TABLE `categorylanguages` (
@@ -1319,13 +1459,11 @@ CREATE TABLE `categorylanguages` (
   PRIMARY KEY (`id`),
   KEY `language_id_refs_id_2a8937d3` (`language_id`),
   KEY `categorylanguages_a951d5d6` (`slug`(255))
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=407 ;
 
 INSERT INTO `categorylanguages` (`id`, `name`, `temp`, `slug`, `info`, `meta`, `altname`, `language_id`) VALUES
-(1, 'Główna', 0, '0796269-gowna', '', '', '', 1),
-(2, 'Root', 0, '0797136-root', '', '', '', 2),
-(3, 'Aktualności', 0, '0970395-aktualnosci', '', '', '', 1),
-(4, NULL, 0, '', NULL, '', NULL, 2);
+(405, 'Root', 0, '8212195-root', '', '', '', 2),
+(406, 'Główna', 0, '8213495-gowna', '', '', '', 1);
 
 DROP TABLE IF EXISTS `countries`;
 CREATE TABLE `countries` (
@@ -1348,7 +1486,7 @@ CREATE TABLE `django_admin_log` (
   PRIMARY KEY (`id`),
   KEY `django_admin_log_fbfc09f1` (`user_id`),
   KEY `django_admin_log_e4470c6e` (`content_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=51 ;
 
 INSERT INTO `django_admin_log` (`id`, `action_time`, `user_id`, `content_type_id`, `object_id`, `object_repr`, `action_flag`, `change_message`) VALUES
 (1, '2011-08-30 14:05:38', 1, 18, '1', 'Polski', 1, ''),
@@ -1391,7 +1529,16 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `user_id`, `content_type_id
 (38, '2011-08-31 08:43:29', 1, 10, '3', 'site3.com', 2, 'Zmieniono domain i name'),
 (39, '2011-08-31 08:43:34', 1, 10, '2', 'site2.com', 2, 'Zmieniono name'),
 (40, '2011-08-31 08:43:43', 1, 10, '4', 'site1.com', 2, 'Zmieniono name'),
-(41, '2011-08-31 08:43:53', 1, 10, '1', 'site4.com', 2, 'Zmieniono domain i name');
+(41, '2011-08-31 08:43:53', 1, 10, '1', 'site4.com', 2, 'Zmieniono domain i name'),
+(42, '2011-08-31 08:50:13', 1, 32, '3', 'Sheet 1', 2, 'Zmieniono name i sheetpath'),
+(43, '2011-08-31 08:50:21', 1, 32, '4', 'Default', 2, 'Zmieniono sheetpath'),
+(44, '2011-08-31 08:50:29', 1, 32, '2', 'Sheet 2', 2, 'Zmieniono name i sheetpath'),
+(45, '2011-08-31 08:50:38', 1, 32, '1', 'Sheet 3', 2, 'Zmieniono name i sheetpath'),
+(46, '2011-09-14 08:26:25', 1, 32, '5', 'PortalAdmin', 1, ''),
+(47, '2011-09-14 08:35:21', 1, 28, '405', 'Root', 1, ''),
+(48, '2011-09-14 08:35:34', 1, 28, '406', 'Główna', 1, ''),
+(49, '2011-09-14 08:35:44', 1, 29, '203', 'None', 1, ''),
+(50, '2011-09-14 08:39:03', 1, 33, '4238', 'admin_module_edit_module_selection', 1, '');
 
 DROP TABLE IF EXISTS `django_content_type`;
 CREATE TABLE `django_content_type` (
@@ -1489,7 +1636,9 @@ CREATE TABLE `django_session` (
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('288d3c64d1c3109d662d6048efa88f04', 'Y2I5ZGY2OWMxMzMxNjU4NGU3NWY1YmRlNzIyOWY4ZDVlMmRiZmY0OTqAAn1xAShVBGxhbmdVAnBs\nVQlwYWdlc2luZm99cQJVEHNlbGVjdGVkY2F0ZWdvcnlOVQphY3RpdmVzaXRlSwFVBXBwcmV2TlUQ\nc2VsZWN0ZWRxdWVzdGlvbk5VBXBhZ2VzXXEDVQNwbmlLClULY3VycmVudGRhdGVjZGF0ZXRpbWUK\nZGF0ZXRpbWUKcQRVCgfbCB4OAQYMeAaFUnEFVQ5zZWxlY3RlZGNvdXJzZU5VBXBuZXh0SwFVDHNl\nbGVjdGVkdGVzdE5VEHNlbGVjdGVkYWN0aXZpdHlK/////1UCcm1OVQRwYWdlWAEAAAAxVQhhZG1p\nbmFsbIh1Lg==\n', '2011-09-13 14:01:06'),
-('56e70734d5f42637ac1eb266e6645f42', 'Mzg3Y2IxZTFlY2Y0Mzc5MzAwOGI1NjJhNDNlNzYwNzBlZTNhNGM5YzqAAn1xAShVFV9fYWRtX0Fy\ndGljbGVzX19wbmV4dEsCVRFfX2FkbV9TaXRlc19fcGFnZUsAVRRfX2FkbV9BcnRpY2xlc19fcGFn\nZUsAVRxfX2FkbV9Nb2R1bGVfcG9zaXRpb25fX3BhZ2VzXVUUX19hZG1fTW9kdWxlc19fcGFnZXNd\nVRVfX2FkbV9BcnRpY2xlc19fcHByZXZOVQxzZWxlY3RlZHRlc3ROVRRfX2FkbV9Nb2R1bGVzX19w\nbmV4dEsCVRNfX2FkbV9BcnRpY2xlc19fcG5pSwpVFF9fYWRtX1RvcE1lbnVfX3BwcmV2TlUSX19h\nZG1fU2l0ZXNfX3BuZXh0SwJVEF9fYWRtX01lbnVfX3BhZ2VLAFUUX19hZG1fTW9kdWxlc19fcHBy\nZXZOVQlwYWdlc2luZm99VQ1fYXV0aF91c2VyX2lkigEBVRJfX2FkbV9Nb2R1bGVzX19wbmlYAwAA\nADEwMFUKYWN0aXZlc2l0ZUsBVRdfX2FkbV9DYXRlZ29yaWVzX19wcHJldk5VBXBhZ2VzXXECVRtf\nX2FkbV9Nb2R1bGVfcG9zaXRpb25fX3BhZ2VLAFUTX19hZG1fU2hlZXRzX19wYWdlc11VFF9fYWRt\nX1RvcE1lbnVfX3BuZXh0SwJVHF9fYWRtX01vZHVsZV9wb3NpdGlvbl9fcG5leHRLAlUXX19hZG1f\nQ2F0ZWdvcmllc19fcGFnZXNoAlUCcm1OVRNfX2FkbV9Ub3BNZW51X19wYWdlSwBVEV9fYWRtX01l\nbnVfX3BhZ2VzXVURX19hZG1fTWVudV9fcG5leHRLAlUUX19hZG1fVG9wTWVudV9fcGFnZXNdVQxz\nZWxlY3RlZG1lbnVK/////1UVX19hZG1fQXJ0aWNsZXNfX3BhZ2VzXVUFcHByZXZOVRBzZWxlY3Rl\nZHF1ZXN0aW9uTlUSX19hZG1fU2l0ZXNfX3BwcmV2TlUGbG9naW50igEBVSBlM2FmZWQwMDQ3YjA4\nMDU5ZDBmYWRhMTBmNDAwYzFlNYZVA3BuaUsZVRJfX2FkbV9Ub3BNZW51X19wbmlLClUSX19hZG1f\nU2hlZXRzX19wYWdlSwBVC2N1cnJlbnRkYXRlY2RhdGV0aW1lCmRhdGV0aW1lCnEDVQoH2wgeFQEr\nDPY1hVJxBFUXX19hZG1fQ2F0ZWdvcmllc19fcG5leHRLAlUVX19hZG1fQ2F0ZWdvcmllc19fcG5p\nWAIAAAAyNXEFVRNfX2FkbV9TaGVldHNfX3BuZXh0SwJVBXBuZXh0SwJVEV9fYWRtX1NoZWV0c19f\ncG5pSwpVBGxhbmdVAnBsVRZfX2FkbV9DYXRlZ29yaWVzX19wYWdlSwBVD19fYWRtX01lbnVfX3Bu\naVgCAAAAMjVVGl9fYWRtX01vZHVsZV9wb3NpdGlvbl9fcG5pSwpVB3JlcXNpdGVYAQAAADFVEHNl\nbGVjdGVkY2F0ZWdvcnlOVRFfX2FkbV9NZW51X19wcHJldk5VEF9fYWRtX1NpdGVzX19wbmlLClUS\nX2F1dGhfdXNlcl9iYWNrZW5kVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFj\na2VuZFUOc2VsZWN0ZWRjb3Vyc2VOVRNfX2FkbV9Nb2R1bGVzX19wYWdlSwBVE19fYWRtX1NoZWV0\nc19fcHByZXZOVRBzZWxlY3RlZGFjdGl2aXR5WAIAAAAtMVUcX19hZG1fTW9kdWxlX3Bvc2l0aW9u\nX19wcHJldk5VEl9fYWRtX1NpdGVzX19wYWdlc11VBHBhZ2VLAFUIYWRtaW5hbGyIdS4=\n', '2011-09-13 21:01:44');
+('56e70734d5f42637ac1eb266e6645f42', 'ODNjNjRmNTAwMjRmOGQ3ODY1ZjIwNmY2NWI3NDc5NTJlM2JjYjMzZDqAAn1xAShVFV9fYWRtX0Fy\ndGljbGVzX19wbmV4dEsCVRNfX2FkbV9TaGVldHNfX3BwcmV2TlURX19hZG1fU2l0ZXNfX3BhZ2VL\nAFUUX19hZG1fQXJ0aWNsZXNfX3BhZ2VLAFUcX19hZG1fTW9kdWxlX3Bvc2l0aW9uX19wYWdlc11V\nFF9fYWRtX01vZHVsZXNfX3BhZ2VzXVUVX19hZG1fQXJ0aWNsZXNfX3BwcmV2TlUMc2VsZWN0ZWR0\nZXN0TlUUX19hZG1fTW9kdWxlc19fcG5leHRLAlUTX19hZG1fQXJ0aWNsZXNfX3BuaUsKVRRfX2Fk\nbV9Ub3BNZW51X19wcHJldk5VEl9fYWRtX1NpdGVzX19wbmV4dEsCVRBfX2FkbV9NZW51X19wYWdl\nSwBVFF9fYWRtX01vZHVsZXNfX3BwcmV2TlUVX19hZG1fQ2F0ZWdvcmllc19fcG5pWAIAAAAyNVUJ\ncGFnZXNpbmZvfVUNX2F1dGhfdXNlcl9pZIoBAVUSX19hZG1fTW9kdWxlc19fcG5pWAMAAAAxMDBV\nCmFjdGl2ZXNpdGVLBFUXX19hZG1fQ2F0ZWdvcmllc19fcHByZXZOVRNfX2FkbV9TaGVldHNfX3Bu\nZXh0SwJVG19fYWRtX01vZHVsZV9wb3NpdGlvbl9fcGFnZUsAVRNfX2FkbV9TaGVldHNfX3BhZ2Vz\nXVUTX19hZG1fTW9kdWxlc19fcGFnZUsAVRRfX2FkbV9Ub3BNZW51X19wbmV4dEsCVQVwbmV4dEsC\nVRdfX2FkbV9DYXRlZ29yaWVzX19wYWdlc11VAnJtTlUTX19hZG1fVG9wTWVudV9fcGFnZUsAVRJf\nX2FkbV9TaXRlc19fcGFnZXNdVRRfX2FkbV9Ub3BNZW51X19wYWdlc11VDHNlbGVjdGVkbWVudUr/\n////VQVwcHJldk5VEHNlbGVjdGVkcXVlc3Rpb25OVRJfX2FkbV9TaXRlc19fcHByZXZOVQZsb2dp\nbnSKAQFVIGUzYWZlZDAwNDdiMDgwNTlkMGZhZGExMGY0MDBjMWU1hlUDcG5pSxlVEl9fYWRtX1Rv\ncE1lbnVfX3BuaUsKVRJfX2FkbV9TaGVldHNfX3BhZ2VLAFULY3VycmVudGRhdGVjZGF0ZXRpbWUK\nZGF0ZXRpbWUKcQJVCgfbCB8IMxABzVKFUnEDVRdfX2FkbV9DYXRlZ29yaWVzX19wbmV4dEsCVRFf\nX2FkbV9NZW51X19wYWdlc11xBFUFcGFnZXNoBFUcX19hZG1fTW9kdWxlX3Bvc2l0aW9uX19wbmV4\ndEsCVRFfX2FkbV9TaGVldHNfX3BuaUsKVQRsYW5nWAIAAABlblUWX19hZG1fQ2F0ZWdvcmllc19f\ncGFnZUsAVQ9fX2FkbV9NZW51X19wbmlYAgAAADI1VRpfX2FkbV9Nb2R1bGVfcG9zaXRpb25fX3Bu\naUsKVQdyZXFzaXRlSwFVEHNlbGVjdGVkY2F0ZWdvcnlOVRBfX2FkbV9TaXRlc19fcG5pSwpVEl9h\ndXRoX3VzZXJfYmFja2VuZFUpZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tl\nbmRVDnNlbGVjdGVkY291cnNlTlURX19hZG1fTWVudV9fcG5leHRLAlUVX19hZG1fQXJ0aWNsZXNf\nX3BhZ2VzXVUQc2VsZWN0ZWRhY3Rpdml0eVgCAAAALTFVHF9fYWRtX01vZHVsZV9wb3NpdGlvbl9f\ncHByZXZOVRFfX2FkbV9NZW51X19wcHJldk5VBHBhZ2VLAFUIYWRtaW5hbGyIdS4=\n', '2011-09-14 08:51:16'),
+('c3ca808461a2c7fd4c79d23bca749486', 'YjE4Y2ZlMGU3MjZjNGU3NTg1ODcxNWJhNTYwZTRkZmMyYjY5Yzc2NjqAAn1xAShVFV9fYWRtX0Fy\ndGljbGVzX19wbmV4dEsCVRRfX2FkbV9BcnRpY2xlc19fcGFnZUsAVRRfX2FkbV9Nb2R1bGVzX19w\nYWdlc11xAlUVX19hZG1fQXJ0aWNsZXNfX3BwcmV2TlUMc2VsZWN0ZWR0ZXN0TlUUX19hZG1fTW9k\ndWxlc19fcG5leHRLAlUTX19hZG1fQXJ0aWNsZXNfX3BuaUsKVRBfX2FkbV9NZW51X19wYWdlSwBV\nFF9fYWRtX01vZHVsZXNfX3BwcmV2TlUJcGFnZXNpbmZvfVUHcmVxc2l0ZUsBVRJfX2FkbV9Nb2R1\nbGVzX19wbmlLClUKYWN0aXZlc2l0ZUsBVRdfX2FkbV9DYXRlZ29yaWVzX19wcHJldk5VE19fYWRt\nX01vZHVsZXNfX3BhZ2VLAFUXX19hZG1fQ2F0ZWdvcmllc19fcGFnZXNdVQJybU5VEV9fYWRtX01l\nbnVfX3BhZ2VzXVUMc2VsZWN0ZWRtZW51Sv////9VBXBwcmV2TlUQc2VsZWN0ZWRxdWVzdGlvbk5V\nBmxvZ2ludIoBAVUgZTNhZmVkMDA0N2IwODA1OWQwZmFkYTEwZjQwMGMxZTWGVQNwbmlLClULY3Vy\ncmVudGRhdGVjZGF0ZXRpbWUKZGF0ZXRpbWUKcQNVCgfbCQ4IJwgL9DGFUnEEVRdfX2FkbV9DYXRl\nZ29yaWVzX19wbmV4dEsCVRVfX2FkbV9DYXRlZ29yaWVzX19wbmlLClUFcGFnZXNoAlUFcG5leHRL\nAlUEbGFuZ1UCcGxVFl9fYWRtX0NhdGVnb3JpZXNfX3BhZ2VLAFUPX19hZG1fTWVudV9fcG5pSwpV\nDV9hdXRoX3VzZXJfaWSKAQFVEHNlbGVjdGVkY2F0ZWdvcnlOVRJfYXV0aF91c2VyX2JhY2tlbmRV\nKWRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kVQ5zZWxlY3RlZGNvdXJz\nZU5VEV9fYWRtX01lbnVfX3BuZXh0SwJVFV9fYWRtX0FydGljbGVzX19wYWdlc11VEHNlbGVjdGVk\nYWN0aXZpdHlK/////1URX19hZG1fTWVudV9fcHByZXZOVQRwYWdlSwBVCGFkbWluYWxsiHUu\n', '2011-09-28 08:39:09'),
+('d23c4137e3ca07f976e37a114525cf1b', 'N2ZmNjNmMDcyZGI0NmU2YzUzMzIxYWQwMDZkNjQ2NjBlZmIwYTMwNTqAAn1xAShVFV9fYWRtX0Fy\ndGljbGVzX19wbmV4dEsCVRRfX2FkbV9BcnRpY2xlc19fcGFnZUsAVRVfX2FkbV9BcnRpY2xlc19f\ncHByZXZOVQxzZWxlY3RlZHRlc3RxAk5VE19fYWRtX0FydGljbGVzX19wbmlLClUJcGFnZXNpbmZv\ncQN9VQdyZXFzaXRlcQRLAVUKYWN0aXZlc2l0ZXEFSwFVAnJtcQZOVQxzZWxlY3RlZG1lbnVxB05V\nBXBwcmV2cQhOVRBzZWxlY3RlZHF1ZXN0aW9ucQlOVQZsb2dpbnSKAQFVIGUzYWZlZDAwNDdiMDgw\nNTlkMGZhZGExMGY0MDBjMWU1hlUDcG5pcQpLClULY3VycmVudGRhdGVxC2NkYXRldGltZQpkYXRl\ndGltZQpxDFUKB9sJDgghMgV2GIVScQ1VBXBhZ2VzcQ5dcQ9VBXBuZXh0cRBLAlUEbGFuZ3ERVQJw\nbHESVRBzZWxlY3RlZGNhdGVnb3J5cRNOVQ5zZWxlY3RlZGNvdXJzZXEUTlUVX19hZG1fQXJ0aWNs\nZXNfX3BhZ2VzaA9VEHNlbGVjdGVkYWN0aXZpdHlxFUr/////VQRwYWdlcRZLAFUIYWRtaW5hbGxx\nF4h1Lg==\n', '2011-09-28 08:33:51');
 
 DROP TABLE IF EXISTS `django_site`;
 CREATE TABLE `django_site` (
@@ -1721,23 +1870,20 @@ CREATE TABLE `megamenu` (
   `visits` int(11) DEFAULT NULL,
   `image` varchar(100) DEFAULT NULL,
   `noedit` tinyint(1) NOT NULL,
-  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
   `menu_id` int(11) DEFAULT NULL,
   `rootmenu_id` int(11) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   `adv_id` varchar(255) DEFAULT NULL,
   `owner_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `megamenu_f53ed95e` (`module_id`),
+  KEY `megamenu_f53ed95e` (`registered_module_id`),
   KEY `megamenu_143efa3` (`menu_id`),
   KEY `megamenu_640b20cf` (`rootmenu_id`),
   KEY `megamenu_42dc49bc` (`category_id`),
   KEY `megamenu_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
-INSERT INTO `megamenu` (`id`, `date`, `temp`, `required`, `order`, `visits`, `image`, `noedit`, `module_id`, `menu_id`, `rootmenu_id`, `category_id`, `adv_id`, `owner_id`) VALUES
-(1, '2011-08-30 17:24:57', 0, 0, 0, 0, '', 0, 24, NULL, NULL, 1, '', NULL),
-(2, '2011-08-30 17:51:52', 0, 0, 0, 0, '', 0, NULL, 5, NULL, 1, '', NULL);
 
 DROP TABLE IF EXISTS `megamenu_active`;
 CREATE TABLE `megamenu_active` (
@@ -1748,11 +1894,8 @@ CREATE TABLE `megamenu_active` (
   UNIQUE KEY `megamenu_id` (`megamenu_id`,`site_id`),
   KEY `megamenu_active_2d9d23f3` (`megamenu_id`),
   KEY `megamenu_active_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
-INSERT INTO `megamenu_active` (`id`, `megamenu_id`, `site_id`) VALUES
-(3, 1, 1),
-(10, 2, 1);
 
 DROP TABLE IF EXISTS `megamenu_lang`;
 CREATE TABLE `megamenu_lang` (
@@ -1766,13 +1909,8 @@ CREATE TABLE `megamenu_lang` (
   PRIMARY KEY (`id`),
   KEY `language_id_refs_id_6a49f184` (`language_id`),
   KEY `megamenu_lang_a951d5d6` (`slug`(255))
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
-INSERT INTO `megamenu_lang` (`id`, `name`, `temp`, `slug`, `info`, `meta`, `language_id`) VALUES
-(1, 'Aktualności', 0, '1797518-lekarze-menu-gorne', '', '', 1),
-(2, NULL, 0, '', NULL, '', 2),
-(3, 'Vademecum', 0, '195549-vademecum', '', '', 1),
-(4, NULL, 0, '', NULL, '', 2);
 
 DROP TABLE IF EXISTS `megamenu_languages`;
 CREATE TABLE `megamenu_languages` (
@@ -1783,13 +1921,8 @@ CREATE TABLE `megamenu_languages` (
   UNIQUE KEY `megamenu_id` (`megamenu_id`,`megamenulanguage_id`),
   KEY `megamenu_languages_2d9d23f3` (`megamenu_id`),
   KEY `megamenu_languages_67e9139` (`megamenulanguage_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=53 ;
 
-INSERT INTO `megamenu_languages` (`id`, `megamenu_id`, `megamenulanguage_id`) VALUES
-(9, 1, 1),
-(10, 1, 2),
-(23, 2, 3),
-(24, 2, 4);
 
 DROP TABLE IF EXISTS `megamenu_permissions`;
 CREATE TABLE `megamenu_permissions` (
@@ -1812,11 +1945,8 @@ CREATE TABLE `megamenu_sites` (
   UNIQUE KEY `megamenu_id` (`megamenu_id`,`site_id`),
   KEY `megamenu_sites_2d9d23f3` (`megamenu_id`),
   KEY `megamenu_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
-INSERT INTO `megamenu_sites` (`id`, `megamenu_id`, `site_id`) VALUES
-(3, 1, 1),
-(10, 2, 1);
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -1829,30 +1959,15 @@ CREATE TABLE `menu` (
   `name` varchar(255) DEFAULT NULL,
   `altname` varchar(255) DEFAULT NULL,
   `info` longtext,
-  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
   `owner_id` int(11) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `menu_f53ed95e` (`module_id`),
+  KEY `menu_f53ed95e` (`registered_module_id`),
   KEY `menu_5d52dd10` (`owner_id`),
   KEY `menu_63f17a16` (`parent_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
 
-INSERT INTO `menu` (`id`, `date`, `temp`, `required`, `order`, `visits`, `name`, `altname`, `info`, `module_id`, `owner_id`, `parent_id`) VALUES
-(1, '2011-08-30 14:46:05', 0, 1, 0, 0, 'Sitemap', '', '', NULL, NULL, NULL),
-(2, '2011-08-30 14:51:49', 0, 1, 0, 0, 'Sitemap', '', '', NULL, NULL, NULL),
-(3, '2011-08-30 14:52:24', 0, 0, 0, 0, 'Menu boczne', '', '', NULL, NULL, 2),
-(4, '2011-08-30 14:53:14', 0, 1, 0, 0, 'Sitemap', '', '', NULL, NULL, NULL),
-(5, '2011-08-30 18:25:01', 0, 0, 0, 0, 'Vademecum', '', '', NULL, NULL, 1),
-(6, '2011-08-30 18:26:07', 0, 0, 0, 0, 'Kasy fiskalne', '', '', NULL, NULL, 1),
-(7, '2011-08-30 18:26:39', 0, 0, 0, 0, 'Warto wiedzieć', '', '', NULL, NULL, 1),
-(8, '2011-08-30 18:26:52', 0, 0, 0, 0, 'Katalog', '', '', NULL, NULL, 1),
-(9, '2011-08-30 18:27:00', 0, 0, 0, 0, 'Imprezy', '', '', NULL, NULL, 1),
-(10, '2011-08-30 18:27:16', 0, 0, 0, 0, 'Wydawnictwa medyczne', '', '', NULL, NULL, 1),
-(11, '2011-08-30 18:27:28', 0, 0, 0, 0, 'DentoBiznes', '', '', NULL, NULL, 1),
-(12, '2011-08-30 18:27:52', 0, 0, 0, 0, 'Inne ważne', '', '', NULL, NULL, 1),
-(13, '2011-08-30 18:28:01', 0, 0, 0, 0, 'Stomatologia', '', '', NULL, NULL, 1),
-(14, '2011-08-30 18:28:13', 0, 0, 0, 0, 'Rozrywka', '', '', NULL, NULL, 1);
 
 DROP TABLE IF EXISTS `menuitem`;
 CREATE TABLE `menuitem` (
@@ -1866,40 +1981,16 @@ CREATE TABLE `menuitem` (
   `image` varchar(100) DEFAULT NULL,
   `pathinfo` varchar(255) NOT NULL,
   `noedit` tinyint(1) NOT NULL,
-  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
   `menu_id` int(11) DEFAULT NULL,
   `owner_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `menuitem_63f17a16` (`parent_id`),
-  KEY `menuitem_f53ed95e` (`module_id`),
+  KEY `menuitem_f53ed95e` (`registered_module_id`),
   KEY `menuitem_143efa3` (`menu_id`),
   KEY `menuitem_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=67 ;
 
-INSERT INTO `menuitem` (`id`, `date`, `temp`, `required`, `order`, `visits`, `parent_id`, `image`, `pathinfo`, `noedit`, `module_id`, `menu_id`, `owner_id`) VALUES
-(1, '2011-08-30 14:46:05', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(2, '2011-08-30 14:51:49', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(3, '2011-08-30 14:52:24', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(4, '2011-08-30 14:53:14', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(5, '2011-08-30 15:05:07', 1, 0, 0, 0, NULL, '', '2011/8', 0, NULL, NULL, NULL),
-(6, '2011-08-30 18:25:01', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(7, '2011-08-30 18:26:07', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(8, '2011-08-30 18:26:39', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(9, '2011-08-30 18:26:52', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(10, '2011-08-30 18:27:00', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(11, '2011-08-30 18:27:16', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(12, '2011-08-30 18:27:28', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(13, '2011-08-30 18:27:52', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(14, '2011-08-30 18:28:01', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(15, '2011-08-30 18:28:13', 1, 0, 0, 0, NULL, '', '2011/8', 1, NULL, NULL, NULL),
-(16, '2011-08-30 18:28:59', 0, 0, 0, 0, 1, '', '2011/8', 0, 1, 6, NULL),
-(17, '2011-08-30 18:29:52', 0, 0, 0, 0, 1, '', '2011/8', 0, 1, 6, NULL),
-(18, '2011-08-30 18:30:12', 0, 0, 0, 0, 1, '', '2011/8', 0, 1, 6, NULL),
-(19, '2011-08-30 18:30:42', 0, 0, 0, 0, 1, '', '2011/8', 0, 1, 1, NULL),
-(20, '2011-08-30 18:31:30', 0, 0, 0, 0, 1, '', '2011/8', 0, 1, 5, NULL),
-(21, '2011-08-30 18:31:46', 0, 0, 0, 0, 1, '', '2011/8', 0, 1, 5, NULL),
-(22, '2011-08-30 18:32:59', 0, 0, 0, 0, 1, '', '2011/8', 0, 1, 5, NULL),
-(23, '2011-08-30 18:33:17', 0, 0, 0, 0, 1, '', '2011/8', 0, 1, 5, NULL);
 
 DROP TABLE IF EXISTS `menuitem_active`;
 CREATE TABLE `menuitem_active` (
@@ -1910,31 +2001,8 @@ CREATE TABLE `menuitem_active` (
   UNIQUE KEY `menuitem_id` (`menuitem_id`,`site_id`),
   KEY `menuitem_active_f8c10b8c` (`menuitem_id`),
   KEY `menuitem_active_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=63 ;
 
-INSERT INTO `menuitem_active` (`id`, `menuitem_id`, `site_id`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 2),
-(4, 4, 3),
-(5, 6, 1),
-(6, 7, 1),
-(7, 8, 1),
-(8, 9, 1),
-(9, 10, 1),
-(10, 11, 1),
-(11, 12, 1),
-(12, 13, 1),
-(13, 14, 1),
-(14, 15, 1),
-(15, 16, 1),
-(16, 17, 1),
-(17, 18, 1),
-(18, 19, 1),
-(19, 20, 1),
-(20, 21, 1),
-(21, 22, 1),
-(22, 23, 1);
 
 DROP TABLE IF EXISTS `menuitem_lang`;
 CREATE TABLE `menuitem_lang` (
@@ -1949,53 +2017,8 @@ CREATE TABLE `menuitem_lang` (
   PRIMARY KEY (`id`),
   KEY `language_id_refs_id_4fd5574f` (`language_id`),
   KEY `menuitem_lang_a951d5d6` (`slug`(255))
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=129 ;
 
-INSERT INTO `menuitem_lang` (`id`, `name`, `altname`, `temp`, `slug`, `info`, `meta`, `language_id`) VALUES
-(1, 'Root', NULL, 0, '0836546-root', '', '', 1),
-(2, 'Root', NULL, 0, '0836546-root', '', '', 2),
-(3, 'Root', NULL, 0, '0871002-root', '', '', 1),
-(4, 'Root', NULL, 0, '0871002-root', '', '', 2),
-(5, 'Root', NULL, 0, '0874431-root', '', '', 1),
-(6, 'Root', NULL, 0, '0874432-root', '', '', 2),
-(7, 'Root', NULL, 0, '0879413-root', '', '', 1),
-(8, 'Root', NULL, 0, '0879414-root', '', '', 2),
-(9, 'Root', NULL, 0, '2150176-root', '', '', 1),
-(10, 'Root', NULL, 0, '2150176-root', '', '', 2),
-(11, 'Root', NULL, 0, '2156765-root', '', '', 1),
-(12, 'Root', NULL, 0, '2156765-root', '', '', 2),
-(13, 'Root', NULL, 0, '2159973-root', '', '', 1),
-(14, 'Root', NULL, 0, '2159973-root', '', '', 2),
-(15, 'Root', NULL, 0, '2161284-root', '', '', 1),
-(16, 'Root', NULL, 0, '2161285-root', '', '', 2),
-(17, 'Root', NULL, 0, '2162064-root', '', '', 1),
-(18, 'Root', NULL, 0, '2162064-root', '', '', 2),
-(19, 'Root', NULL, 0, '2163689-root', '', '', 1),
-(20, 'Root', NULL, 0, '216369-root', '', '', 2),
-(21, 'Root', NULL, 0, '2164842-root', '', '', 1),
-(22, 'Root', NULL, 0, '2164842-root', '', '', 2),
-(23, 'Root', NULL, 0, '2167269-root', '', '', 1),
-(24, 'Root', NULL, 0, '2167269-root', '', '', 2),
-(25, 'Root', NULL, 0, '2168198-root', '', '', 1),
-(26, 'Root', NULL, 0, '2168198-root', '', '', 2),
-(27, 'Root', NULL, 0, '2169341-root', '', '', 1),
-(28, 'Root', NULL, 0, '2169342-root', '', '', 2),
-(29, 'Formularz zamówienia', '', 0, '2177718-formularz-zamowienia', '', '', 1),
-(30, NULL, NULL, 0, '', NULL, '', 2),
-(31, 'Nasza oferta', '', 0, '2180734-nasza-oferta', '', '', 1),
-(32, NULL, NULL, 0, '', NULL, '', 2),
-(33, 'Informacje ogólne', '', 0, '2182552-informacje-ogolne', '', '', 1),
-(34, NULL, NULL, 0, '', NULL, '', 2),
-(35, 'Poradnik', '', 0, '2185087-poradnik', '', '', 1),
-(36, NULL, NULL, 0, '', NULL, '', 2),
-(37, 'Endodoncja', '', 0, '2190103-endodoncja', '', '', 1),
-(38, NULL, NULL, 0, '', NULL, '', 2),
-(39, 'Implantologia', '', 0, '2191876-implantologia', '', '', 1),
-(40, NULL, NULL, 0, '', NULL, '', 2),
-(41, 'Periodontologia', '', 0, '2198973-periodontologia', '', '', 1),
-(42, NULL, NULL, 0, '', NULL, '', 2),
-(43, 'Lasery w stomatologii', '', 0, '2200528-lasery-w-stomatologii', '', '', 1),
-(44, NULL, NULL, 0, '', NULL, '', 2);
 
 DROP TABLE IF EXISTS `menuitem_languages`;
 CREATE TABLE `menuitem_languages` (
@@ -2006,53 +2029,8 @@ CREATE TABLE `menuitem_languages` (
   UNIQUE KEY `menuitem_id` (`menuitem_id`,`menuitemlanguage_id`),
   KEY `menuitem_languages_f8c10b8c` (`menuitem_id`),
   KEY `menuitem_languages_ace3ffae` (`menuitemlanguage_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=129 ;
 
-INSERT INTO `menuitem_languages` (`id`, `menuitem_id`, `menuitemlanguage_id`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 2, 3),
-(4, 2, 4),
-(5, 3, 5),
-(6, 3, 6),
-(7, 4, 7),
-(8, 4, 8),
-(9, 6, 9),
-(10, 6, 10),
-(11, 7, 11),
-(12, 7, 12),
-(13, 8, 13),
-(14, 8, 14),
-(15, 9, 15),
-(16, 9, 16),
-(17, 10, 17),
-(18, 10, 18),
-(19, 11, 19),
-(20, 11, 20),
-(21, 12, 21),
-(22, 12, 22),
-(23, 13, 23),
-(24, 13, 24),
-(25, 14, 25),
-(26, 14, 26),
-(27, 15, 27),
-(28, 15, 28),
-(29, 16, 29),
-(30, 16, 30),
-(31, 17, 31),
-(32, 17, 32),
-(33, 18, 33),
-(34, 18, 34),
-(35, 19, 35),
-(36, 19, 36),
-(37, 20, 37),
-(38, 20, 38),
-(39, 21, 39),
-(40, 21, 40),
-(41, 22, 41),
-(42, 22, 42),
-(43, 23, 43),
-(44, 23, 44);
 
 DROP TABLE IF EXISTS `menuitem_permissions`;
 CREATE TABLE `menuitem_permissions` (
@@ -2075,31 +2053,8 @@ CREATE TABLE `menuitem_sites` (
   UNIQUE KEY `menuitem_id` (`menuitem_id`,`site_id`),
   KEY `menuitem_sites_f8c10b8c` (`menuitem_id`),
   KEY `menuitem_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=63 ;
 
-INSERT INTO `menuitem_sites` (`id`, `menuitem_id`, `site_id`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 2),
-(4, 4, 3),
-(5, 6, 1),
-(6, 7, 1),
-(7, 8, 1),
-(8, 9, 1),
-(9, 10, 1),
-(10, 11, 1),
-(11, 12, 1),
-(12, 13, 1),
-(13, 14, 1),
-(14, 15, 1),
-(15, 16, 1),
-(16, 17, 1),
-(17, 18, 1),
-(18, 19, 1),
-(19, 20, 1),
-(20, 21, 1),
-(21, 22, 1),
-(22, 23, 1);
 
 DROP TABLE IF EXISTS `menu_active`;
 CREATE TABLE `menu_active` (
@@ -2110,23 +2065,8 @@ CREATE TABLE `menu_active` (
   UNIQUE KEY `menu_id` (`menu_id`,`site_id`),
   KEY `menu_active_143efa3` (`menu_id`),
   KEY `menu_active_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
-INSERT INTO `menu_active` (`id`, `menu_id`, `site_id`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 2),
-(4, 4, 3),
-(5, 5, 1),
-(6, 6, 1),
-(7, 7, 1),
-(8, 8, 1),
-(9, 9, 1),
-(10, 10, 1),
-(11, 11, 1),
-(12, 12, 1),
-(13, 13, 1),
-(14, 14, 1);
 
 DROP TABLE IF EXISTS `menu_permissions`;
 CREATE TABLE `menu_permissions` (
@@ -2149,23 +2089,42 @@ CREATE TABLE `menu_sites` (
   UNIQUE KEY `menu_id` (`menu_id`,`site_id`),
   KEY `menu_sites_143efa3` (`menu_id`),
   KEY `menu_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
-INSERT INTO `menu_sites` (`id`, `menu_id`, `site_id`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 2),
-(4, 4, 3),
-(5, 5, 1),
-(6, 6, 1),
-(7, 7, 1),
-(8, 8, 1),
-(9, 9, 1),
-(10, 10, 1),
-(11, 11, 1),
-(12, 12, 1),
-(13, 13, 1),
-(14, 14, 1);
+
+DROP TABLE IF EXISTS `module_adv_option`;
+CREATE TABLE `module_adv_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `title` longtext,
+  `show_title` tinyint(1) NOT NULL,
+  `slug` varchar(900) DEFAULT NULL,
+  `advgroup_id` int(11) DEFAULT NULL,
+  `adv_id` int(11) DEFAULT NULL,
+  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
+  `ammount` int(11) DEFAULT NULL,
+  `class_prefix` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `registered_module_id_refs_id_ea9a60a2` (`registered_module_id`),
+  KEY `advgroup_id_refs_id_17b8be30` (`advgroup_id`),
+  KEY `module_id_refs_id_9f6d65e8` (`module_id`),
+  KEY `adv_id_refs_id_60258c44` (`adv_id`),
+  KEY `module_adv_option_a951d5d6` (`slug`(255))
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+
+DROP TABLE IF EXISTS `module_adv_option_sites`;
+CREATE TABLE `module_adv_option_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `advmoduleoption_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `advmoduleoption_id` (`advmoduleoption_id`,`site_id`),
+  KEY `module_adv_option_sites_4ac7cc2f` (`advmoduleoption_id`),
+  KEY `module_adv_option_sites_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
 
 DROP TABLE IF EXISTS `module_article_list_option`;
 CREATE TABLE `module_article_list_option` (
@@ -2185,12 +2144,13 @@ CREATE TABLE `module_article_list_option` (
   `date` datetime NOT NULL,
   `menuitem_id` int(11) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
+  `small` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `module_article_list_option_f8c10b8c` (`menuitem_id`),
   KEY `module_article_list_option_42dc49bc` (`category_id`),
-  KEY `module_article_list_option_f53ed95e` (`module_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `module_article_list_option_f53ed95e` (`registered_module_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 
 DROP TABLE IF EXISTS `module_article_option`;
@@ -2205,22 +2165,74 @@ CREATE TABLE `module_article_option` (
   `date` datetime NOT NULL,
   `menuitem_id` int(11) DEFAULT NULL,
   `article_id` int(11) DEFAULT NULL,
-  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `module_article_option_f8c10b8c` (`menuitem_id`),
   KEY `module_article_option_30525a19` (`article_id`),
-  KEY `module_article_option_f53ed95e` (`module_id`)
+  KEY `module_article_option_f53ed95e` (`registered_module_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
+
+
+DROP TABLE IF EXISTS `module_htmlbox_option`;
+CREATE TABLE `module_htmlbox_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `title` longtext,
+  `html` longtext,
+  `slug` varchar(900) DEFAULT NULL,
+  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
+  `menuitem_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `registered_module_id_refs_id_9872b383` (`registered_module_id`),
+  KEY `module_id_refs_id_fa878041` (`module_id`),
+  KEY `module_htmlbox_option_a951d5d6` (`slug`(255))
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+
+DROP TABLE IF EXISTS `module_htmlbox_option_sites`;
+CREATE TABLE `module_htmlbox_option_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `htmlboxmoduleoption_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `htmlboxmoduleoption_id` (`htmlboxmoduleoption_id`,`site_id`),
+  KEY `module_htmlbox_option_sites_19f76772` (`htmlboxmoduleoption_id`),
+  KEY `module_htmlbox_option_sites_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+
+
+DROP TABLE IF EXISTS `module_link_option`;
+CREATE TABLE `module_link_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `title` longtext,
+  `link` longtext,
+  `slug` varchar(900) DEFAULT NULL,
+  `show_title` tinyint(1) NOT NULL,
+  `new_window` tinyint(1) NOT NULL,
+  `menuitem_id` int(11) DEFAULT NULL,
+  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `menuitem_id_refs_id_62d5904` (`menuitem_id`),
+  KEY `module_id_refs_id_fc2200c8` (`module_id`),
+  KEY `registered_module_id_refs_id_d4cf7cae` (`registered_module_id`),
+  KEY `module_link_option_a951d5d6` (`slug`(255))
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
-INSERT INTO `module_article_option` (`id`, `show_title`, `show_footer`, `show_info`, `page_title`, `show_page_title`, `class_prefix`, `date`, `menuitem_id`, `article_id`, `module_id`) VALUES
-(1, 1, 1, 1, '', 0, '', '2011-08-30 18:29:08', 16, NULL, 1),
-(2, 1, 1, 1, '', 0, '', '2011-08-30 18:29:55', 17, NULL, 1),
-(3, 1, 1, 1, '', 0, '', '2011-08-30 18:30:15', 18, NULL, 1),
-(4, 1, 1, 1, '', 0, '', '2011-08-30 18:30:44', 19, NULL, 1),
-(5, 1, 1, 1, '', 0, '', '2011-08-30 18:31:32', 20, 1, 1),
-(6, 1, 1, 1, '', 0, '', '2011-08-30 18:31:49', 21, NULL, 1),
-(7, 1, 1, 1, '', 0, '', '2011-08-30 18:33:02', 22, NULL, 1),
-(8, 1, 1, 1, '', 0, '', '2011-08-30 18:33:20', 23, 1, 1);
+
+DROP TABLE IF EXISTS `module_link_option_sites`;
+CREATE TABLE `module_link_option_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `linkmoduleoption_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `linkmoduleoption_id` (`linkmoduleoption_id`,`site_id`),
+  KEY `module_link_option_sites_8ab45dd3` (`linkmoduleoption_id`),
+  KEY `module_link_option_sites_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
 
 DROP TABLE IF EXISTS `module_menu_option`;
 CREATE TABLE `module_menu_option` (
@@ -2233,28 +2245,52 @@ CREATE TABLE `module_menu_option` (
   `class_prefix` varchar(255) DEFAULT NULL,
   `date` datetime NOT NULL,
   `menu_id` int(11) DEFAULT NULL,
-  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
+  `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `module_menu_option_143efa3` (`menu_id`),
-  KEY `module_menu_option_f53ed95e` (`module_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+  KEY `module_menu_option_f53ed95e` (`registered_module_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
 
-INSERT INTO `module_menu_option` (`id`, `show_name`, `show_info`, `show_images`, `page_title`, `show_page_title`, `class_prefix`, `date`, `menu_id`, `module_id`) VALUES
-(1, 1, 1, 0, '', 0, '', '2011-08-30 14:46:05', 1, 26),
-(2, 1, 1, 0, '', 0, '', '2011-08-30 14:51:50', 2, 27),
-(3, 1, 1, 0, '', 0, '', '2011-08-30 14:52:24', 3, 28),
-(4, 1, 1, 0, '', 0, '', '2011-08-30 14:53:14', 4, 29),
-(5, 1, 1, 0, '', 0, '', '2011-08-30 18:25:02', NULL, 31),
-(6, 1, 1, 0, '', 0, '', '2011-08-30 18:26:07', 6, 32),
-(7, 1, 1, 0, '', 0, '', '2011-08-30 18:26:40', 7, 33),
-(8, 1, 1, 0, '', 0, '', '2011-08-30 18:26:53', 8, 34),
-(9, 1, 1, 0, '', 0, '', '2011-08-30 18:27:00', 9, 35),
-(10, 1, 1, 0, '', 0, '', '2011-08-30 18:27:17', 10, 36),
-(11, 1, 1, 0, '', 0, '', '2011-08-30 18:27:28', 11, 37),
-(12, 1, 1, 0, '', 0, '', '2011-08-30 18:27:52', 12, 38),
-(13, 1, 1, 0, '', 0, '', '2011-08-30 18:28:02', 13, 39),
-(14, 1, 1, 0, '', 0, '', '2011-08-30 18:28:13', 14, 40),
-(15, 1, 1, 0, '', 0, '', '2011-08-30 19:15:14', 5, 41);
+
+DROP TABLE IF EXISTS `module_newsflash_c_option`;
+CREATE TABLE `module_newsflash_c_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `show_title` tinyint(1) NOT NULL,
+  `show_footer` tinyint(1) NOT NULL,
+  `show_more` tinyint(1) NOT NULL,
+  `show_info` tinyint(1) NOT NULL,
+  `link_title` tinyint(1) NOT NULL,
+  `show_mainimage` tinyint(1) NOT NULL,
+  `exposefirst` tinyint(1) NOT NULL,
+  `columns` int(11) DEFAULT NULL,
+  `page_title` varchar(255) DEFAULT NULL,
+  `show_page_title` tinyint(1) NOT NULL,
+  `class_prefix` varchar(255) DEFAULT NULL,
+  `info` longtext,
+  `image` varchar(100) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `module_newsflash_c_option_42dc49bc` (`category_id`),
+  KEY `module_newsflash_c_option_f53ed95e` (`module_id`),
+  KEY `module_newsflash_c_option_6b2d3de` (`registered_module_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+
+DROP TABLE IF EXISTS `module_newsflash_c_option_sites`;
+CREATE TABLE `module_newsflash_c_option_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `newsflashcolumnmoduleoption_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `newsflashcolumnmoduleoption_id` (`newsflashcolumnmoduleoption_id`,`site_id`),
+  KEY `module_newsflash_c_option_sites_614fc391` (`newsflashcolumnmoduleoption_id`),
+  KEY `module_newsflash_c_option_sites_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+
 
 DROP TABLE IF EXISTS `module_position`;
 CREATE TABLE `module_position` (
@@ -2264,13 +2300,8 @@ CREATE TABLE `module_position` (
   `owner_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `module_position_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
-INSERT INTO `module_position` (`id`, `date`, `name`, `owner_id`) VALUES
-(1, '2011-08-20 23:32:33', 'lekarze-reklama-1', NULL),
-(2, '2011-08-22 08:41:32', 'lekarze-top', NULL),
-(3, '2011-08-23 10:23:14', 'lekarze-content', NULL),
-(4, '2011-08-24 08:45:50', 'lekarze-bottom', NULL);
 
 DROP TABLE IF EXISTS `module_position_active`;
 CREATE TABLE `module_position_active` (
@@ -2281,13 +2312,8 @@ CREATE TABLE `module_position_active` (
   UNIQUE KEY `moduleposition_id` (`moduleposition_id`,`site_id`),
   KEY `module_position_active_a9f4973f` (`moduleposition_id`),
   KEY `module_position_active_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
-INSERT INTO `module_position_active` (`id`, `moduleposition_id`, `site_id`) VALUES
-(4, 1, 3),
-(3, 2, 3),
-(1, 3, 3),
-(2, 4, 3);
 
 DROP TABLE IF EXISTS `module_position_permissions`;
 CREATE TABLE `module_position_permissions` (
@@ -2310,13 +2336,8 @@ CREATE TABLE `module_position_sites` (
   UNIQUE KEY `moduleposition_id` (`moduleposition_id`,`site_id`),
   KEY `module_position_sites_a9f4973f` (`moduleposition_id`),
   KEY `module_position_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
-INSERT INTO `module_position_sites` (`id`, `moduleposition_id`, `site_id`) VALUES
-(4, 1, 3),
-(3, 2, 3),
-(1, 3, 3),
-(2, 4, 3);
 
 DROP TABLE IF EXISTS `module_registered`;
 CREATE TABLE `module_registered` (
@@ -2333,35 +2354,12 @@ CREATE TABLE `module_registered` (
   KEY `module_registered_777d41c8` (`type_id`),
   KEY `module_registered_80180135` (`position_id`),
   KEY `module_registered_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=179 ;
 
 INSERT INTO `module_registered` (`id`, `date`, `name`, `info`, `modulename`, `order`, `type_id`, `position_id`, `owner_id`) VALUES
-(1, '2011-08-20 23:07:43', 'Artykul (menu)', '', '', 1, 2, 1, NULL),
-(17, '2011-08-21 18:32:28', 'Footer menu', '', '', 1, 3, 1, NULL),
-(18, '2011-08-21 18:53:22', 'Main Menu', '', '', 1, 3, 1, NULL),
-(19, '2011-08-21 19:45:50', 'fghgfh', '', '', 1, 2, 1, NULL),
-(20, '2011-08-22 15:53:26', 'Lista Artykułów', '', '', 1, 4, 3, NULL),
-(21, '2011-08-23 11:27:34', 'Lista Artykułów (menu)', '', '', 1, 5, NULL, NULL),
-(22, '2011-08-23 13:58:44', 'Lista Artykułów (domyślne)', '', '', 1, 4, NULL, NULL),
-(23, '2011-08-24 08:31:56', 'Dla lekarzy', NULL, NULL, 1, 3, NULL, NULL),
-(24, '2011-08-24 08:45:34', 'Menu górne', NULL, NULL, 1, 6, 4, NULL),
-(25, '2011-08-24 10:31:52', '', NULL, NULL, 1, 3, NULL, NULL),
-(26, '2011-08-30 14:46:05', 'Menu główne', NULL, NULL, 1, 3, NULL, NULL),
-(27, '2011-08-30 14:51:50', 'Menu główne', NULL, NULL, 1, 3, NULL, NULL),
-(28, '2011-08-30 14:52:24', 'Menu boczne', NULL, NULL, 1, 3, NULL, NULL),
-(29, '2011-08-30 14:53:14', 'Menu główne', NULL, NULL, 1, 3, NULL, NULL),
-(30, '2011-08-30 17:39:11', 'Lekarze-menu-gorne', NULL, NULL, 1, 6, 2, NULL),
-(31, '2011-08-30 18:25:02', 'Vademecum', NULL, NULL, 1, 3, NULL, NULL),
-(32, '2011-08-30 18:26:07', 'Kasy fiskalne', NULL, NULL, 1, 3, NULL, NULL),
-(33, '2011-08-30 18:26:40', 'Warto wiedzieć', NULL, NULL, 1, 3, NULL, NULL),
-(34, '2011-08-30 18:26:53', 'Katalog', NULL, NULL, 1, 3, NULL, NULL),
-(35, '2011-08-30 18:27:00', 'Imprezy', NULL, NULL, 1, 3, NULL, NULL),
-(36, '2011-08-30 18:27:17', 'Wydawnictwa medyczne', NULL, NULL, 1, 3, NULL, NULL),
-(37, '2011-08-30 18:27:28', 'DentoBiznes', NULL, NULL, 1, 3, NULL, NULL),
-(38, '2011-08-30 18:27:52', 'Inne ważne', NULL, NULL, 1, 3, NULL, NULL),
-(39, '2011-08-30 18:28:02', 'Stomatologia', NULL, NULL, 1, 3, NULL, NULL),
-(40, '2011-08-30 18:28:13', 'Rozrywka', NULL, NULL, 1, 3, NULL, NULL),
-(41, '2011-08-30 19:15:14', 'Vademecum', NULL, NULL, 1, 3, NULL, NULL);
+(176, '2011-09-14 08:36:39', NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(177, '2011-09-14 08:37:23', NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(178, '2011-09-14 08:39:06', NULL, NULL, NULL, 1, NULL, NULL, NULL);
 
 DROP TABLE IF EXISTS `module_registered_active`;
 CREATE TABLE `module_registered_active` (
@@ -2372,44 +2370,12 @@ CREATE TABLE `module_registered_active` (
   UNIQUE KEY `registeredmodule_id` (`registeredmodule_id`,`site_id`),
   KEY `module_registered_active_a89b7aec` (`registeredmodule_id`),
   KEY `module_registered_active_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=63 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=197 ;
 
 INSERT INTO `module_registered_active` (`id`, `registeredmodule_id`, `site_id`) VALUES
-(48, 1, 1),
-(49, 1, 2),
-(50, 1, 3),
-(21, 17, 1),
-(26, 18, 1),
-(27, 19, 1),
-(28, 19, 3),
-(45, 20, 1),
-(46, 20, 2),
-(47, 20, 3),
-(42, 21, 1),
-(43, 21, 2),
-(44, 21, 3),
-(39, 22, 1),
-(40, 22, 2),
-(41, 22, 3),
-(33, 23, 1),
-(32, 24, 1),
-(34, 25, 1),
-(35, 26, 1),
-(36, 27, 2),
-(37, 28, 2),
-(38, 29, 3),
-(51, 30, 1),
-(52, 31, 1),
-(53, 32, 1),
-(54, 33, 1),
-(55, 34, 1),
-(56, 35, 1),
-(57, 36, 1),
-(58, 37, 1),
-(59, 38, 1),
-(60, 39, 1),
-(61, 40, 1),
-(62, 41, 1);
+(194, 176, 1),
+(195, 177, 1),
+(196, 178, 1);
 
 DROP TABLE IF EXISTS `module_registered_permissions`;
 CREATE TABLE `module_registered_permissions` (
@@ -2432,37 +2398,45 @@ CREATE TABLE `module_registered_sites` (
   UNIQUE KEY `registeredmodule_id` (`registeredmodule_id`,`site_id`),
   KEY `module_registered_sites_a89b7aec` (`registeredmodule_id`),
   KEY `module_registered_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=163 ;
 
 INSERT INTO `module_registered_sites` (`id`, `registeredmodule_id`, `site_id`) VALUES
-(14, 1, 1),
-(15, 1, 2),
-(16, 1, 3),
-(11, 20, 1),
-(12, 20, 2),
-(13, 20, 3),
-(8, 21, 1),
-(9, 21, 2),
-(10, 21, 3),
-(5, 22, 1),
-(6, 22, 2),
-(7, 22, 3),
-(1, 26, 1),
-(2, 27, 2),
-(3, 28, 2),
-(4, 29, 3),
-(17, 30, 1),
-(18, 31, 1),
-(19, 32, 1),
-(20, 33, 1),
-(21, 34, 1),
-(22, 35, 1),
-(23, 36, 1),
-(24, 37, 1),
-(25, 38, 1),
-(26, 39, 1),
-(27, 40, 1),
-(28, 41, 1);
+(160, 176, 1),
+(161, 177, 1),
+(162, 178, 1);
+
+DROP TABLE IF EXISTS `module_sitemap_option`;
+CREATE TABLE `module_sitemap_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `show_name` tinyint(1) NOT NULL,
+  `show_info` tinyint(1) NOT NULL,
+  `page_title` varchar(255) DEFAULT NULL,
+  `show_page_title` tinyint(1) NOT NULL,
+  `class_prefix` varchar(255) DEFAULT NULL,
+  `slug` varchar(900) DEFAULT NULL,
+  `menu_id` int(11) DEFAULT NULL,
+  `module_id` int(11) DEFAULT NULL,
+  `registered_module_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `registered_module_id_refs_id_150aadc0` (`registered_module_id`),
+  KEY `module_id_refs_id_ca7b1ab6` (`module_id`),
+  KEY `menu_id_refs_id_a69303dd` (`menu_id`),
+  KEY `module_sitemap_option_a951d5d6` (`slug`(255))
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+
+DROP TABLE IF EXISTS `module_sitemap_option_sites`;
+CREATE TABLE `module_sitemap_option_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sitemapmoduleoption_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sitemapmoduleoption_id` (`sitemapmoduleoption_id`,`site_id`),
+  KEY `module_sitemap_option_sites_7fae7945` (`sitemapmoduleoption_id`),
+  KEY `module_sitemap_option_sites_6223029` (`site_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
 
 DROP TABLE IF EXISTS `module_type`;
 CREATE TABLE `module_type` (
@@ -2480,14 +2454,20 @@ CREATE TABLE `module_type` (
   `fileview` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `module_type_a951d5d6` (`slug`(255))
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 INSERT INTO `module_type` (`id`, `date`, `name`, `info`, `slug`, `menu`, `options_modelname`, `options_formname`, `filemodel`, `fileform`, `filetemplate`, `fileview`) VALUES
 (2, '2011-08-20 23:07:17', 'Artykul', '', '7444718-artykul', 1, 'ArticleModuleOption', 'ArticleOptionForm', 'artykul_module', 'artykul_module', '', ''),
-(3, '2011-08-21 14:50:04', 'Menu', '', '3103994-menu', 0, 'Menu', 'MenuForm', 'menu_module', 'menu_module', 'menu_module', 'menu_module'),
+(3, '2011-08-21 14:50:04', 'Menu', '', '3103994-menu', 0, 'MenuModuleOption', 'MenuOptionForm', 'menu_module', 'menu_module', 'menu_module', 'menu_module'),
 (4, '2011-08-22 00:00:00', 'Lista artykułów', '', 'articles-list', 0, 'ArticleListModuleOption', 'ArticleListOptionForm', 'article_list_module', 'article_list_module', 'article_list_module', 'article_list_module'),
-(5, '2011-08-22 00:00:00', 'Lista artykułów (menu)', '', 'articles-list-menu', 1, 'ArticleListModuleOption', 'ArticleListOptionForm', 'article_list_module', 'article_list_module', 'article_list_module', 'article_list_module'),
-(6, '2011-08-30 14:38:02', 'Top Menu', '', 'topmenu', 0, '', '', '', '', 'megamenu', 'megamenu');
+(5, '2011-08-22 00:00:00', 'Lista artykułów', '', 'articles-list-menu', 1, 'ArticleListModuleOption', 'ArticleListOptionForm', 'article_list_module', 'article_list_module', 'article_list_module', 'article_list_module'),
+(6, '2011-08-30 14:38:02', 'Top Menu', '', 'topmenu', 0, '', '', '', '', 'megamenu', 'megamenu'),
+(7, '2011-08-31 08:58:49', 'Column News Flash', '', '7405507-column-news-flash', 0, 'NewsFlashColumnModuleOption', 'NewsFlashColumnModuleOptionForm', 'newsflash_column_module', 'newsflash_column_module', 'newsflash_column_module', 'newsflash_column_module'),
+(8, '2011-09-05 09:47:47', 'Html Box', '', '0899177-html-box', 1, 'HTMLBoxModuleOption', 'HTMLBoxModuleOptionForm', 'htmlbox_module', 'htmlbox_module', 'htmlbox_module', 'htmlbox_menu_module'),
+(9, '2011-09-05 09:50:28', 'Html Box', '', '0904747-html-box', 0, 'HTMLBoxModuleOption', 'HTMLBoxModuleOptionForm', 'htmlbox_module', 'htmlbox_module', 'htmlbox_module', 'htmlbox_module'),
+(10, '2011-09-05 11:20:14', 'Link zewnętrzny', '', '1485533-link-zewnetrzny', 1, 'LinkModuleOption', 'LinkModuleOptionForm', 'link_module', 'link_module', 'link_module', 'link_module'),
+(11, '2011-09-05 12:26:21', 'SiteMap', '', '1843041-sitemap', 0, 'SiteMapModuleOption', 'SiteMapOptionForm', 'sitemap_module', 'sitemap_module', 'sitemap_module', 'sitemap_module'),
+(12, '2011-09-07 08:03:12', 'Reklama', '', '7547358-reklama', 0, 'AdvModuleOption', 'AdvModuleOptionForm', 'adv_module', 'adv_module', 'adv_module', 'adv_module');
 
 DROP TABLE IF EXISTS `module_type_active`;
 CREATE TABLE `module_type_active` (
@@ -2498,14 +2478,38 @@ CREATE TABLE `module_type_active` (
   UNIQUE KEY `moduletype_id` (`moduletype_id`,`site_id`),
   KEY `module_type_active_9cb16fae` (`moduletype_id`),
   KEY `module_type_active_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
 
 INSERT INTO `module_type_active` (`id`, `moduletype_id`, `site_id`) VALUES
 (5, 2, 1),
 (4, 3, 1),
 (3, 4, 1),
 (2, 5, 1),
-(1, 6, 1);
+(1, 6, 1),
+(6, 7, 1),
+(7, 7, 2),
+(8, 7, 3),
+(9, 7, 4),
+(14, 8, 1),
+(15, 8, 2),
+(16, 8, 3),
+(17, 8, 4),
+(18, 9, 1),
+(19, 9, 2),
+(20, 9, 3),
+(21, 9, 4),
+(22, 10, 1),
+(23, 10, 2),
+(24, 10, 3),
+(25, 10, 4),
+(34, 11, 1),
+(35, 11, 2),
+(36, 11, 3),
+(37, 11, 4),
+(38, 12, 1),
+(39, 12, 2),
+(40, 12, 3),
+(41, 12, 4);
 
 DROP TABLE IF EXISTS `module_type_sites`;
 CREATE TABLE `module_type_sites` (
@@ -2516,14 +2520,38 @@ CREATE TABLE `module_type_sites` (
   UNIQUE KEY `moduletype_id` (`moduletype_id`,`site_id`),
   KEY `module_type_sites_9cb16fae` (`moduletype_id`),
   KEY `module_type_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
 
 INSERT INTO `module_type_sites` (`id`, `moduletype_id`, `site_id`) VALUES
 (5, 2, 1),
 (4, 3, 1),
 (3, 4, 1),
 (2, 5, 1),
-(1, 6, 1);
+(1, 6, 1),
+(6, 7, 1),
+(7, 7, 2),
+(8, 7, 3),
+(9, 7, 4),
+(14, 8, 1),
+(15, 8, 2),
+(16, 8, 3),
+(17, 8, 4),
+(18, 9, 1),
+(19, 9, 2),
+(20, 9, 3),
+(21, 9, 4),
+(22, 10, 1),
+(23, 10, 2),
+(24, 10, 3),
+(25, 10, 4),
+(34, 11, 1),
+(35, 11, 2),
+(36, 11, 3),
+(37, 11, 4),
+(38, 12, 1),
+(39, 12, 2),
+(40, 12, 3),
+(41, 12, 4);
 
 DROP TABLE IF EXISTS `module_visibility`;
 CREATE TABLE `module_visibility` (
@@ -2532,14 +2560,8 @@ CREATE TABLE `module_visibility` (
   `model_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `module_visibility_aff30766` (`model_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
-INSERT INTO `module_visibility` (`id`, `date`, `model_id`) VALUES
-(1, '2011-08-30 17:39:12', NULL),
-(2, '2011-08-30 17:39:37', NULL),
-(3, '2011-08-30 17:45:17', NULL),
-(4, '2011-08-30 17:45:30', NULL),
-(5, '2011-08-30 19:20:32', NULL);
 
 DROP TABLE IF EXISTS `module_visibility_menuitem`;
 CREATE TABLE `module_visibility_menuitem` (
@@ -2577,319 +2599,427 @@ CREATE TABLE `permission_groups` (
   `own_only` tinyint(1) NOT NULL,
   `model` varchar(255) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
+  `login` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `permission_groups_63f17a16` (`parent_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1015 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=816 ;
 
-INSERT INTO `permission_groups` (`id`, `name`, `public`, `read`, `write`, `delete`, `add`, `own_only`, `model`, `parent_id`) VALUES
-(1, 'User', 1, 1, 0, 0, 0, 0, '', NULL),
-(2, 'Admin', 0, 1, 1, 1, 1, 0, '', NULL),
-(97, 'Kategorie', 0, 1, 1, 1, 1, 0, 'Category', 2),
-(98, 'Artykuły', 0, 1, 1, 1, 1, 0, 'Article', 2),
-(99, 'Użytkownicy', 0, 1, 1, 1, 1, 0, 'UserProfile', 2),
-(100, 'Wiki', 0, 1, 1, 1, 1, 0, 'Wiki', 2),
-(101, 'Strony', 0, 1, 1, 1, 1, 0, 'SitePortal', 2),
-(102, 'Szablony', 0, 1, 1, 1, 1, 0, 'Sheet', 2),
-(103, 'Kursy', 0, 1, 1, 1, 1, 0, 'RepetitioCourse', 2),
-(104, 'Testy', 0, 1, 1, 1, 1, 0, 'RepetitioTest', 2),
-(105, 'Pytania', 0, 1, 1, 1, 1, 0, 'RepetitioQuestion', 2),
-(106, 'Moduły', 0, 1, 1, 1, 1, 0, 'RegisteredModule', 2),
-(107, 'Pozycje modułów', 0, 1, 1, 1, 1, 0, 'ModulePosition', 2),
-(108, 'Elementy menu', 0, 1, 1, 1, 1, 0, 'MenuItem', 2),
-(109, 'Menu', 0, 1, 1, 1, 1, 0, 'Menu', 2),
-(110, 'MegaMenu', 0, 1, 1, 1, 1, 0, 'MegaMenu', 2),
-(111, 'Zdjęcia', 0, 1, 1, 1, 1, 0, 'Image', 2),
-(112, 'Galerie', 0, 1, 1, 1, 1, 0, 'Gallery', 2),
-(113, 'Elementy katalogu', 0, 1, 1, 1, 1, 0, 'CatalogItem', 2),
-(114, 'Kategorie katalogu', 0, 1, 1, 1, 1, 0, 'CatalogCategory', 2),
-(115, 'Zdjęcia katalogu', 0, 1, 1, 1, 1, 0, 'CatalogImage', 2),
-(116, 'Kalendarze', 0, 1, 1, 1, 1, 0, 'Calendar', 2),
-(117, 'Wydarzenia', 0, 1, 1, 1, 1, 0, 'CalendarEvent', 2),
-(118, 'Typy wydarzeń', 0, 1, 1, 1, 1, 0, 'CalendarEventType', 2),
-(119, 'Kategorie ogłoszeń', 0, 1, 1, 1, 1, 0, 'AdCategory', 2),
-(120, 'Ogłoszenia', 0, 1, 1, 1, 1, 0, 'Ad', 2),
-(121, 'Zdjęcia ogłoszeń', 0, 1, 1, 1, 1, 0, 'AdImage', 2),
-(122, 'Kategorie', 1, 1, 0, 0, 0, 0, 'Category', 1),
-(123, 'Artykuły', 1, 1, 0, 0, 0, 0, 'Article', 1),
-(124, 'Użytkownicy', 1, 1, 0, 0, 0, 0, 'UserProfile', 1),
-(125, 'Wiki', 1, 1, 0, 0, 0, 0, 'Wiki', 1),
-(126, 'Strony', 1, 1, 0, 0, 0, 0, 'SitePortal', 1),
-(127, 'Szablony', 1, 1, 0, 0, 0, 0, 'Sheet', 1),
-(128, 'Kursy', 1, 1, 0, 0, 0, 0, 'RepetitioCourse', 1),
-(129, 'Testy', 1, 1, 0, 0, 0, 0, 'RepetitioTest', 1),
-(130, 'Pytania', 1, 1, 0, 0, 0, 0, 'RepetitioQuestion', 1),
-(131, 'Odpowiedzi', 1, 1, 0, 0, 0, 0, 'RepetitioAnswer', 1),
-(132, 'Moduły', 1, 1, 0, 0, 0, 0, 'RegisteredModule', 1),
-(133, 'Pozycje modułów', 1, 1, 0, 0, 0, 0, 'ModulePosition', 1),
-(134, 'Elementy menu', 1, 1, 0, 0, 0, 0, 'MenuItem', 1),
-(135, 'Menu', 1, 1, 0, 0, 0, 0, 'Menu', 1),
-(136, 'MegaMenu', 1, 1, 0, 0, 0, 0, 'MegaMenu', 1),
-(137, 'Zdjęcia', 1, 1, 0, 0, 0, 0, 'Image', 1),
-(138, 'Galerie', 1, 1, 0, 0, 0, 0, 'Gallery', 1),
-(139, 'Elementy katalogu', 1, 1, 0, 0, 0, 0, 'CatalogItem', 1),
-(140, 'Kategorie katalogu', 1, 1, 0, 0, 0, 0, 'CatalogCategory', 1),
-(141, 'Zdjęcia katalogu', 1, 1, 0, 0, 0, 0, 'CatalogImage', 1),
-(142, 'Kalendarze', 1, 1, 0, 0, 0, 0, 'Calendar', 1),
-(143, 'Wydarzenia', 1, 1, 0, 0, 0, 0, 'CalendarEvent', 1),
-(144, 'Typy wydarzeń', 1, 1, 0, 0, 0, 0, 'CalendarEventType', 1),
-(145, 'Kategorie ogłoszeń', 1, 1, 0, 0, 0, 0, 'AdCategory', 1),
-(146, 'Ogłoszenia', 1, 1, 0, 0, 0, 0, 'Ad', 1),
-(147, 'Zdjęcia ogłoszeń', 1, 1, 0, 0, 0, 0, 'AdImage', 1),
-(148, 'Kategorie: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 122),
-(149, 'Kategorie: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 122),
-(150, 'Kategorie: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 122),
-(151, 'Kategorie: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 122),
-(152, 'Kategorie: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 122),
-(153, 'Artykuły: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 123),
-(154, 'Artykuły: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 123),
-(155, 'Artykuły: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 123),
-(156, 'Artykuły: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 123),
-(157, 'Artykuły: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 123),
-(158, 'Użytkownicy: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 124),
-(159, 'Użytkownicy: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 124),
-(160, 'Użytkownicy: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 124),
-(161, 'Użytkownicy: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 124),
-(162, 'Użytkownicy: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 124),
-(163, 'Wiki: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 125),
-(164, 'Wiki: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 125),
-(165, 'Wiki: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 125),
-(166, 'Wiki: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 125),
-(167, 'Wiki: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 125),
-(168, 'Strony: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 126),
-(169, 'Strony: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 126),
-(170, 'Strony: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 126),
-(171, 'Strony: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 126),
-(172, 'Strony: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 126),
-(173, 'Szablony: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 127),
-(174, 'Szablony: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 127),
-(175, 'Szablony: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 127),
-(176, 'Szablony: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 127),
-(177, 'Szablony: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 127),
-(178, 'Kursy: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 128),
-(179, 'Kursy: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 128),
-(180, 'Kursy: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 128),
-(181, 'Kursy: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 128),
-(182, 'Kursy: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 128),
-(183, 'Testy: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 129),
-(184, 'Testy: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 129),
-(185, 'Testy: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 129),
-(186, 'Testy: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 129),
-(187, 'Testy: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 129),
-(188, 'Pytania: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 130),
-(189, 'Pytania: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 130),
-(190, 'Pytania: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 130),
-(191, 'Pytania: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 130),
-(192, 'Pytania: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 130),
-(193, 'Odpowiedzi: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 131),
-(194, 'Odpowiedzi: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 131),
-(195, 'Odpowiedzi: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 131),
-(196, 'Odpowiedzi: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 131),
-(197, 'Odpowiedzi: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 131),
-(198, 'Moduły: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 132),
-(199, 'Moduły: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 132),
-(200, 'Moduły: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 132),
-(201, 'Moduły: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 132),
-(202, 'Moduły: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 132),
-(203, 'Pozycje modułów: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 133),
-(204, 'Pozycje modułów: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 133),
-(205, 'Pozycje modułów: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 133),
-(206, 'Pozycje modułów: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 133),
-(207, 'Pozycje modułów: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 133),
-(208, 'Elementy menu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 134),
-(209, 'Elementy menu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 134),
-(210, 'Elementy menu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 134),
-(211, 'Elementy menu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 134),
-(212, 'Elementy menu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 134),
-(213, 'Menu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 135),
-(214, 'Menu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 135),
-(215, 'Menu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 135),
-(216, 'Menu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 135),
-(217, 'Menu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 135),
-(218, 'MegaMenu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 136),
-(219, 'MegaMenu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 136),
-(220, 'MegaMenu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 136),
-(221, 'MegaMenu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 136),
-(222, 'MegaMenu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 136),
-(223, 'Zdjęcia: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 137),
-(224, 'Zdjęcia: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 137),
-(225, 'Zdjęcia: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 137),
-(226, 'Zdjęcia: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 137),
-(227, 'Zdjęcia: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 137),
-(228, 'Galerie: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 138),
-(229, 'Galerie: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 138),
-(230, 'Galerie: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 138),
-(231, 'Galerie: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 138),
-(232, 'Galerie: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 138),
-(233, 'Elementy katalogu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 139),
-(234, 'Elementy katalogu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 139),
-(235, 'Elementy katalogu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 139),
-(236, 'Elementy katalogu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 139),
-(237, 'Elementy katalogu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 139),
-(238, 'Kategorie katalogu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 140),
-(239, 'Kategorie katalogu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 140),
-(240, 'Kategorie katalogu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 140),
-(241, 'Kategorie katalogu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 140),
-(242, 'Kategorie katalogu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 140),
-(243, 'Zdjęcia katalogu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 141),
-(244, 'Zdjęcia katalogu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 141),
-(245, 'Zdjęcia katalogu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 141),
-(246, 'Zdjęcia katalogu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 141),
-(247, 'Zdjęcia katalogu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 141),
-(248, 'Kalendarze: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 142),
-(249, 'Kalendarze: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 142),
-(250, 'Kalendarze: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 142),
-(251, 'Kalendarze: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 142),
-(252, 'Kalendarze: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 142),
-(253, 'Wydarzenia: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 143),
-(254, 'Wydarzenia: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 143),
-(255, 'Wydarzenia: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 143),
-(256, 'Wydarzenia: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 143),
-(257, 'Wydarzenia: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 143),
-(258, 'Typy wydarzeń: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 144),
-(259, 'Typy wydarzeń: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 144),
-(260, 'Typy wydarzeń: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 144),
-(261, 'Typy wydarzeń: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 144),
-(262, 'Typy wydarzeń: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 144),
-(263, 'Kategorie ogłoszeń: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 145),
-(264, 'Kategorie ogłoszeń: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 145),
-(265, 'Kategorie ogłoszeń: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 145),
-(266, 'Kategorie ogłoszeń: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 145),
-(267, 'Kategorie ogłoszeń: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 145),
-(268, 'Ogłoszenia: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 146),
-(269, 'Ogłoszenia: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 146),
-(270, 'Ogłoszenia: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 146),
-(271, 'Ogłoszenia: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 146),
-(272, 'Ogłoszenia: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 146),
-(273, 'Zdjęcia ogłoszeń: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 147),
-(274, 'Zdjęcia ogłoszeń: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 147),
-(275, 'Zdjęcia ogłoszeń: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 147),
-(276, 'Zdjęcia ogłoszeń: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 147),
-(277, 'Zdjęcia ogłoszeń: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 147),
-(278, 'Kategorie: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 97),
-(279, 'Kategorie: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 97),
-(280, 'Kategorie: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 97),
-(281, 'Kategorie: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 97),
-(282, 'Kategorie: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 97),
-(283, 'Artykuły: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 98),
-(284, 'Artykuły: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 98),
-(285, 'Artykuły: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 98),
-(286, 'Artykuły: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 98),
-(287, 'Artykuły: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 98),
-(288, 'Użytkownicy: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 99),
-(289, 'Użytkownicy: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 99),
-(290, 'Użytkownicy: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 99),
-(291, 'Użytkownicy: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 99),
-(292, 'Użytkownicy: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 99),
-(293, 'Wiki: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 100),
-(294, 'Wiki: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 100),
-(295, 'Wiki: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 100),
-(296, 'Wiki: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 100),
-(297, 'Wiki: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 100),
-(298, 'Strony: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 101),
-(299, 'Strony: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 101),
-(300, 'Strony: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 101),
-(301, 'Strony: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 101),
-(302, 'Strony: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 101),
-(303, 'Szablony: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 102),
-(304, 'Szablony: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 102),
-(305, 'Szablony: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 102),
-(306, 'Szablony: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 102),
-(307, 'Szablony: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 102),
-(308, 'Kursy: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 103),
-(309, 'Kursy: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 103),
-(310, 'Kursy: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 103),
-(311, 'Kursy: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 103),
-(312, 'Kursy: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 103),
-(313, 'Testy: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 104),
-(314, 'Testy: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 104),
-(315, 'Testy: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 104),
-(316, 'Testy: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 104),
-(317, 'Testy: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 104),
-(318, 'Pytania: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 105),
-(319, 'Pytania: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 105),
-(320, 'Pytania: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 105),
-(321, 'Pytania: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 105),
-(322, 'Pytania: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 105),
-(323, 'Moduły: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 106),
-(324, 'Moduły: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 106),
-(325, 'Moduły: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 106),
-(326, 'Moduły: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 106),
-(327, 'Moduły: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 106),
-(328, 'Pozycje modułów: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 107),
-(329, 'Pozycje modułów: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 107),
-(330, 'Pozycje modułów: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 107),
-(331, 'Pozycje modułów: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 107),
-(332, 'Pozycje modułów: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 107),
-(333, 'Elementy menu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 108),
-(334, 'Elementy menu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 108),
-(335, 'Elementy menu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 108),
-(336, 'Elementy menu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 108),
-(337, 'Elementy menu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 108),
-(338, 'Menu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 109),
-(339, 'Menu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 109),
-(340, 'Menu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 109),
-(341, 'Menu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 109),
-(342, 'Menu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 109),
-(343, 'MegaMenu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 110),
-(344, 'MegaMenu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 110),
-(345, 'MegaMenu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 110),
-(346, 'MegaMenu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 110),
-(347, 'MegaMenu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 110),
-(348, 'Zdjęcia: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 111),
-(349, 'Zdjęcia: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 111),
-(350, 'Zdjęcia: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 111),
-(351, 'Zdjęcia: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 111),
-(352, 'Zdjęcia: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 111),
-(353, 'Galerie: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 112),
-(354, 'Galerie: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 112),
-(355, 'Galerie: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 112),
-(356, 'Galerie: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 112),
-(357, 'Galerie: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 112),
-(358, 'Elementy katalogu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 113),
-(359, 'Elementy katalogu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 113),
-(360, 'Elementy katalogu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 113),
-(361, 'Elementy katalogu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 113),
-(362, 'Elementy katalogu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 113),
-(363, 'Kategorie katalogu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 114),
-(364, 'Kategorie katalogu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 114),
-(365, 'Kategorie katalogu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 114),
-(366, 'Kategorie katalogu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 114),
-(367, 'Kategorie katalogu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 114),
-(368, 'Zdjęcia katalogu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 115),
-(369, 'Zdjęcia katalogu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 115),
-(370, 'Zdjęcia katalogu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 115),
-(371, 'Zdjęcia katalogu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 115),
-(372, 'Zdjęcia katalogu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 115),
-(373, 'Kalendarze: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 116),
-(374, 'Kalendarze: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 116),
-(375, 'Kalendarze: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 116),
-(376, 'Kalendarze: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 116),
-(377, 'Kalendarze: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 116),
-(378, 'Wydarzenia: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 117),
-(379, 'Wydarzenia: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 117),
-(380, 'Wydarzenia: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 117),
-(381, 'Wydarzenia: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 117),
-(382, 'Wydarzenia: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 117),
-(383, 'Typy wydarzeń: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 118),
-(384, 'Typy wydarzeń: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 118),
-(385, 'Typy wydarzeń: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 118),
-(386, 'Typy wydarzeń: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 118),
-(387, 'Typy wydarzeń: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 118),
-(388, 'Kategorie ogłoszeń: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 119),
-(389, 'Kategorie ogłoszeń: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 119),
-(390, 'Kategorie ogłoszeń: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 119),
-(391, 'Kategorie ogłoszeń: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 119),
-(392, 'Kategorie ogłoszeń: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 119),
-(393, 'Ogłoszenia: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 120),
-(394, 'Ogłoszenia: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 120),
-(395, 'Ogłoszenia: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 120),
-(396, 'Ogłoszenia: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 120),
-(397, 'Ogłoszenia: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 120),
-(398, 'Zdjęcia ogłoszeń: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 121),
-(399, 'Zdjęcia ogłoszeń: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 121),
-(400, 'Zdjęcia ogłoszeń: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 121),
-(401, 'Zdjęcia ogłoszeń: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 121),
-(402, 'Zdjęcia ogłoszeń: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 121);
+INSERT INTO `permission_groups` (`id`, `name`, `public`, `read`, `write`, `delete`, `add`, `own_only`, `model`, `parent_id`, `login`) VALUES
+(1, 'User', 1, 1, 0, 0, 0, 0, '0', 0, NULL),
+(2, 'Admin', 0, 1, 1, 1, 1, 0, '1', 0, NULL),
+(403, 'Kategorie', 0, 1, 1, 1, 1, 0, 'Category', 2, 1),
+(404, 'Artykuły', 0, 1, 1, 1, 1, 0, 'Article', 2, 1),
+(405, 'Użytkownicy', 0, 1, 1, 1, 1, 0, 'UserProfile', 2, 1),
+(406, 'Wiki', 0, 1, 1, 1, 1, 0, 'Wiki', 2, 1),
+(407, 'Strony', 0, 1, 1, 1, 1, 0, 'SitePortal', 2, 1),
+(408, 'Szablony', 0, 1, 1, 1, 1, 0, 'Sheet', 2, 1),
+(409, 'Pliki Szablonów', 0, 1, 1, 1, 1, 0, 'SheetFile', 2, 1),
+(410, 'Kursy', 0, 1, 1, 1, 1, 0, 'RepetitioCourse', 2, 1),
+(411, 'Testy', 0, 1, 1, 1, 1, 0, 'RepetitioTest', 2, 1),
+(412, 'Pytania', 0, 1, 1, 1, 1, 0, 'RepetitioQuestion', 2, 1),
+(413, 'Moduły', 0, 1, 1, 1, 1, 0, 'RegisteredModule', 2, 1),
+(414, 'Pozycje modułów', 0, 1, 1, 1, 1, 0, 'ModulePosition', 2, 1),
+(415, 'Elementy menu', 0, 1, 1, 1, 1, 0, 'MenuItem', 2, 1),
+(416, 'Menu', 0, 1, 1, 1, 1, 0, 'Menu', 2, 1),
+(417, 'MegaMenu', 0, 1, 1, 1, 1, 0, 'MegaMenu', 2, 1),
+(418, 'Zdjęcia', 0, 1, 1, 1, 1, 0, 'Image', 2, 1),
+(419, 'Galerie', 0, 1, 1, 1, 1, 0, 'Gallery', 2, 1),
+(420, 'Elementy katalogu', 0, 1, 1, 1, 1, 0, 'CatalogItem', 2, 1),
+(421, 'Kategorie katalogu', 0, 1, 1, 1, 1, 0, 'CatalogCategory', 2, 1),
+(422, 'Zdjęcia katalogu', 0, 1, 1, 1, 1, 0, 'CatalogImage', 2, 1),
+(423, 'Kalendarze', 0, 1, 1, 1, 1, 0, 'Calendar', 2, 1),
+(424, 'Wydarzenia', 0, 1, 1, 1, 1, 0, 'CalendarEvent', 2, 1),
+(425, 'Typy wydarzeń', 0, 1, 1, 1, 1, 0, 'CalendarEventType', 2, 1),
+(426, 'Kategorie ogłoszeń', 0, 1, 1, 1, 1, 0, 'AdCategory', 2, 1),
+(427, 'Ogłoszenia', 0, 1, 1, 1, 1, 0, 'Ad', 2, 1),
+(428, 'Zdjęcia ogłoszeń', 0, 1, 1, 1, 1, 0, 'AdImage', 2, 1),
+(429, 'Grupy reklam', 0, 1, 1, 1, 1, 0, 'AdvGroup', 2, 1),
+(430, 'Reklamy', 0, 1, 1, 1, 1, 0, 'Adv', 2, 1),
+(431, 'Reklamy - klienci', 0, 1, 1, 1, 1, 0, 'AdvClient', 2, 1),
+(432, 'Kategorie', 1, 1, 0, 0, 0, 0, 'Category', 1, 0),
+(433, 'Artykuły', 1, 1, 0, 0, 0, 0, 'Article', 1, 0),
+(434, 'Użytkownicy', 1, 1, 0, 0, 0, 0, 'UserProfile', 1, 0),
+(435, 'Wiki', 1, 1, 0, 0, 0, 0, 'Wiki', 1, 0),
+(436, 'Strony', 1, 1, 0, 0, 0, 0, 'SitePortal', 1, 0),
+(437, 'Szablony', 1, 1, 0, 0, 0, 0, 'Sheet', 1, 0),
+(438, 'Pliki Szablonów', 1, 1, 0, 0, 0, 0, 'SheetFile', 1, 0),
+(439, 'Kursy', 1, 1, 0, 0, 0, 0, 'RepetitioCourse', 1, 0),
+(440, 'Testy', 1, 1, 0, 0, 0, 0, 'RepetitioTest', 1, 0),
+(441, 'Pytania', 1, 1, 0, 0, 0, 0, 'RepetitioQuestion', 1, 0),
+(442, 'Odpowiedzi', 1, 1, 0, 0, 0, 0, 'RepetitioAnswer', 1, 0),
+(443, 'Moduły', 1, 1, 0, 0, 0, 0, 'RegisteredModule', 1, 0),
+(444, 'Pozycje modułów', 1, 1, 0, 0, 0, 0, 'ModulePosition', 1, 0),
+(445, 'Elementy menu', 1, 1, 0, 0, 0, 0, 'MenuItem', 1, 0),
+(446, 'Menu', 1, 1, 0, 0, 0, 0, 'Menu', 1, 0),
+(447, 'MegaMenu', 1, 1, 0, 0, 0, 0, 'MegaMenu', 1, 0),
+(448, 'Zdjęcia', 1, 1, 0, 0, 0, 0, 'Image', 1, 0),
+(449, 'Galerie', 1, 1, 0, 0, 0, 0, 'Gallery', 1, 0),
+(450, 'Elementy katalogu', 1, 1, 0, 0, 0, 0, 'CatalogItem', 1, 0),
+(451, 'Kategorie katalogu', 1, 1, 0, 0, 0, 0, 'CatalogCategory', 1, 0),
+(452, 'Zdjęcia katalogu', 1, 1, 0, 0, 0, 0, 'CatalogImage', 1, 0),
+(453, 'Kalendarze', 1, 1, 0, 0, 0, 0, 'Calendar', 1, 0),
+(454, 'Wydarzenia', 1, 1, 0, 0, 0, 0, 'CalendarEvent', 1, 0),
+(455, 'Typy wydarzeń', 1, 1, 0, 0, 0, 0, 'CalendarEventType', 1, 0),
+(456, 'Kategorie ogłoszeń', 1, 1, 0, 0, 0, 0, 'AdCategory', 1, 0),
+(457, 'Ogłoszenia', 1, 1, 0, 0, 0, 0, 'Ad', 1, 0),
+(458, 'Zdjęcia ogłoszeń', 1, 1, 0, 0, 0, 0, 'AdImage', 1, 0),
+(459, 'Grupy reklam', 0, 1, 1, 1, 1, 0, 'AdvGroup', 1, 0),
+(460, 'Reklamy', 0, 1, 1, 1, 1, 0, 'Adv', 1, 0),
+(461, 'Reklamy - klienci', 0, 1, 1, 1, 1, 0, 'AdvClient', 1, 0),
+(462, 'Kategorie: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 432, 0),
+(463, 'Kategorie: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 432, 1),
+(464, 'Kategorie: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 432, 1),
+(465, 'Kategorie: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 432, 1),
+(466, 'Kategorie: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 432, 1),
+(467, 'Kategorie: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 432, 1),
+(468, 'Artykuły: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 433, 0),
+(469, 'Artykuły: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 433, 1),
+(470, 'Artykuły: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 433, 1),
+(471, 'Artykuły: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 433, 1),
+(472, 'Artykuły: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 433, 1),
+(473, 'Artykuły: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 433, 1),
+(474, 'Użytkownicy: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 434, 0),
+(475, 'Użytkownicy: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 434, 1),
+(476, 'Użytkownicy: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 434, 1),
+(477, 'Użytkownicy: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 434, 1),
+(478, 'Użytkownicy: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 434, 1),
+(479, 'Użytkownicy: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 434, 1),
+(480, 'Wiki: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 435, 0),
+(481, 'Wiki: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 435, 1),
+(482, 'Wiki: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 435, 1),
+(483, 'Wiki: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 435, 1),
+(484, 'Wiki: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 435, 1),
+(485, 'Wiki: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 435, 1),
+(486, 'Strony: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 436, 0),
+(487, 'Strony: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 436, 1),
+(488, 'Strony: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 436, 1),
+(489, 'Strony: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 436, 1),
+(490, 'Strony: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 436, 1),
+(491, 'Strony: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 436, 1),
+(492, 'Szablony: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 437, 0),
+(493, 'Szablony: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 437, 1),
+(494, 'Szablony: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 437, 1),
+(495, 'Szablony: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 437, 1),
+(496, 'Szablony: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 437, 1),
+(497, 'Szablony: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 437, 1),
+(498, 'Pliki Szablonów: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 438, 0),
+(499, 'Pliki Szablonów: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 438, 1),
+(500, 'Pliki Szablonów: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 438, 1),
+(501, 'Pliki Szablonów: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 438, 1),
+(502, 'Pliki Szablonów: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 438, 1),
+(503, 'Pliki Szablonów: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 438, 1),
+(504, 'Kursy: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 439, 0),
+(505, 'Kursy: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 439, 1),
+(506, 'Kursy: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 439, 1),
+(507, 'Kursy: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 439, 1),
+(508, 'Kursy: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 439, 1),
+(509, 'Kursy: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 439, 1),
+(510, 'Testy: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 440, 0),
+(511, 'Testy: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 440, 1),
+(512, 'Testy: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 440, 1),
+(513, 'Testy: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 440, 1),
+(514, 'Testy: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 440, 1),
+(515, 'Testy: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 440, 1),
+(516, 'Pytania: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 441, 0),
+(517, 'Pytania: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 441, 1),
+(518, 'Pytania: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 441, 1),
+(519, 'Pytania: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 441, 1),
+(520, 'Pytania: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 441, 1),
+(521, 'Pytania: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 441, 1),
+(522, 'Odpowiedzi: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 442, 0),
+(523, 'Odpowiedzi: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 442, 1),
+(524, 'Odpowiedzi: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 442, 1),
+(525, 'Odpowiedzi: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 442, 1),
+(526, 'Odpowiedzi: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 442, 1),
+(527, 'Odpowiedzi: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 442, 1),
+(528, 'Moduły: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 443, 0),
+(529, 'Moduły: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 443, 1),
+(530, 'Moduły: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 443, 1),
+(531, 'Moduły: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 443, 1),
+(532, 'Moduły: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 443, 1),
+(533, 'Moduły: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 443, 1),
+(534, 'Pozycje modułów: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 444, 0),
+(535, 'Pozycje modułów: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 444, 1),
+(536, 'Pozycje modułów: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 444, 1),
+(537, 'Pozycje modułów: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 444, 1),
+(538, 'Pozycje modułów: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 444, 1),
+(539, 'Pozycje modułów: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 444, 1),
+(540, 'Elementy menu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 445, 0),
+(541, 'Elementy menu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 445, 1),
+(542, 'Elementy menu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 445, 1),
+(543, 'Elementy menu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 445, 1),
+(544, 'Elementy menu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 445, 1),
+(545, 'Elementy menu: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 445, 1),
+(546, 'Menu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 446, 0),
+(547, 'Menu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 446, 1),
+(548, 'Menu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 446, 1),
+(549, 'Menu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 446, 1),
+(550, 'Menu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 446, 1),
+(551, 'Menu: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 446, 1),
+(552, 'MegaMenu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 447, 0),
+(553, 'MegaMenu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 447, 1),
+(554, 'MegaMenu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 447, 1),
+(555, 'MegaMenu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 447, 1),
+(556, 'MegaMenu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 447, 1),
+(557, 'MegaMenu: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 447, 1),
+(558, 'Zdjęcia: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 448, 0),
+(559, 'Zdjęcia: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 448, 1),
+(560, 'Zdjęcia: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 448, 1),
+(561, 'Zdjęcia: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 448, 1),
+(562, 'Zdjęcia: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 448, 1),
+(563, 'Zdjęcia: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 448, 1),
+(564, 'Galerie: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 449, 0),
+(565, 'Galerie: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 449, 1),
+(566, 'Galerie: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 449, 1),
+(567, 'Galerie: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 449, 1),
+(568, 'Galerie: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 449, 1),
+(569, 'Galerie: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 449, 1),
+(570, 'Elementy katalogu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 450, 0),
+(571, 'Elementy katalogu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 450, 1),
+(572, 'Elementy katalogu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 450, 1),
+(573, 'Elementy katalogu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 450, 1),
+(574, 'Elementy katalogu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 450, 1),
+(575, 'Elementy katalogu: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 450, 1),
+(576, 'Kategorie katalogu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 451, 0),
+(577, 'Kategorie katalogu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 451, 1),
+(578, 'Kategorie katalogu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 451, 1),
+(579, 'Kategorie katalogu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 451, 1),
+(580, 'Kategorie katalogu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 451, 1),
+(581, 'Kategorie katalogu: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 451, 1),
+(582, 'Zdjęcia katalogu: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 452, 0),
+(583, 'Zdjęcia katalogu: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 452, 1),
+(584, 'Zdjęcia katalogu: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 452, 1),
+(585, 'Zdjęcia katalogu: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 452, 1),
+(586, 'Zdjęcia katalogu: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 452, 1),
+(587, 'Zdjęcia katalogu: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 452, 1),
+(588, 'Kalendarze: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 453, 0),
+(589, 'Kalendarze: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 453, 1),
+(590, 'Kalendarze: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 453, 1),
+(591, 'Kalendarze: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 453, 1),
+(592, 'Kalendarze: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 453, 1),
+(593, 'Kalendarze: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 453, 1),
+(594, 'Wydarzenia: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 454, 0),
+(595, 'Wydarzenia: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 454, 1),
+(596, 'Wydarzenia: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 454, 1),
+(597, 'Wydarzenia: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 454, 1),
+(598, 'Wydarzenia: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 454, 1),
+(599, 'Wydarzenia: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 454, 1),
+(600, 'Typy wydarzeń: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 455, 0),
+(601, 'Typy wydarzeń: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 455, 1),
+(602, 'Typy wydarzeń: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 455, 1),
+(603, 'Typy wydarzeń: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 455, 1),
+(604, 'Typy wydarzeń: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 455, 1),
+(605, 'Typy wydarzeń: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 455, 1),
+(606, 'Kategorie ogłoszeń: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 456, 0),
+(607, 'Kategorie ogłoszeń: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 456, 1),
+(608, 'Kategorie ogłoszeń: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 456, 1),
+(609, 'Kategorie ogłoszeń: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 456, 1),
+(610, 'Kategorie ogłoszeń: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 456, 1),
+(611, 'Kategorie ogłoszeń: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 456, 1),
+(612, 'Ogłoszenia: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 457, 0),
+(613, 'Ogłoszenia: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 457, 1),
+(614, 'Ogłoszenia: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 457, 1),
+(615, 'Ogłoszenia: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 457, 1),
+(616, 'Ogłoszenia: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 457, 1),
+(617, 'Ogłoszenia: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 457, 1),
+(618, 'Zdjęcia ogłoszeń: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 458, 0),
+(619, 'Zdjęcia ogłoszeń: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 458, 1),
+(620, 'Zdjęcia ogłoszeń: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 458, 1),
+(621, 'Zdjęcia ogłoszeń: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 458, 1),
+(622, 'Zdjęcia ogłoszeń: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 458, 1),
+(623, 'Zdjęcia ogłoszeń: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 458, 1),
+(624, 'Grupy reklam: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 459, 0),
+(625, 'Grupy reklam: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 459, 1),
+(626, 'Grupy reklam: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 459, 1),
+(627, 'Grupy reklam: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 459, 1),
+(628, 'Grupy reklam: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 459, 1),
+(629, 'Grupy reklam: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 459, 1),
+(630, 'Reklamy: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 460, 0),
+(631, 'Reklamy: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 460, 1),
+(632, 'Reklamy: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 460, 1),
+(633, 'Reklamy: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 460, 1),
+(634, 'Reklamy: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 460, 1),
+(635, 'Reklamy: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 460, 1),
+(636, 'Reklamy - klienci: Użytkownik - Przeglądanie', 1, 1, 0, 0, 0, 0, NULL, 461, 0),
+(637, 'Reklamy - klienci: Użytkownik - Edycja', 1, 0, 1, 0, 0, 0, NULL, 461, 1),
+(638, 'Reklamy - klienci: Użytkownik - Dodawanie', 1, 0, 0, 0, 1, 0, NULL, 461, 1),
+(639, 'Reklamy - klienci: Użytkownik - Kasowanie', 1, 0, 0, 1, 0, 0, NULL, 461, 1),
+(640, 'Reklamy - klienci: Użytkownik - Tylko własne', 1, 0, 0, 0, 0, 1, NULL, 461, 1),
+(641, 'Reklamy - klienci: Użytkownik - Zalogowany', 0, 0, 0, 0, 0, 0, NULL, 461, 1),
+(642, 'Kategorie: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 403, 1),
+(643, 'Kategorie: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 403, 1),
+(644, 'Kategorie: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 403, 1),
+(645, 'Kategorie: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 403, 1),
+(646, 'Kategorie: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 403, 1),
+(647, 'Kategorie: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 403, 1),
+(648, 'Artykuły: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 404, 1),
+(649, 'Artykuły: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 404, 1),
+(650, 'Artykuły: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 404, 1),
+(651, 'Artykuły: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 404, 1),
+(652, 'Artykuły: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 404, 1),
+(653, 'Artykuły: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 404, 1),
+(654, 'Użytkownicy: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 405, 1),
+(655, 'Użytkownicy: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 405, 1),
+(656, 'Użytkownicy: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 405, 1),
+(657, 'Użytkownicy: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 405, 1),
+(658, 'Użytkownicy: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 405, 1),
+(659, 'Użytkownicy: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 405, 1),
+(660, 'Wiki: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 406, 1),
+(661, 'Wiki: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 406, 1),
+(662, 'Wiki: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 406, 1),
+(663, 'Wiki: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 406, 1),
+(664, 'Wiki: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 406, 1),
+(665, 'Wiki: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 406, 1),
+(666, 'Strony: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 407, 1),
+(667, 'Strony: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 407, 1),
+(668, 'Strony: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 407, 1),
+(669, 'Strony: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 407, 1),
+(670, 'Strony: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 407, 1),
+(671, 'Strony: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 407, 1),
+(672, 'Szablony: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 408, 1),
+(673, 'Szablony: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 408, 1),
+(674, 'Szablony: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 408, 1),
+(675, 'Szablony: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 408, 1),
+(676, 'Szablony: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 408, 1),
+(677, 'Szablony: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 408, 1),
+(678, 'Pliki Szablonów: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 409, 1),
+(679, 'Pliki Szablonów: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 409, 1),
+(680, 'Pliki Szablonów: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 409, 1),
+(681, 'Pliki Szablonów: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 409, 1),
+(682, 'Pliki Szablonów: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 409, 1),
+(683, 'Pliki Szablonów: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 409, 1),
+(684, 'Kursy: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 410, 1),
+(685, 'Kursy: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 410, 1),
+(686, 'Kursy: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 410, 1),
+(687, 'Kursy: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 410, 1),
+(688, 'Kursy: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 410, 1),
+(689, 'Kursy: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 410, 1),
+(690, 'Testy: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 411, 1),
+(691, 'Testy: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 411, 1),
+(692, 'Testy: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 411, 1),
+(693, 'Testy: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 411, 1),
+(694, 'Testy: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 411, 1),
+(695, 'Testy: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 411, 1),
+(696, 'Pytania: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 412, 1),
+(697, 'Pytania: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 412, 1),
+(698, 'Pytania: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 412, 1),
+(699, 'Pytania: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 412, 1),
+(700, 'Pytania: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 412, 1),
+(701, 'Pytania: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 412, 1),
+(702, 'Moduły: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 413, 1),
+(703, 'Moduły: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 413, 1),
+(704, 'Moduły: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 413, 1),
+(705, 'Moduły: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 413, 1),
+(706, 'Moduły: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 413, 1),
+(707, 'Moduły: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 413, 1),
+(708, 'Pozycje modułów: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 414, 1),
+(709, 'Pozycje modułów: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 414, 1),
+(710, 'Pozycje modułów: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 414, 1),
+(711, 'Pozycje modułów: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 414, 1),
+(712, 'Pozycje modułów: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 414, 1),
+(713, 'Pozycje modułów: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 414, 1),
+(714, 'Elementy menu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 415, 1),
+(715, 'Elementy menu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 415, 1),
+(716, 'Elementy menu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 415, 1),
+(717, 'Elementy menu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 415, 1),
+(718, 'Elementy menu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 415, 1),
+(719, 'Elementy menu: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 415, 1),
+(720, 'Menu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 416, 1),
+(721, 'Menu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 416, 1),
+(722, 'Menu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 416, 1),
+(723, 'Menu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 416, 1),
+(724, 'Menu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 416, 1),
+(725, 'Menu: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 416, 1),
+(726, 'MegaMenu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 417, 1),
+(727, 'MegaMenu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 417, 1),
+(728, 'MegaMenu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 417, 1),
+(729, 'MegaMenu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 417, 1),
+(730, 'MegaMenu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 417, 1),
+(731, 'MegaMenu: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 417, 1),
+(732, 'Zdjęcia: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 418, 1),
+(733, 'Zdjęcia: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 418, 1),
+(734, 'Zdjęcia: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 418, 1),
+(735, 'Zdjęcia: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 418, 1),
+(736, 'Zdjęcia: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 418, 1),
+(737, 'Zdjęcia: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 418, 1),
+(738, 'Galerie: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 419, 1),
+(739, 'Galerie: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 419, 1),
+(740, 'Galerie: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 419, 1),
+(741, 'Galerie: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 419, 1),
+(742, 'Galerie: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 419, 1),
+(743, 'Galerie: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 419, 1),
+(744, 'Elementy katalogu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 420, 1),
+(745, 'Elementy katalogu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 420, 1),
+(746, 'Elementy katalogu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 420, 1),
+(747, 'Elementy katalogu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 420, 1),
+(748, 'Elementy katalogu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 420, 1),
+(749, 'Elementy katalogu: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 420, 1),
+(750, 'Kategorie katalogu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 421, 1),
+(751, 'Kategorie katalogu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 421, 1),
+(752, 'Kategorie katalogu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 421, 1),
+(753, 'Kategorie katalogu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 421, 1),
+(754, 'Kategorie katalogu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 421, 1),
+(755, 'Kategorie katalogu: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 421, 1),
+(756, 'Zdjęcia katalogu: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 422, 1),
+(757, 'Zdjęcia katalogu: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 422, 1),
+(758, 'Zdjęcia katalogu: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 422, 1),
+(759, 'Zdjęcia katalogu: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 422, 1),
+(760, 'Zdjęcia katalogu: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 422, 1),
+(761, 'Zdjęcia katalogu: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 422, 1),
+(762, 'Kalendarze: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 423, 1),
+(763, 'Kalendarze: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 423, 1),
+(764, 'Kalendarze: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 423, 1),
+(765, 'Kalendarze: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 423, 1),
+(766, 'Kalendarze: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 423, 1),
+(767, 'Kalendarze: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 423, 1),
+(768, 'Wydarzenia: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 424, 1),
+(769, 'Wydarzenia: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 424, 1),
+(770, 'Wydarzenia: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 424, 1),
+(771, 'Wydarzenia: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 424, 1),
+(772, 'Wydarzenia: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 424, 1),
+(773, 'Wydarzenia: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 424, 1),
+(774, 'Typy wydarzeń: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 425, 1),
+(775, 'Typy wydarzeń: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 425, 1),
+(776, 'Typy wydarzeń: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 425, 1),
+(777, 'Typy wydarzeń: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 425, 1),
+(778, 'Typy wydarzeń: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 425, 1),
+(779, 'Typy wydarzeń: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 425, 1),
+(780, 'Kategorie ogłoszeń: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 426, 1),
+(781, 'Kategorie ogłoszeń: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 426, 1),
+(782, 'Kategorie ogłoszeń: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 426, 1),
+(783, 'Kategorie ogłoszeń: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 426, 1),
+(784, 'Kategorie ogłoszeń: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 426, 1),
+(785, 'Kategorie ogłoszeń: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 426, 1),
+(786, 'Ogłoszenia: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 427, 1),
+(787, 'Ogłoszenia: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 427, 1),
+(788, 'Ogłoszenia: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 427, 1),
+(789, 'Ogłoszenia: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 427, 1),
+(790, 'Ogłoszenia: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 427, 1),
+(791, 'Ogłoszenia: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 427, 1),
+(792, 'Zdjęcia ogłoszeń: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 428, 1),
+(793, 'Zdjęcia ogłoszeń: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 428, 1),
+(794, 'Zdjęcia ogłoszeń: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 428, 1),
+(795, 'Zdjęcia ogłoszeń: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 428, 1),
+(796, 'Zdjęcia ogłoszeń: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 428, 1),
+(797, 'Zdjęcia ogłoszeń: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 428, 1),
+(798, 'Grupy reklam: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 429, 1),
+(799, 'Grupy reklam: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 429, 1),
+(800, 'Grupy reklam: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 429, 1),
+(801, 'Grupy reklam: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 429, 1),
+(802, 'Grupy reklam: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 429, 1),
+(803, 'Grupy reklam: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 429, 1),
+(804, 'Reklamy: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 430, 1),
+(805, 'Reklamy: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 430, 1),
+(806, 'Reklamy: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 430, 1),
+(807, 'Reklamy: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 430, 1),
+(808, 'Reklamy: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 430, 1),
+(809, 'Reklamy: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 430, 1),
+(810, 'Reklamy - klienci: Admin - Przeglądanie', 0, 1, 0, 0, 0, 0, NULL, 431, 1),
+(811, 'Reklamy - klienci: Admin - Edycja', 0, 0, 1, 0, 0, 0, NULL, 431, 1),
+(812, 'Reklamy - klienci: Admin - Dodawanie', 0, 0, 0, 0, 1, 0, NULL, 431, 1),
+(813, 'Reklamy - klienci: Admin - Kasowanie', 0, 0, 0, 1, 0, 0, NULL, 431, 1),
+(814, 'Reklamy - klienci: Admin - Tylko własne', 0, 0, 0, 0, 0, 1, NULL, 431, 1),
+(815, 'Reklamy - klienci: Admin - Zalogowany', 0, 0, 0, 0, 0, 1, NULL, 431, 1);
 
 DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE `profiles` (
@@ -2910,7 +3040,7 @@ CREATE TABLE `profiles` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 INSERT INTO `profiles` (`id`, `username`, `password`, `email`, `registerhash`, `userhash`, `lastlogin`, `lastip`, `is_active`, `confirmed`, `registerdate`, `emailsenddate`, `admincomment`) VALUES
-(1, 'Admin', 'admin123', 'admin@admin.pl', '', '', '2011-08-30 14:29:33', '127.0.0.1', 1, 1, '2011-08-30 14:12:58', NULL, '');
+(1, 'Admin', 'admin123', 'admin@admin.pl', '', '', '2011-09-14 08:33:50', '127.0.0.1', 1, 1, '2011-08-30 14:12:58', NULL, '');
 
 DROP TABLE IF EXISTS `profiles_permissions`;
 CREATE TABLE `profiles_permissions` (
@@ -2921,134 +3051,242 @@ CREATE TABLE `profiles_permissions` (
   UNIQUE KEY `userprofile_id` (`userprofile_id`,`permisiongroup_id`),
   KEY `profiles_permissions_1be3128f` (`userprofile_id`),
   KEY `profiles_permissions_912eb7a3` (`permisiongroup_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2403 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2881 ;
 
 INSERT INTO `profiles_permissions` (`id`, `userprofile_id`, `permisiongroup_id`) VALUES
-(1902, 1, 278),
-(1903, 1, 279),
-(1904, 1, 280),
-(1905, 1, 281),
-(1906, 1, 282),
-(1907, 1, 283),
-(1908, 1, 284),
-(1909, 1, 285),
-(1910, 1, 286),
-(1911, 1, 287),
-(1912, 1, 288),
-(1913, 1, 289),
-(1914, 1, 290),
-(1915, 1, 291),
-(1916, 1, 292),
-(1917, 1, 293),
-(1918, 1, 294),
-(1919, 1, 295),
-(1920, 1, 296),
-(1921, 1, 297),
-(1922, 1, 298),
-(1923, 1, 299),
-(1924, 1, 300),
-(1925, 1, 301),
-(1926, 1, 302),
-(1927, 1, 303),
-(1928, 1, 304),
-(1929, 1, 305),
-(1930, 1, 306),
-(1931, 1, 307),
-(1932, 1, 308),
-(1933, 1, 309),
-(1934, 1, 310),
-(1935, 1, 311),
-(1936, 1, 312),
-(1937, 1, 313),
-(1938, 1, 314),
-(1939, 1, 315),
-(1940, 1, 316),
-(1941, 1, 317),
-(1942, 1, 318),
-(1943, 1, 319),
-(1944, 1, 320),
-(1945, 1, 321),
-(1946, 1, 322),
-(1947, 1, 323),
-(1948, 1, 324),
-(1949, 1, 325),
-(1950, 1, 326),
-(1951, 1, 327),
-(1952, 1, 328),
-(1953, 1, 329),
-(1954, 1, 330),
-(1955, 1, 331),
-(1956, 1, 332),
-(1957, 1, 333),
-(1958, 1, 334),
-(1959, 1, 335),
-(1960, 1, 336),
-(1961, 1, 337),
-(1962, 1, 338),
-(1963, 1, 339),
-(1964, 1, 340),
-(1965, 1, 341),
-(1966, 1, 342),
-(1967, 1, 343),
-(1968, 1, 344),
-(1969, 1, 345),
-(1970, 1, 346),
-(1971, 1, 347),
-(1972, 1, 348),
-(1973, 1, 349),
-(1974, 1, 350),
-(1975, 1, 351),
-(1976, 1, 352),
-(1977, 1, 353),
-(1978, 1, 354),
-(1979, 1, 355),
-(1980, 1, 356),
-(1981, 1, 357),
-(1982, 1, 358),
-(1983, 1, 359),
-(1984, 1, 360),
-(1985, 1, 361),
-(1986, 1, 362),
-(1987, 1, 363),
-(1988, 1, 364),
-(1989, 1, 365),
-(1990, 1, 366),
-(1991, 1, 367),
-(1992, 1, 368),
-(1993, 1, 369),
-(1994, 1, 370),
-(1995, 1, 371),
-(1996, 1, 372),
-(1997, 1, 373),
-(1998, 1, 374),
-(1999, 1, 375),
-(2000, 1, 376),
-(2001, 1, 377),
-(2002, 1, 378),
-(2003, 1, 379),
-(2004, 1, 380),
-(2005, 1, 381),
-(2006, 1, 382),
-(2007, 1, 383),
-(2008, 1, 384),
-(2009, 1, 385),
-(2010, 1, 386),
-(2011, 1, 387),
-(2012, 1, 388),
-(2013, 1, 389),
-(2014, 1, 390),
-(2015, 1, 391),
-(2016, 1, 392),
-(2017, 1, 393),
-(2018, 1, 394),
-(2019, 1, 395),
-(2020, 1, 396),
-(2021, 1, 397),
-(2022, 1, 398),
-(2023, 1, 399),
-(2024, 1, 400),
-(2025, 1, 401),
-(2026, 1, 402),
+(2822, 1, 403),
+(2823, 1, 404),
+(2824, 1, 405),
+(2825, 1, 406),
+(2826, 1, 407),
+(2827, 1, 408),
+(2828, 1, 409),
+(2829, 1, 410),
+(2830, 1, 411),
+(2831, 1, 412),
+(2832, 1, 413),
+(2833, 1, 414),
+(2834, 1, 415),
+(2835, 1, 416),
+(2836, 1, 417),
+(2837, 1, 418),
+(2838, 1, 419),
+(2839, 1, 420),
+(2840, 1, 421),
+(2841, 1, 422),
+(2842, 1, 423),
+(2843, 1, 424),
+(2844, 1, 425),
+(2845, 1, 426),
+(2846, 1, 427),
+(2847, 1, 428),
+(2848, 1, 429),
+(2849, 1, 430),
+(2850, 1, 431),
+(2851, 1, 432),
+(2852, 1, 433),
+(2853, 1, 434),
+(2854, 1, 435),
+(2855, 1, 436),
+(2856, 1, 437),
+(2857, 1, 438),
+(2858, 1, 439),
+(2859, 1, 440),
+(2860, 1, 441),
+(2861, 1, 442),
+(2862, 1, 443),
+(2863, 1, 444),
+(2864, 1, 445),
+(2865, 1, 446),
+(2866, 1, 447),
+(2867, 1, 448),
+(2868, 1, 449),
+(2869, 1, 450),
+(2870, 1, 451),
+(2871, 1, 452),
+(2872, 1, 453),
+(2873, 1, 454),
+(2874, 1, 455),
+(2875, 1, 456),
+(2876, 1, 457),
+(2877, 1, 458),
+(2878, 1, 459),
+(2879, 1, 460),
+(2880, 1, 461),
+(2648, 1, 642),
+(2649, 1, 643),
+(2650, 1, 644),
+(2651, 1, 645),
+(2652, 1, 646),
+(2653, 1, 647),
+(2654, 1, 648),
+(2655, 1, 649),
+(2656, 1, 650),
+(2657, 1, 651),
+(2658, 1, 652),
+(2659, 1, 653),
+(2660, 1, 654),
+(2661, 1, 655),
+(2662, 1, 656),
+(2663, 1, 657),
+(2664, 1, 658),
+(2665, 1, 659),
+(2666, 1, 660),
+(2667, 1, 661),
+(2668, 1, 662),
+(2669, 1, 663),
+(2670, 1, 664),
+(2671, 1, 665),
+(2672, 1, 666),
+(2673, 1, 667),
+(2674, 1, 668),
+(2675, 1, 669),
+(2676, 1, 670),
+(2677, 1, 671),
+(2678, 1, 672),
+(2679, 1, 673),
+(2680, 1, 674),
+(2681, 1, 675),
+(2682, 1, 676),
+(2683, 1, 677),
+(2684, 1, 678),
+(2685, 1, 679),
+(2686, 1, 680),
+(2687, 1, 681),
+(2688, 1, 682),
+(2689, 1, 683),
+(2690, 1, 684),
+(2691, 1, 685),
+(2692, 1, 686),
+(2693, 1, 687),
+(2694, 1, 688),
+(2695, 1, 689),
+(2696, 1, 690),
+(2697, 1, 691),
+(2698, 1, 692),
+(2699, 1, 693),
+(2700, 1, 694),
+(2701, 1, 695),
+(2702, 1, 696),
+(2703, 1, 697),
+(2704, 1, 698),
+(2705, 1, 699),
+(2706, 1, 700),
+(2707, 1, 701),
+(2708, 1, 702),
+(2709, 1, 703),
+(2710, 1, 704),
+(2711, 1, 705),
+(2712, 1, 706),
+(2713, 1, 707),
+(2714, 1, 708),
+(2715, 1, 709),
+(2716, 1, 710),
+(2717, 1, 711),
+(2718, 1, 712),
+(2719, 1, 713),
+(2720, 1, 714),
+(2721, 1, 715),
+(2722, 1, 716),
+(2723, 1, 717),
+(2724, 1, 718),
+(2725, 1, 719),
+(2726, 1, 720),
+(2727, 1, 721),
+(2728, 1, 722),
+(2729, 1, 723),
+(2730, 1, 724),
+(2731, 1, 725),
+(2732, 1, 726),
+(2733, 1, 727),
+(2734, 1, 728),
+(2735, 1, 729),
+(2736, 1, 730),
+(2737, 1, 731),
+(2738, 1, 732),
+(2739, 1, 733),
+(2740, 1, 734),
+(2741, 1, 735),
+(2742, 1, 736),
+(2743, 1, 737),
+(2744, 1, 738),
+(2745, 1, 739),
+(2746, 1, 740),
+(2747, 1, 741),
+(2748, 1, 742),
+(2749, 1, 743),
+(2750, 1, 744),
+(2751, 1, 745),
+(2752, 1, 746),
+(2753, 1, 747),
+(2754, 1, 748),
+(2755, 1, 749),
+(2756, 1, 750),
+(2757, 1, 751),
+(2758, 1, 752),
+(2759, 1, 753),
+(2760, 1, 754),
+(2761, 1, 755),
+(2762, 1, 756),
+(2763, 1, 757),
+(2764, 1, 758),
+(2765, 1, 759),
+(2766, 1, 760),
+(2767, 1, 761),
+(2768, 1, 762),
+(2769, 1, 763),
+(2770, 1, 764),
+(2771, 1, 765),
+(2772, 1, 766),
+(2773, 1, 767),
+(2774, 1, 768),
+(2775, 1, 769),
+(2776, 1, 770),
+(2777, 1, 771),
+(2778, 1, 772),
+(2779, 1, 773),
+(2780, 1, 774),
+(2781, 1, 775),
+(2782, 1, 776),
+(2783, 1, 777),
+(2784, 1, 778),
+(2785, 1, 779),
+(2786, 1, 780),
+(2787, 1, 781),
+(2788, 1, 782),
+(2789, 1, 783),
+(2790, 1, 784),
+(2791, 1, 785),
+(2792, 1, 786),
+(2793, 1, 787),
+(2794, 1, 788),
+(2795, 1, 789),
+(2796, 1, 790),
+(2797, 1, 791),
+(2798, 1, 792),
+(2799, 1, 793),
+(2800, 1, 794),
+(2801, 1, 795),
+(2802, 1, 796),
+(2803, 1, 797),
+(2804, 1, 798),
+(2805, 1, 799),
+(2806, 1, 800),
+(2807, 1, 801),
+(2808, 1, 802),
+(2809, 1, 803),
+(2810, 1, 804),
+(2811, 1, 805),
+(2812, 1, 806),
+(2813, 1, 807),
+(2814, 1, 808),
+(2815, 1, 809),
+(2816, 1, 810),
+(2817, 1, 811),
+(2818, 1, 812),
+(2819, 1, 813),
+(2820, 1, 814),
+(2821, 1, 815),
 (2027, 2, 280),
 (2278, 3, 278),
 (2279, 3, 279),
@@ -3281,7 +3519,7 @@ CREATE TABLE `repetitio_course` (
   `owner_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `repetitio_course_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 DROP TABLE IF EXISTS `repetitio_courseusers`;
@@ -3335,7 +3573,7 @@ CREATE TABLE `repetitio_course_languages` (
   UNIQUE KEY `repetitiocourse_id` (`repetitiocourse_id`,`repetitiocourselanguage_id`),
   KEY `repetitio_course_languages_d4b8a271` (`repetitiocourse_id`),
   KEY `repetitio_course_languages_58e38741` (`repetitiocourselanguage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 
 DROP TABLE IF EXISTS `repetitio_course_permissions`;
@@ -3554,7 +3792,7 @@ CREATE TABLE `rep_course_lang` (
   PRIMARY KEY (`id`),
   KEY `language_id_refs_id_a1105936` (`language_id`),
   KEY `rep_course_lang_a951d5d6` (`slug`(255))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 
 DROP TABLE IF EXISTS `rep_question_lang`;
@@ -3585,6 +3823,50 @@ CREATE TABLE `rep_test_lang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
+DROP TABLE IF EXISTS `schedule`;
+CREATE TABLE `schedule` (
+  `schID` int(11) NOT NULL AUTO_INCREMENT,
+  `year` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `day` int(11) NOT NULL,
+  `description` longtext NOT NULL,
+  `countrydistinctsID` int(11) NOT NULL,
+  `schedule_typeID` int(11) NOT NULL,
+  `bannerLink` varchar(100) NOT NULL,
+  `infoLink` varchar(255) NOT NULL,
+  `support` varchar(122) NOT NULL,
+  `backgroundColor` varchar(10) NOT NULL,
+  `borderColor` varchar(10) NOT NULL,
+  `borderWidth` int(11) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `promotor` varchar(128) NOT NULL,
+  `formMail` varchar(32) NOT NULL,
+  `profesor` varchar(128) NOT NULL,
+  `city` varchar(32) NOT NULL,
+  `date` varchar(64) NOT NULL,
+  `ord` int(11) NOT NULL,
+  PRIMARY KEY (`schID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+DROP TABLE IF EXISTS `schedule_special`;
+CREATE TABLE `schedule_special` (
+  `specID` int(11) NOT NULL AUTO_INCREMENT,
+  `desc` longtext NOT NULL,
+  `date` date NOT NULL,
+  `schID` int(11) NOT NULL,
+  PRIMARY KEY (`specID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+DROP TABLE IF EXISTS `schedule_type`;
+CREATE TABLE `schedule_type` (
+  `schedule_typeID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` longtext NOT NULL,
+  PRIMARY KEY (`schedule_typeID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
 DROP TABLE IF EXISTS `sex`;
 CREATE TABLE `sex` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3603,196 +3885,72 @@ CREATE TABLE `sheetfiles` (
   `owner_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `sheetfiles_abbdb8c4` (`sheet_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4228 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4239 ;
 
 INSERT INTO `sheetfiles` (`id`, `name`, `path`, `info`, `sheet_id`, `owner_id`) VALUES
-(1, 'admin_portal', 'core/admin/static/portal.html', '', 2, NULL),
-(2, 'admin_sheets_list', 'core/admin/list/sheets.html', '', 2, NULL),
-(3, 'admin_sheets_edit', 'core/admin/edit/sheets.html', '', 2, NULL),
-(4, 'admin_sheet_files_list', 'core/admin/list/sheetfiles.html', '', 2, NULL),
-(5, 'admin_sheet_files_edit', 'core/admin/edit/sheetfiles.html', '', 2, NULL),
-(6, 'admin_articles_edit', 'core/admin/edit/articles.html', '', 2, NULL),
-(7, 'admin_categories_list', 'core/admin/list/categories.html', '', 2, NULL),
-(8, 'admin_calendarium_calendar_edit', 'core/admin/edit/calendar.html', '', 2, NULL),
-(9, 'admin_calendarium_calendar_list', 'core/admin/list/calendar.html', '', 2, NULL),
-(10, 'admin_calendarium_event_edit', 'core/admin/edit/event.html', '', 2, NULL),
-(11, 'admin_calendarium_event_list', 'core/admin/list/event.html', '', 2, NULL),
-(12, 'admin_calendarium_eventtype_edit', 'core/admin/edit/eventtype.html', '', 2, NULL),
-(13, 'admin_calendarium_eventtype_list', 'core/admin/list/eventtype.html', '', 2, NULL),
-(14, 'admin_cms', 'cms/admin/admin.html', '', 2, NULL),
-(15, 'admin_articles_list', 'core/admin/list/articles.html', '', 2, NULL),
-(16, 'admin_categories_edit', 'core/admin/edit/categories.html', '', 2, NULL),
-(17, 'admin_galleries_list', 'core/admin/list/galleries.html', '', 2, NULL),
-(18, 'admin_galleries_edit', 'core/admin/edit/galleries.html', '', 2, NULL),
-(19, 'admin_sites_list', 'core/admin/list/sites.html', '', 2, NULL),
-(20, 'admin_sites_edit', 'core/admin/edit/sites.html', '', 2, NULL),
-(21, 'admin_images_list', 'core/admin/list/images.html', '', 2, NULL),
-(22, 'admin_images_edit', 'core/admin/edit/images.html', '', 2, NULL),
-(23, 'admin_list', 'core/admin/list.html', '', 2, NULL),
-(24, 'admin_edit', 'core/admin/edit.html', '', 2, NULL),
-(25, 'articles_list', 'core/portal/list/article.html', '', 2, NULL),
-(26, 'article', 'core/portal/article.html', '', 2, NULL),
-(27, 'mainsite', 'core/portal/mainsite.html', '', 2, NULL),
-(28, 'admin_user_profile_list', 'core/admin/list/userprofiles.html', '', 2, NULL),
-(29, 'admin_user_profile_edit', 'core/admin/edit/userprofiles.html', '', 2, NULL),
-(30, 'admin_repetitio_courses_list', 'core/admin/list/repetitio_courses.html', '', 2, NULL),
-(32, 'admin_repetitio_courses_edit', 'core/admin/edit/repetitio_courses.html', '', 2, NULL),
-(33, 'admin_repetitio_tests_edit', 'core/admin/edit/repetitio_tests.html', '', 2, NULL),
-(34, 'admin_repetitio_tests_list', 'core/admin/list/repetitio_tests.html', '', 2, NULL),
-(35, 'admin_repetitio_answers_list', 'core/admin/list/repetitio_answers.html', '', 2, NULL),
-(36, 'admin_repetitio_answers_edit', 'core/admin/edit/repetitio_answers.html', '', 2, NULL),
-(37, 'admin_repetitio_questions_edit', 'core/admin/edit/repetitio_questions.html', '', 2, NULL),
-(38, 'admin_repetitio_questions_list', 'core/admin/list/repetitio_questions.html', '', 2, NULL),
-(39, 'admin_ads_images_list', 'core/admin/list/ads_images.html', '', 2, NULL),
-(40, 'admin_ads_images_edit', 'core/admin/edit/ads_images.html', '', 2, NULL),
-(41, 'admin_ads_categories_list', 'core/admin/list/ads_categories.html', '', 2, NULL),
-(42, 'admin_ads_categories_edit', 'core/admin/edit/ads_categories.html', '', 2, NULL),
-(43, 'admin_ads_edit', 'core/admin/edit/ads.html', '', 2, NULL),
-(44, 'admin_ads_list', 'core/admin/list/ads.html', '', 2, NULL),
-(45, 'admin_wiki_list', 'core/admin/list/wiki.html', '', 2, NULL),
-(46, 'admin_wiki_edit', 'core/admin/edit/wiki.html', '', 2, NULL),
-(47, 'admin_catalog_categories_list', 'core/admin/list/catalog_categories.html', '', 2, NULL),
-(48, 'admin_catalog_categories_edit', 'core/admin/edit/catalog_categories.html', '', 2, NULL),
-(49, 'admin_catalog_edit', 'core/admin/edit/catalog.html', '', 2, NULL),
-(50, 'admin_catalog_list', 'core/admin/list/catalog.html', '', 2, NULL),
-(51, 'admin_menu_items_list', 'core/admin/list/menu_items.html', '', 2, NULL),
-(52, 'admin_menu_items_edit', 'core/admin/edit/menu_items.html', '', 2, NULL),
-(53, 'admin_menu_items_edit_module_selection', 'core/admin/edit/menu_items_module_selection.html', '', 2, NULL),
-(54, 'admin_menu_list', 'core/admin/list/menu.html', '', 2, NULL),
-(55, 'admin_menu_edit', 'core/admin/edit/menu.html', '', 2, NULL),
-(56, 'admin_modules_edit', 'core/admin/edit/modules.html', '', 2, NULL),
-(57, 'admin_modules_list', 'core/admin/list/modules.html', '', 2, NULL),
-(58, 'admin_module_positions_list', 'core/admin/list/module_positions.html', '', 2, NULL),
-(59, 'admin_module_positions_edit', 'core/admin/edit/module_positions.html', '', 2, NULL),
-(60, 'categories_list', 'core/portal/list/article.html', '', 2, NULL),
-(61, 'admin_megamenu_edit', 'core/admin/edit/megamenu.html', '', 2, NULL),
-(62, 'admin_megamenu_list', 'core/admin/list/megamenu.html', '', 2, NULL),
-(63, 'admin_login', 'core/admin/login.html', '', 2, NULL),
-(111, 'admin_calendarium_event_list', 'core/admin/list/event.html', '', 1, NULL),
-(112, 'admin_calendarium_eventtype_edit', 'core/admin/edit/eventtype.html', '', 1, NULL),
-(113, 'admin_calendarium_eventtype_list', 'core/admin/list/eventtype.html', '', 1, NULL),
-(114, 'admin_cms', 'cms/admin/admin.html', '', 1, NULL),
-(115, 'admin_articles_list', 'core/admin/list/articles.html', '', 1, NULL),
-(116, 'admin_categories_edit', 'core/admin/edit/categories.html', '', 1, NULL),
-(117, 'admin_galleries_list', 'core/admin/list/galleries.html', '', 1, NULL),
-(118, 'admin_galleries_edit', 'core/admin/edit/galleries.html', '', 1, NULL),
-(119, 'admin_sites_list', 'core/admin/list/sites.html', '', 1, NULL),
-(120, 'admin_sites_edit', 'core/admin/edit/sites.html', '', 1, NULL),
-(121, 'admin_images_list', 'core/admin/list/images.html', '', 1, NULL),
-(122, 'admin_images_edit', 'core/admin/edit/images.html', '', 1, NULL),
-(123, 'admin_list', 'core/admin/list.html', '', 1, NULL),
-(124, 'admin_edit', 'core/admin/edit.html', '', 1, NULL),
-(125, 'articles_list', 'core/portal/list/article.html', '', 1, NULL),
-(126, 'article', 'core/portal/article.html', '', 1, NULL),
-(127, 'mainsite', 'core/portal/mainsite.html', '', 1, NULL),
-(128, 'admin_user_profile_list', 'core/admin/list/userprofiles.html', '', 1, NULL),
-(129, 'admin_user_profile_edit', 'core/admin/edit/userprofiles.html', '', 1, NULL),
-(130, 'admin_repetitio_courses_list', 'core/admin/list/repetitio_courses.html', '', 1, NULL),
-(132, 'admin_repetitio_courses_edit', 'core/admin/edit/repetitio_courses.html', '', 1, NULL),
-(133, 'admin_repetitio_tests_edit', 'core/admin/edit/repetitio_tests.html', '', 1, NULL),
-(134, 'admin_repetitio_tests_list', 'core/admin/list/repetitio_tests.html', '', 1, NULL),
-(135, 'admin_repetitio_answers_list', 'core/admin/list/repetitio_answers.html', '', 1, NULL),
-(136, 'admin_repetitio_answers_edit', 'core/admin/edit/repetitio_answers.html', '', 1, NULL),
-(137, 'admin_repetitio_questions_edit', 'core/admin/edit/repetitio_questions.html', '', 1, NULL),
-(139, 'admin_ads_images_list', 'core/admin/list/ads_images.html', '', 1, NULL),
-(140, 'admin_ads_images_edit', 'core/admin/edit/ads_images.html', '', 1, NULL),
-(141, 'admin_ads_categories_list', 'core/admin/list/ads_categories.html', '', 1, NULL),
-(142, 'admin_ads_categories_edit', 'core/admin/edit/ads_categories.html', '', 1, NULL),
-(143, 'admin_ads_edit', 'core/admin/edit/ads.html', '', 1, NULL),
-(144, 'admin_ads_list', 'core/admin/list/ads.html', '', 1, NULL),
-(145, 'admin_wiki_list', 'core/admin/list/wiki.html', '', 1, NULL),
-(146, 'admin_wiki_edit', 'core/admin/edit/wiki.html', '', 1, NULL),
-(147, 'admin_catalog_categories_list', 'core/admin/list/catalog_categories.html', '', 1, NULL),
-(148, 'admin_catalog_categories_edit', 'core/admin/edit/catalog_categories.html', '', 1, NULL),
-(149, 'admin_catalog_edit', 'core/admin/edit/catalog.html', '', 1, NULL),
-(150, 'admin_catalog_list', 'core/admin/list/catalog.html', '', 1, NULL),
-(151, 'admin_menu_items_list', 'core/admin/list/menu_items.html', '', 1, NULL),
-(152, 'admin_menu_items_edit', 'core/admin/edit/menu_items.html', '', 1, NULL),
-(153, 'admin_menu_items_edit_module_selection', 'core/admin/edit/menu_items_module_selection.html', '', 1, NULL),
-(154, 'admin_menu_list', 'core/admin/list/menu.html', '', 1, NULL),
-(155, 'admin_menu_edit', 'core/admin/edit/menu.html', '', 1, NULL),
-(156, 'admin_modules_edit', 'core/admin/edit/modules.html', '', 1, NULL),
-(157, 'admin_modules_list', 'core/admin/list/modules.html', '', 1, NULL),
-(158, 'admin_module_positions_list', 'core/admin/list/module_positions.html', '', 1, NULL),
-(159, 'admin_module_positions_edit', 'core/admin/edit/module_positions.html', '', 1, NULL),
-(160, 'categories_list', 'core/portal/list/article.html', '', 1, NULL),
-(161, 'admin_megamenu_edit', 'core/admin/edit/megamenu.html', '', 1, NULL),
-(162, 'admin_megamenu_list', 'core/admin/list/megamenu.html', '', 1, NULL),
-(163, 'admin_login', 'core/admin/login.html', '', 1, NULL),
-(210, 'admin_calendarium_event_edit', 'core/admin/edit/event.html', '', 3, NULL),
-(211, 'admin_calendarium_event_list', 'core/admin/list/event.html', '', 3, NULL),
-(212, 'admin_calendarium_eventtype_edit', 'core/admin/edit/eventtype.html', '', 3, NULL),
-(213, 'admin_calendarium_eventtype_list', 'core/admin/list/eventtype.html', '', 3, NULL),
-(214, 'admin_cms', 'cms/admin/admin.html', '', 3, NULL),
-(215, 'admin_articles_list', 'core/admin/list/articles.html', '', 3, NULL),
-(216, 'admin_categories_edit', 'core/admin/edit/categories.html', '', 3, NULL),
-(217, 'admin_galleries_list', 'core/admin/list/galleries.html', '', 3, NULL),
-(218, 'admin_galleries_edit', 'core/admin/edit/galleries.html', '', 3, NULL),
-(219, 'admin_sites_list', 'core/admin/list/sites.html', '', 3, NULL),
-(220, 'admin_sites_edit', 'core/admin/edit/sites.html', '', 3, NULL),
-(221, 'admin_images_list', 'core/admin/list/images.html', '', 3, NULL),
-(222, 'admin_images_edit', 'core/admin/edit/images.html', '', 3, NULL),
-(223, 'admin_list', 'core/admin/list.html', '', 3, NULL),
-(224, 'admin_edit', 'core/admin/edit.html', '', 3, NULL),
-(225, 'articles_list', 'core/portal/list/article.html', '', 3, NULL),
-(226, 'article', 'core/portal/article.html', '', 3, NULL),
-(227, 'mainsite', 'core/portal/mainsite.html', '', 3, NULL),
-(228, 'admin_user_profile_list', 'core/admin/list/userprofiles.html', '', 3, NULL),
-(229, 'admin_user_profile_edit', 'core/admin/edit/userprofiles.html', '', 3, NULL),
-(230, 'admin_repetitio_courses_list', 'core/admin/list/repetitio_courses.html', '', 3, NULL),
-(232, 'admin_repetitio_courses_edit', 'core/admin/edit/repetitio_courses.html', '', 3, NULL),
-(233, 'admin_repetitio_tests_edit', 'core/admin/edit/repetitio_tests.html', '', 3, NULL),
-(234, 'admin_repetitio_tests_list', 'core/admin/list/repetitio_tests.html', '', 3, NULL),
-(235, 'admin_repetitio_answers_list', 'core/admin/list/repetitio_answers.html', '', 3, NULL),
-(236, 'admin_repetitio_answers_edit', 'core/admin/edit/repetitio_answers.html', '', 3, NULL),
-(237, 'admin_repetitio_questions_edit', 'core/admin/edit/repetitio_questions.html', '', 3, NULL),
-(238, 'admin_repetitio_questions_list', 'core/admin/list/repetitio_questions.html', '', 3, NULL),
-(239, 'admin_ads_images_list', 'core/admin/list/ads_images.html', '', 3, NULL),
-(240, 'admin_ads_images_edit', 'core/admin/edit/ads_images.html', '', 3, NULL),
-(241, 'admin_ads_categories_list', 'core/admin/list/ads_categories.html', '', 3, NULL),
-(242, 'admin_ads_categories_edit', 'core/admin/edit/ads_categories.html', '', 3, NULL),
-(243, 'admin_ads_edit', 'core/admin/edit/ads.html', '', 3, NULL),
-(244, 'admin_ads_list', 'core/admin/list/ads.html', '', 3, NULL),
-(245, 'admin_wiki_list', 'core/admin/list/wiki.html', '', 3, NULL),
-(246, 'admin_wiki_edit', 'core/admin/edit/wiki.html', '', 3, NULL),
-(247, 'admin_catalog_categories_list', 'core/admin/list/catalog_categories.html', '', 3, NULL),
-(248, 'admin_catalog_categories_edit', 'core/admin/edit/catalog_categories.html', '', 3, NULL),
-(249, 'admin_catalog_edit', 'core/admin/edit/catalog.html', '', 3, NULL),
-(250, 'admin_catalog_list', 'core/admin/list/catalog.html', '', 3, NULL),
-(251, 'admin_menu_items_list', 'core/admin/list/menu_items.html', '', 3, NULL),
-(252, 'admin_menu_items_edit', 'core/admin/edit/menu_items.html', '', 3, NULL),
-(253, 'admin_menu_items_edit_module_selection', 'core/admin/edit/menu_items_module_selection.html', '', 3, NULL),
-(254, 'admin_menu_list', 'core/admin/list/menu.html', '', 3, NULL),
-(255, 'admin_menu_edit', 'core/admin/edit/menu.html', '', 3, NULL),
-(256, 'admin_modules_edit', 'core/admin/edit/modules.html', '', 3, NULL),
-(257, 'admin_modules_list', 'core/admin/list/modules.html', '', 3, NULL),
-(258, 'admin_module_positions_list', 'core/admin/list/module_positions.html', '', 3, NULL),
-(259, 'admin_module_positions_edit', 'core/admin/edit/module_positions.html', '', 3, NULL),
-(260, 'categories_list', 'core/portal/list/article.html', '', 3, NULL),
-(261, 'admin_megamenu_edit', 'core/admin/edit/megamenu.html', '', 3, NULL),
-(262, 'admin_megamenu_list', 'core/admin/list/megamenu.html', '', 3, NULL),
-(263, 'admin_login', 'core/admin/login.html', '', 3, NULL),
-(318, 'admin_repetitio_questions_list', 'core/admin/list/repetitio_questions.html', '', 1, NULL),
-(521, 'admin_portal', 'core/admin/static/portal.html', '', 3, NULL),
-(522, 'admin_sheets_list', 'core/admin/list/sheets.html', '', 3, NULL),
-(523, 'admin_sheets_edit', 'core/admin/edit/sheets.html', '', 3, NULL),
-(524, 'admin_sheet_files_list', 'core/admin/list/sheetfiles.html', '', 3, NULL),
-(525, 'admin_sheet_files_edit', 'core/admin/edit/sheetfiles.html', '', 3, NULL),
-(526, 'admin_articles_edit', 'core/admin/edit/articles.html', '', 3, NULL),
-(527, 'admin_categories_list', 'core/admin/list/categories.html', '', 3, NULL),
-(528, 'admin_calendarium_calendar_edit', 'core/admin/edit/calendar.html', '', 3, NULL),
-(529, 'admin_calendarium_calendar_list', 'core/admin/list/calendar.html', '', 3, NULL),
-(1110, 'admin_calendarium_event_edit', 'core/admin/edit/event.html', '', 1, NULL),
-(1111, 'admin_portal', 'core/admin/static/portal.html', '', 1, NULL),
-(1112, 'admin_sheets_list', 'core/admin/list/sheets.html', '', 1, NULL),
-(1113, 'admin_sheets_edit', 'core/admin/edit/sheets.html', '', 1, NULL),
-(1114, 'admin_sheet_files_list', 'core/admin/list/sheetfiles.html', '', 1, NULL),
-(1115, 'admin_sheet_files_edit', 'core/admin/edit/sheetfiles.html', '', 1, NULL),
-(1116, 'admin_articles_edit', 'core/admin/edit/articles.html', '', 1, NULL),
-(1117, 'admin_categories_list', 'core/admin/list/categories.html', '', 1, NULL),
-(1118, 'admin_calendarium_calendar_edit', 'core/admin/edit/calendar.html', '', 1, NULL),
-(1119, 'admin_calendarium_calendar_list', 'core/admin/list/calendar.html', '', 1, NULL),
-(4227, 'mainsite', 'core/portal/mainsite.html', '', 4, NULL);
+(1, 'admin_portal', 'core/admin/static/portal.html', '', 5, NULL),
+(2, 'admin_sheets_list', 'core/admin/list/sheets.html', '', 5, NULL),
+(3, 'admin_sheets_edit', 'core/admin/edit/sheets.html', '', 5, NULL),
+(4, 'admin_sheet_files_list', 'core/admin/list/sheetfiles.html', '', 5, NULL),
+(5, 'admin_sheet_files_edit', 'core/admin/edit/sheetfiles.html', '', 5, NULL),
+(6, 'admin_articles_edit', 'core/admin/edit/articles.html', '', 5, NULL),
+(7, 'admin_categories_list', 'core/admin/list/categories.html', '', 5, NULL),
+(8, 'admin_calendarium_calendar_edit', 'core/admin/edit/calendar.html', '', 5, NULL),
+(9, 'admin_calendarium_calendar_list', 'core/admin/list/calendar.html', '', 5, NULL),
+(10, 'admin_calendarium_event_edit', 'core/admin/edit/event.html', '', 5, NULL),
+(11, 'admin_calendarium_event_list', 'core/admin/list/event.html', '', 5, NULL),
+(12, 'admin_calendarium_eventtype_edit', 'core/admin/edit/eventtype.html', '', 5, NULL),
+(13, 'admin_calendarium_eventtype_list', 'core/admin/list/eventtype.html', '', 5, NULL),
+(14, 'admin_cms', 'cms/admin/admin.html', '', 5, NULL),
+(15, 'admin_articles_list', 'core/admin/list/articles.html', '', 5, NULL),
+(16, 'admin_categories_edit', 'core/admin/edit/categories.html', '', 5, NULL),
+(17, 'admin_galleries_list', 'core/admin/list/galleries.html', '', 5, NULL),
+(18, 'admin_galleries_edit', 'core/admin/edit/galleries.html', '', 5, NULL),
+(19, 'admin_sites_list', 'core/admin/list/sites.html', '', 5, NULL),
+(20, 'admin_sites_edit', 'core/admin/edit/sites.html', '', 5, NULL),
+(21, 'admin_images_list', 'core/admin/list/images.html', '', 5, NULL),
+(22, 'admin_images_edit', 'core/admin/edit/images.html', '', 5, NULL),
+(23, 'admin_list', 'core/admin/list.html', '', 5, NULL),
+(24, 'admin_edit', 'core/admin/edit.html', '', 5, NULL),
+(25, 'articles_list', 'core/portal/list/article.html', '', 5, NULL),
+(26, 'article', 'core/portal/article.html', '', 5, NULL),
+(27, 'mainsite', 'core/portal/mainsite_content.html', '', 5, NULL),
+(28, 'admin_user_profile_list', 'core/admin/list/userprofiles.html', '', 5, NULL),
+(29, 'admin_user_profile_edit', 'core/admin/edit/userprofiles.html', '', 5, NULL),
+(30, 'admin_repetitio_courses_list', 'core/admin/list/repetitio_courses.html', '', 5, NULL),
+(32, 'admin_repetitio_courses_edit', 'core/admin/edit/repetitio_courses.html', '', 5, NULL),
+(33, 'admin_repetitio_tests_edit', 'core/admin/edit/repetitio_tests.html', '', 5, NULL),
+(34, 'admin_repetitio_tests_list', 'core/admin/list/repetitio_tests.html', '', 5, NULL),
+(35, 'admin_repetitio_answers_list', 'core/admin/list/repetitio_answers.html', '', 5, NULL),
+(36, 'admin_repetitio_answers_edit', 'core/admin/edit/repetitio_answers.html', '', 5, NULL),
+(37, 'admin_repetitio_questions_edit', 'core/admin/edit/repetitio_questions.html', '', 5, NULL),
+(38, 'admin_repetitio_questions_list', 'core/admin/list/repetitio_questions.html', '', 5, NULL),
+(39, 'admin_ads_images_list', 'core/admin/list/ads_images.html', '', 5, NULL),
+(40, 'admin_ads_images_edit', 'core/admin/edit/ads_images.html', '', 5, NULL),
+(41, 'admin_ads_categories_list', 'core/admin/list/ads_categories.html', '', 5, NULL),
+(42, 'admin_ads_categories_edit', 'core/admin/edit/ads_categories.html', '', 5, NULL),
+(43, 'admin_ads_edit', 'core/admin/edit/ads.html', '', 5, NULL),
+(44, 'admin_ads_list', 'core/admin/list/ads.html', '', 5, NULL),
+(45, 'admin_wiki_list', 'core/admin/list/wiki.html', '', 5, NULL),
+(46, 'admin_wiki_edit', 'core/admin/edit/wiki.html', '', 5, NULL),
+(47, 'admin_catalog_categories_list', 'core/admin/list/catalog_categories.html', '', 5, NULL),
+(48, 'admin_catalog_categories_edit', 'core/admin/edit/catalog_categories.html', '', 5, NULL),
+(49, 'admin_catalog_edit', 'core/admin/edit/catalog.html', '', 5, NULL),
+(50, 'admin_catalog_list', 'core/admin/list/catalog.html', '', 5, NULL),
+(51, 'admin_menu_items_list', 'core/admin/list/menu_items.html', '', 5, NULL),
+(52, 'admin_menu_items_edit', 'core/admin/edit/menu_items.html', '', 5, NULL),
+(53, 'admin_menu_items_edit_module_selection', 'core/admin/edit/menu_items_module_selection.html', '', 5, NULL),
+(54, 'admin_menu_list', 'core/admin/list/menu.html', '', 5, NULL),
+(55, 'admin_menu_edit', 'core/admin/edit/menu.html', '', 5, NULL),
+(56, 'admin_modules_edit', 'core/admin/edit/modules.html', '', 5, NULL),
+(57, 'admin_modules_list', 'core/admin/list/modules.html', '', 5, NULL),
+(58, 'admin_module_positions_list', 'core/admin/list/module_positions.html', '', 5, NULL),
+(59, 'admin_module_positions_edit', 'core/admin/edit/module_positions.html', '', 5, NULL),
+(60, 'categories_list', 'core/portal/list/article.html', '', 5, NULL),
+(61, 'admin_megamenu_edit', 'core/admin/edit/megamenu.html', '', 5, NULL),
+(62, 'admin_megamenu_list', 'core/admin/list/megamenu.html', '', 5, NULL),
+(63, 'admin_login', 'core/admin/login.html', '', 5, NULL),
+(4238, 'admin_module_edit_module_selection', 'core/admin/edit/module_module_selection.html', '', 5, NULL);
 
 DROP TABLE IF EXISTS `sheetfiles_active`;
 CREATE TABLE `sheetfiles_active` (
@@ -3803,8 +3961,36 @@ CREATE TABLE `sheetfiles_active` (
   UNIQUE KEY `sheetfiles_id` (`sheetfiles_id`,`site_id`),
   KEY `sheetfiles_active_947805ac` (`sheetfiles_id`),
   KEY `sheetfiles_active_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
 
+INSERT INTO `sheetfiles_active` (`id`, `sheetfiles_id`, `site_id`) VALUES
+(11, 27, 2),
+(9, 127, 1),
+(10, 227, 3),
+(7, 4227, 4),
+(1, 4228, 1),
+(2, 4228, 2),
+(3, 4228, 3),
+(4, 4228, 4),
+(16, 4229, 1),
+(17, 4229, 2),
+(18, 4229, 3),
+(19, 4229, 4),
+(20, 4230, 1),
+(21, 4231, 1),
+(22, 4232, 1),
+(23, 4233, 1),
+(24, 4234, 1),
+(25, 4235, 1),
+(26, 4236, 1),
+(27, 4237, 1),
+(28, 4237, 2),
+(29, 4237, 3),
+(30, 4237, 4),
+(31, 4238, 1),
+(32, 4238, 2),
+(33, 4238, 3),
+(34, 4238, 4);
 
 DROP TABLE IF EXISTS `sheetlanguages`;
 CREATE TABLE `sheetlanguages` (
@@ -3815,7 +4001,7 @@ CREATE TABLE `sheetlanguages` (
   `language_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sheetlanguages_7ab48146` (`language_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=228 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=229 ;
 
 INSERT INTO `sheetlanguages` (`id`, `date`, `systemname`, `name`, `language_id`) VALUES
 (1, '0000-00-00 00:00:00', '__No_articles__', 'Brak artykułów', 1),
@@ -4040,7 +4226,8 @@ INSERT INTO `sheetlanguages` (`id`, `date`, `systemname`, `name`, `language_id`)
 (224, '2011-08-29 10:30:39', '__adm_TopMenu__', 'TopMenu', 2),
 (225, '2011-08-29 10:30:39', '__adm_Catalogs_images__', 'Catalogs images', 2),
 (226, '2011-08-29 10:30:39', '__adm_No_permissions__', 'No permissions', 2),
-(227, '2011-08-30 20:57:09', '__adm_Show_items__', 'Pokaż elementy', 1);
+(227, '2011-08-30 20:57:09', '__adm_Show_items__', 'Pokaż elementy', 1),
+(228, '2011-09-06 11:53:42', '__adm_Clients__', 'Klienci', 1);
 
 DROP TABLE IF EXISTS `sheetlanguages_permissions`;
 CREATE TABLE `sheetlanguages_permissions` (
@@ -4063,13 +4250,17 @@ CREATE TABLE `sheetlanguages_sites` (
   UNIQUE KEY `portalsiteconstlanguage_id` (`portalsiteconstlanguage_id`,`site_id`),
   KEY `sheetlanguages_sites_f1573e83` (`portalsiteconstlanguage_id`),
   KEY `sheetlanguages_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 INSERT INTO `sheetlanguages_sites` (`id`, `portalsiteconstlanguage_id`, `site_id`) VALUES
 (1, 227, 1),
 (2, 227, 2),
 (3, 227, 3),
-(4, 227, 4);
+(4, 227, 4),
+(5, 228, 1),
+(6, 228, 2),
+(7, 228, 3),
+(8, 228, 4);
 
 DROP TABLE IF EXISTS `sheets`;
 CREATE TABLE `sheets` (
@@ -4082,13 +4273,10 @@ CREATE TABLE `sheets` (
   `default` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `sheets_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 INSERT INTO `sheets` (`id`, `date`, `name`, `sheetpath`, `info`, `owner_id`, `default`) VALUES
-(1, '2011-08-30 14:06:40', 'Lekarze', 'lekarze', '', NULL, 1),
-(2, '2011-08-30 14:06:55', 'Pacjenci', 'pacjenci', '', NULL, 1),
-(3, '2011-08-30 14:07:11', 'Studenci', 'studenci', '', NULL, 1),
-(4, '2011-08-30 14:07:53', 'Default', 'default', '', NULL, 0);
+(5, '2011-09-14 08:25:57', 'PortalAdmin', 'portaladmin', '', NULL, 1);
 
 DROP TABLE IF EXISTS `sheets_active`;
 CREATE TABLE `sheets_active` (
@@ -4099,16 +4287,13 @@ CREATE TABLE `sheets_active` (
   UNIQUE KEY `sheet_id` (`sheet_id`,`site_id`),
   KEY `sheets_active_abbdb8c4` (`sheet_id`),
   KEY `sheets_active_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 INSERT INTO `sheets_active` (`id`, `sheet_id`, `site_id`) VALUES
-(9, 1, 1),
-(10, 2, 2),
-(11, 3, 3),
-(12, 4, 1),
-(13, 4, 2),
-(14, 4, 3),
-(15, 4, 4);
+(18, 5, 1),
+(19, 5, 2),
+(20, 5, 3),
+(21, 5, 4);
 
 DROP TABLE IF EXISTS `sheets_permissions`;
 CREATE TABLE `sheets_permissions` (
@@ -4131,16 +4316,13 @@ CREATE TABLE `sheets_sites` (
   UNIQUE KEY `sheet_id` (`sheet_id`,`site_id`),
   KEY `sheets_sites_abbdb8c4` (`sheet_id`),
   KEY `sheets_sites_6223029` (`site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 INSERT INTO `sheets_sites` (`id`, `sheet_id`, `site_id`) VALUES
-(9, 1, 1),
-(10, 2, 2),
-(11, 3, 3),
-(12, 4, 1),
-(13, 4, 2),
-(14, 4, 3),
-(15, 4, 4);
+(18, 5, 1),
+(19, 5, 2),
+(20, 5, 3),
+(21, 5, 4);
 
 DROP TABLE IF EXISTS `site_portal`;
 CREATE TABLE `site_portal` (
@@ -4159,11 +4341,6 @@ CREATE TABLE `site_portal` (
   KEY `site_portal_5d52dd10` (`owner_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
-INSERT INTO `site_portal` (`id`, `image`, `info`, `meta`, `keywords`, `visits`, `name`, `domain`, `site_id`, `owner_id`) VALUES
-(1, '', '', '', '', 0, 'Dentonet dla lekarzy', 'lekarze.dentonet.pl', 1, NULL),
-(2, '', '', '', '', 0, 'Dentonet dla pacjentów', 'pacjenci.dentonet.pl', 2, NULL),
-(3, '', '', '', '', 0, 'Dentonet dla studentów', 'studenci.dentonet.pl', 3, NULL),
-(4, '', '', '', '', 0, 'Domyślna', 'dentonet.pl', 4, NULL);
 
 DROP TABLE IF EXISTS `site_portal_active`;
 CREATE TABLE `site_portal_active` (
@@ -4176,16 +4353,6 @@ CREATE TABLE `site_portal_active` (
   KEY `site_portal_active_6223029` (`site_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
-INSERT INTO `site_portal_active` (`id`, `siteportal_id`, `site_id`) VALUES
-(1, 1, 1),
-(6, 2, 1),
-(7, 2, 2),
-(5, 3, 1),
-(4, 3, 3),
-(8, 4, 1),
-(9, 4, 2),
-(10, 4, 3),
-(11, 4, 4);
 
 DROP TABLE IF EXISTS `site_portal_permissions`;
 CREATE TABLE `site_portal_permissions` (
@@ -4234,6 +4401,29 @@ CREATE TABLE `states` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
+DROP TABLE IF EXISTS `systemStructure`;
+CREATE TABLE `systemStructure` (
+  `idStr` int(11) NOT NULL AUTO_INCREMENT,
+  `idOver` int(11) NOT NULL,
+  `name` varchar(122) NOT NULL,
+  `ZmianaNa` int(11) NOT NULL,
+  `orderStr` int(11) NOT NULL,
+  `actionID` int(11) NOT NULL,
+  `bannersType` varchar(3) NOT NULL,
+  `bannersHere` varchar(122) NOT NULL,
+  `pollID` int(11) NOT NULL,
+  `pollPosition` varchar(122) NOT NULL,
+  `hintID` int(11) NOT NULL,
+  `hintPosition` varchar(122) NOT NULL,
+  `freeAccess` varchar(122) NOT NULL,
+  `isEzin` varchar(122) NOT NULL,
+  `display` varchar(122) NOT NULL,
+  `altSys` int(11) NOT NULL,
+  `altName` varchar(50) NOT NULL,
+  PRIMARY KEY (`idStr`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
 DROP TABLE IF EXISTS `taggit_tag`;
 CREATE TABLE `taggit_tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4241,10 +4431,10 @@ CREATE TABLE `taggit_tag` (
   `slug` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `taggit_tag` (`id`, `name`, `slug`) VALUES
-(1, 'root', 'root');
+(2, 'cat', 'cat');
 
 DROP TABLE IF EXISTS `taggit_taggeditem`;
 CREATE TABLE `taggit_taggeditem` (
@@ -4256,10 +4446,10 @@ CREATE TABLE `taggit_taggeditem` (
   KEY `taggit_taggeditem_3747b463` (`tag_id`),
   KEY `taggit_taggeditem_829e37fd` (`object_id`),
   KEY `taggit_taggeditem_e4470c6e` (`content_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 INSERT INTO `taggit_taggeditem` (`id`, `tag_id`, `object_id`, `content_type_id`) VALUES
-(3, 1, 1, 29);
+(4, 2, 203, 29);
 
 DROP TABLE IF EXISTS `thumbnail_kvstore`;
 CREATE TABLE `thumbnail_kvstore` (
@@ -4286,7 +4476,7 @@ CREATE TABLE `wiki` (
   PRIMARY KEY (`id`),
   KEY `wiki_63f17a16` (`parent_id`),
   KEY `wiki_5d52dd10` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 DROP TABLE IF EXISTS `wiki_active`;
@@ -4298,7 +4488,7 @@ CREATE TABLE `wiki_active` (
   UNIQUE KEY `wiki_id` (`wiki_id`,`site_id`),
   KEY `wiki_active_a3b21284` (`wiki_id`),
   KEY `wiki_active_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 DROP TABLE IF EXISTS `wiki_lang`;
@@ -4313,7 +4503,7 @@ CREATE TABLE `wiki_lang` (
   PRIMARY KEY (`id`),
   KEY `language_id_refs_id_246ed0f1` (`language_id`),
   KEY `wiki_lang_a951d5d6` (`slug`(255))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 
 DROP TABLE IF EXISTS `wiki_languages`;
@@ -4325,7 +4515,7 @@ CREATE TABLE `wiki_languages` (
   UNIQUE KEY `wiki_id` (`wiki_id`,`wikilanguage_id`),
   KEY `wiki_languages_a3b21284` (`wiki_id`),
   KEY `wiki_languages_526934ea` (`wikilanguage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 
 DROP TABLE IF EXISTS `wiki_permissions`;
@@ -4349,16 +4539,47 @@ CREATE TABLE `wiki_sites` (
   UNIQUE KEY `wiki_id` (`wiki_id`,`site_id`),
   KEY `wiki_sites_a3b21284` (`wiki_id`),
   KEY `wiki_sites_6223029` (`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 
 
 ALTER TABLE `ad`
-  ADD CONSTRAINT `owner_id_refs_id_a641c670` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`),
-  ADD CONSTRAINT `category_id_refs_id_7a482ffa` FOREIGN KEY (`category_id`) REFERENCES `ad_cat` (`id`);
+  ADD CONSTRAINT `category_id_refs_id_7a482ffa` FOREIGN KEY (`category_id`) REFERENCES `ad_cat` (`id`),
+  ADD CONSTRAINT `owner_id_refs_id_a641c670` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`);
 
 ALTER TABLE `ads_image_lang`
   ADD CONSTRAINT `language_id_refs_id_421cd526` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
+
+ALTER TABLE `adv`
+  ADD CONSTRAINT `group_id_refs_id_c415e7f1` FOREIGN KEY (`group_id`) REFERENCES `adv_groups` (`id`);
+
+ALTER TABLE `adv_active`
+  ADD CONSTRAINT `adv_id_refs_id_6d1b8cc3` FOREIGN KEY (`adv_id`) REFERENCES `adv` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_b6b60c27` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+
+ALTER TABLE `adv_clients_active`
+  ADD CONSTRAINT `advclient_id_refs_id_462d3d71` FOREIGN KEY (`advclient_id`) REFERENCES `adv_clients` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_97cc75a8` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+
+ALTER TABLE `adv_clients_sites`
+  ADD CONSTRAINT `advclient_id_refs_id_31a7295a` FOREIGN KEY (`advclient_id`) REFERENCES `adv_clients` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_8f7d78dd` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+
+ALTER TABLE `adv_groups_active`
+  ADD CONSTRAINT `advgroup_id_refs_id_e8799b65` FOREIGN KEY (`advgroup_id`) REFERENCES `adv_groups` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_ee194b23` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+
+ALTER TABLE `adv_groups_sites`
+  ADD CONSTRAINT `advgroup_id_refs_id_895694c0` FOREIGN KEY (`advgroup_id`) REFERENCES `adv_groups` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_f7499afe` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+
+ALTER TABLE `adv_menuitem`
+  ADD CONSTRAINT `adv_id_refs_id_aba45ea5` FOREIGN KEY (`adv_id`) REFERENCES `adv` (`id`),
+  ADD CONSTRAINT `menuitem_id_refs_id_6fd57903` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`);
+
+ALTER TABLE `adv_sites`
+  ADD CONSTRAINT `adv_id_refs_id_69778f00` FOREIGN KEY (`adv_id`) REFERENCES `adv` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_68e3a39e` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `ad_active`
   ADD CONSTRAINT `ad_id_refs_id_2faacbe1` FOREIGN KEY (`ad_id`) REFERENCES `ad` (`id`),
@@ -4376,8 +4597,8 @@ ALTER TABLE `ad_cat_lang`
   ADD CONSTRAINT `language_id_refs_id_b0d7340d` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `ad_cat_languages`
-  ADD CONSTRAINT `adcategory_id_refs_id_cf4974d9` FOREIGN KEY (`adcategory_id`) REFERENCES `ad_cat` (`id`),
-  ADD CONSTRAINT `adcategorylanguage_id_refs_id_d3fde58b` FOREIGN KEY (`adcategorylanguage_id`) REFERENCES `ad_cat_lang` (`id`);
+  ADD CONSTRAINT `adcategorylanguage_id_refs_id_d3fde58b` FOREIGN KEY (`adcategorylanguage_id`) REFERENCES `ad_cat_lang` (`id`),
+  ADD CONSTRAINT `adcategory_id_refs_id_cf4974d9` FOREIGN KEY (`adcategory_id`) REFERENCES `ad_cat` (`id`);
 
 ALTER TABLE `ad_cat_permissions`
   ADD CONSTRAINT `adcategory_id_refs_id_99562c6e` FOREIGN KEY (`adcategory_id`) REFERENCES `ad_cat` (`id`),
@@ -4391,16 +4612,16 @@ ALTER TABLE `ad_image`
   ADD CONSTRAINT `owner_id_refs_id_72c31b64` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`);
 
 ALTER TABLE `ad_images`
-  ADD CONSTRAINT `ad_id_refs_id_e6128017` FOREIGN KEY (`ad_id`) REFERENCES `ad` (`id`),
-  ADD CONSTRAINT `adimage_id_refs_id_f8fc9c1d` FOREIGN KEY (`adimage_id`) REFERENCES `ad_image` (`id`);
+  ADD CONSTRAINT `adimage_id_refs_id_f8fc9c1d` FOREIGN KEY (`adimage_id`) REFERENCES `ad_image` (`id`),
+  ADD CONSTRAINT `ad_id_refs_id_e6128017` FOREIGN KEY (`ad_id`) REFERENCES `ad` (`id`);
 
 ALTER TABLE `ad_image_active`
   ADD CONSTRAINT `adimage_id_refs_id_815c9ab9` FOREIGN KEY (`adimage_id`) REFERENCES `ad_image` (`id`),
   ADD CONSTRAINT `site_id_refs_id_596ad480` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `ad_image_languages`
-  ADD CONSTRAINT `adimage_id_refs_id_80ba2579` FOREIGN KEY (`adimage_id`) REFERENCES `ad_image` (`id`),
-  ADD CONSTRAINT `adimagelanguage_id_refs_id_d175cccb` FOREIGN KEY (`adimagelanguage_id`) REFERENCES `ads_image_lang` (`id`);
+  ADD CONSTRAINT `adimagelanguage_id_refs_id_d175cccb` FOREIGN KEY (`adimagelanguage_id`) REFERENCES `ads_image_lang` (`id`),
+  ADD CONSTRAINT `adimage_id_refs_id_80ba2579` FOREIGN KEY (`adimage_id`) REFERENCES `ad_image` (`id`);
 
 ALTER TABLE `ad_image_permissions`
   ADD CONSTRAINT `adimage_id_refs_id_1efd6d7c` FOREIGN KEY (`adimage_id`) REFERENCES `ad_image` (`id`),
@@ -4414,8 +4635,8 @@ ALTER TABLE `ad_lang`
   ADD CONSTRAINT `language_id_refs_id_b1feb076` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `ad_languages`
-  ADD CONSTRAINT `ad_id_refs_id_b451f03f` FOREIGN KEY (`ad_id`) REFERENCES `ad` (`id`),
-  ADD CONSTRAINT `adlanguage_id_refs_id_5a4655cb` FOREIGN KEY (`adlanguage_id`) REFERENCES `ad_lang` (`id`);
+  ADD CONSTRAINT `adlanguage_id_refs_id_5a4655cb` FOREIGN KEY (`adlanguage_id`) REFERENCES `ad_lang` (`id`),
+  ADD CONSTRAINT `ad_id_refs_id_b451f03f` FOREIGN KEY (`ad_id`) REFERENCES `ad` (`id`);
 
 ALTER TABLE `ad_permissions`
   ADD CONSTRAINT `ad_id_refs_id_cc7345b0` FOREIGN KEY (`ad_id`) REFERENCES `ad` (`id`),
@@ -4439,8 +4660,8 @@ ALTER TABLE `articles_active`
   ADD CONSTRAINT `site_id_refs_id_6a89008` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `articles_languages`
-  ADD CONSTRAINT `article_id_refs_id_c2f3e7e9` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
-  ADD CONSTRAINT `articlelanguage_id_refs_id_31ce88b7` FOREIGN KEY (`articlelanguage_id`) REFERENCES `articlelanguages` (`id`);
+  ADD CONSTRAINT `articlelanguage_id_refs_id_31ce88b7` FOREIGN KEY (`articlelanguage_id`) REFERENCES `articlelanguages` (`id`),
+  ADD CONSTRAINT `article_id_refs_id_c2f3e7e9` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`);
 
 ALTER TABLE `articles_permissions`
   ADD CONSTRAINT `article_id_refs_id_b463d014` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
@@ -4461,12 +4682,12 @@ ALTER TABLE `auth_permission`
   ADD CONSTRAINT `content_type_id_refs_id_728de91f` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
 
 ALTER TABLE `auth_user_groups`
-  ADD CONSTRAINT `user_id_refs_id_831107f1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
-  ADD CONSTRAINT `group_id_refs_id_f0ee9890` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`);
+  ADD CONSTRAINT `group_id_refs_id_f0ee9890` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  ADD CONSTRAINT `user_id_refs_id_831107f1` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 
 ALTER TABLE `auth_user_user_permissions`
-  ADD CONSTRAINT `user_id_refs_id_f2045483` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
-  ADD CONSTRAINT `permission_id_refs_id_67e79cb` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`);
+  ADD CONSTRAINT `permission_id_refs_id_67e79cb` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  ADD CONSTRAINT `user_id_refs_id_f2045483` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 
 ALTER TABLE `calendareventlanguages`
   ADD CONSTRAINT `language_id_refs_id_6203068a` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
@@ -4482,8 +4703,8 @@ ALTER TABLE `calendarevents_active`
   ADD CONSTRAINT `site_id_refs_id_c4e8dbba` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `calendarevents_languages`
-  ADD CONSTRAINT `calendarevent_id_refs_id_832e2563` FOREIGN KEY (`calendarevent_id`) REFERENCES `calendarevents` (`id`),
-  ADD CONSTRAINT `calendareventlanguage_id_refs_id_14e355` FOREIGN KEY (`calendareventlanguage_id`) REFERENCES `calendareventlanguages` (`id`);
+  ADD CONSTRAINT `calendareventlanguage_id_refs_id_14e355` FOREIGN KEY (`calendareventlanguage_id`) REFERENCES `calendareventlanguages` (`id`),
+  ADD CONSTRAINT `calendarevent_id_refs_id_832e2563` FOREIGN KEY (`calendarevent_id`) REFERENCES `calendarevents` (`id`);
 
 ALTER TABLE `calendarevents_permissions`
   ADD CONSTRAINT `calendarevent_id_refs_id_e50a7f78` FOREIGN KEY (`calendarevent_id`) REFERENCES `calendarevents` (`id`),
@@ -4507,8 +4728,8 @@ ALTER TABLE `calendars_active`
   ADD CONSTRAINT `site_id_refs_id_232b7baf` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `calendars_languages`
-  ADD CONSTRAINT `calendar_id_refs_id_e5ec7aa3` FOREIGN KEY (`calendar_id`) REFERENCES `calendars` (`id`),
-  ADD CONSTRAINT `calendarlanguage_id_refs_id_51658bab` FOREIGN KEY (`calendarlanguage_id`) REFERENCES `calendarlanguages` (`id`);
+  ADD CONSTRAINT `calendarlanguage_id_refs_id_51658bab` FOREIGN KEY (`calendarlanguage_id`) REFERENCES `calendarlanguages` (`id`),
+  ADD CONSTRAINT `calendar_id_refs_id_e5ec7aa3` FOREIGN KEY (`calendar_id`) REFERENCES `calendars` (`id`);
 
 ALTER TABLE `calendars_permissions`
   ADD CONSTRAINT `calendar_id_refs_id_7a056b6a` FOREIGN KEY (`calendar_id`) REFERENCES `calendars` (`id`),
@@ -4526,8 +4747,8 @@ ALTER TABLE `calendartypes_active`
   ADD CONSTRAINT `site_id_refs_id_83ecdb45` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `calendartypes_languages`
-  ADD CONSTRAINT `calendareventtype_id_refs_id_54855073` FOREIGN KEY (`calendareventtype_id`) REFERENCES `calendartypes` (`id`),
-  ADD CONSTRAINT `calendareventtypelanguage_id_refs_id_ae3e87ba` FOREIGN KEY (`calendareventtypelanguage_id`) REFERENCES `calendareventtypelanguages` (`id`);
+  ADD CONSTRAINT `calendareventtypelanguage_id_refs_id_ae3e87ba` FOREIGN KEY (`calendareventtypelanguage_id`) REFERENCES `calendareventtypelanguages` (`id`),
+  ADD CONSTRAINT `calendareventtype_id_refs_id_54855073` FOREIGN KEY (`calendareventtype_id`) REFERENCES `calendartypes` (`id`);
 
 ALTER TABLE `calendartypes_permissions`
   ADD CONSTRAINT `calendareventtype_id_refs_id_350959a6` FOREIGN KEY (`calendareventtype_id`) REFERENCES `calendartypes` (`id`),
@@ -4538,8 +4759,8 @@ ALTER TABLE `calendartypes_sites`
   ADD CONSTRAINT `site_id_refs_id_4ad633c2` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `catalogs_cat`
-  ADD CONSTRAINT `parent_id_refs_id_9ceba5a5` FOREIGN KEY (`parent_id`) REFERENCES `catalogs_cat` (`id`),
-  ADD CONSTRAINT `owner_id_refs_id_2cfbce88` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`);
+  ADD CONSTRAINT `owner_id_refs_id_2cfbce88` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`),
+  ADD CONSTRAINT `parent_id_refs_id_9ceba5a5` FOREIGN KEY (`parent_id`) REFERENCES `catalogs_cat` (`id`);
 
 ALTER TABLE `catalogs_cat_active`
   ADD CONSTRAINT `catalogcategory_id_refs_id_2c4551d9` FOREIGN KEY (`catalogcategory_id`) REFERENCES `catalogs_cat` (`id`),
@@ -4549,8 +4770,8 @@ ALTER TABLE `catalogs_cat_lang`
   ADD CONSTRAINT `language_id_refs_id_29bca8c2` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `catalogs_cat_languages`
-  ADD CONSTRAINT `catalogcategory_id_refs_id_f1cbfdf1` FOREIGN KEY (`catalogcategory_id`) REFERENCES `catalogs_cat` (`id`),
-  ADD CONSTRAINT `catalogcategorylanguage_id_refs_id_a8500be5` FOREIGN KEY (`catalogcategorylanguage_id`) REFERENCES `catalogs_cat_lang` (`id`);
+  ADD CONSTRAINT `catalogcategorylanguage_id_refs_id_a8500be5` FOREIGN KEY (`catalogcategorylanguage_id`) REFERENCES `catalogs_cat_lang` (`id`),
+  ADD CONSTRAINT `catalogcategory_id_refs_id_f1cbfdf1` FOREIGN KEY (`catalogcategory_id`) REFERENCES `catalogs_cat` (`id`);
 
 ALTER TABLE `catalogs_cat_permissions`
   ADD CONSTRAINT `catalogcategory_id_refs_id_a96f0b14` FOREIGN KEY (`catalogcategory_id`) REFERENCES `catalogs_cat` (`id`),
@@ -4571,8 +4792,8 @@ ALTER TABLE `catalogs_image_lang`
   ADD CONSTRAINT `language_id_refs_id_b7ede39f` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `catalogs_image_languages`
-  ADD CONSTRAINT `catalogimage_id_refs_id_167b1289` FOREIGN KEY (`catalogimage_id`) REFERENCES `catalogs_image` (`id`),
-  ADD CONSTRAINT `adimagelanguage_id_refs_id_dc738212` FOREIGN KEY (`adimagelanguage_id`) REFERENCES `ads_image_lang` (`id`);
+  ADD CONSTRAINT `adimagelanguage_id_refs_id_dc738212` FOREIGN KEY (`adimagelanguage_id`) REFERENCES `ads_image_lang` (`id`),
+  ADD CONSTRAINT `catalogimage_id_refs_id_167b1289` FOREIGN KEY (`catalogimage_id`) REFERENCES `catalogs_image` (`id`);
 
 ALTER TABLE `catalogs_image_permissions`
   ADD CONSTRAINT `catalogimage_id_refs_id_cfa9dbba` FOREIGN KEY (`catalogimage_id`) REFERENCES `catalogs_image` (`id`),
@@ -4593,12 +4814,12 @@ ALTER TABLE `catalogs_item_active`
   ADD CONSTRAINT `site_id_refs_id_403a660e` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `catalogs_item_images`
-  ADD CONSTRAINT `catalogitem_id_refs_id_48815c5b` FOREIGN KEY (`catalogitem_id`) REFERENCES `catalogs_item` (`id`),
-  ADD CONSTRAINT `catalogimage_id_refs_id_3dfc32c` FOREIGN KEY (`catalogimage_id`) REFERENCES `catalogs_image` (`id`);
+  ADD CONSTRAINT `catalogimage_id_refs_id_3dfc32c` FOREIGN KEY (`catalogimage_id`) REFERENCES `catalogs_image` (`id`),
+  ADD CONSTRAINT `catalogitem_id_refs_id_48815c5b` FOREIGN KEY (`catalogitem_id`) REFERENCES `catalogs_item` (`id`);
 
 ALTER TABLE `catalogs_item_languages`
-  ADD CONSTRAINT `catalogitem_id_refs_id_ff47fcff` FOREIGN KEY (`catalogitem_id`) REFERENCES `catalogs_item` (`id`),
-  ADD CONSTRAINT `catalogitemlanguage_id_refs_id_fb0576c0` FOREIGN KEY (`catalogitemlanguage_id`) REFERENCES `catalogs_lang` (`id`);
+  ADD CONSTRAINT `catalogitemlanguage_id_refs_id_fb0576c0` FOREIGN KEY (`catalogitemlanguage_id`) REFERENCES `catalogs_lang` (`id`),
+  ADD CONSTRAINT `catalogitem_id_refs_id_ff47fcff` FOREIGN KEY (`catalogitem_id`) REFERENCES `catalogs_item` (`id`);
 
 ALTER TABLE `catalogs_item_permissions`
   ADD CONSTRAINT `catalogitem_id_refs_id_1eec8364` FOREIGN KEY (`catalogitem_id`) REFERENCES `catalogs_item` (`id`),
@@ -4612,8 +4833,8 @@ ALTER TABLE `catalogs_lang`
   ADD CONSTRAINT `language_id_refs_id_8a5613fb` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `categories`
-  ADD CONSTRAINT `parent_id_refs_id_d28b8177` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `owner_id_refs_id_e55436a7` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`);
+  ADD CONSTRAINT `owner_id_refs_id_e55436a7` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`),
+  ADD CONSTRAINT `parent_id_refs_id_d28b8177` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`);
 
 ALTER TABLE `categories_active`
   ADD CONSTRAINT `category_id_refs_id_5dbfafdf` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
@@ -4624,8 +4845,8 @@ ALTER TABLE `categories_galleries`
   ADD CONSTRAINT `gallery_id_refs_id_6ba249c3` FOREIGN KEY (`gallery_id`) REFERENCES `galleries` (`id`);
 
 ALTER TABLE `categories_languages`
-  ADD CONSTRAINT `category_id_refs_id_2ba099df` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `categorylanguage_id_refs_id_496e19b` FOREIGN KEY (`categorylanguage_id`) REFERENCES `categorylanguages` (`id`);
+  ADD CONSTRAINT `categorylanguage_id_refs_id_496e19b` FOREIGN KEY (`categorylanguage_id`) REFERENCES `categorylanguages` (`id`),
+  ADD CONSTRAINT `category_id_refs_id_2ba099df` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 
 ALTER TABLE `categories_permissions`
   ADD CONSTRAINT `category_id_refs_id_a7bbb3f2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
@@ -4654,8 +4875,8 @@ ALTER TABLE `galleries_active`
   ADD CONSTRAINT `site_id_refs_id_db9f19f6` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `galleries_languages`
-  ADD CONSTRAINT `gallery_id_refs_id_c5591a6f` FOREIGN KEY (`gallery_id`) REFERENCES `galleries` (`id`),
-  ADD CONSTRAINT `gallerylanguage_id_refs_id_31a3ac83` FOREIGN KEY (`gallerylanguage_id`) REFERENCES `gallerieslanguages` (`id`);
+  ADD CONSTRAINT `gallerylanguage_id_refs_id_31a3ac83` FOREIGN KEY (`gallerylanguage_id`) REFERENCES `gallerieslanguages` (`id`),
+  ADD CONSTRAINT `gallery_id_refs_id_c5591a6f` FOREIGN KEY (`gallery_id`) REFERENCES `galleries` (`id`);
 
 ALTER TABLE `galleries_permissions`
   ADD CONSTRAINT `gallery_id_refs_id_e5eb186c` FOREIGN KEY (`gallery_id`) REFERENCES `galleries` (`id`),
@@ -4669,16 +4890,16 @@ ALTER TABLE `imagelanguages`
   ADD CONSTRAINT `language_id_refs_id_c994f155` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `images`
-  ADD CONSTRAINT `owner_id_refs_id_292119af` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`),
-  ADD CONSTRAINT `gallery_id_refs_id_396a15a6` FOREIGN KEY (`gallery_id`) REFERENCES `galleries` (`id`);
+  ADD CONSTRAINT `gallery_id_refs_id_396a15a6` FOREIGN KEY (`gallery_id`) REFERENCES `galleries` (`id`),
+  ADD CONSTRAINT `owner_id_refs_id_292119af` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`);
 
 ALTER TABLE `images_active`
   ADD CONSTRAINT `image_id_refs_id_ec5a35eb` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`),
   ADD CONSTRAINT `site_id_refs_id_ae207037` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `images_languages`
-  ADD CONSTRAINT `image_id_refs_id_aca91289` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`),
-  ADD CONSTRAINT `imagelanguage_id_refs_id_7aa4a585` FOREIGN KEY (`imagelanguage_id`) REFERENCES `imagelanguages` (`id`);
+  ADD CONSTRAINT `imagelanguage_id_refs_id_7aa4a585` FOREIGN KEY (`imagelanguage_id`) REFERENCES `imagelanguages` (`id`),
+  ADD CONSTRAINT `image_id_refs_id_aca91289` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`);
 
 ALTER TABLE `images_permissions`
   ADD CONSTRAINT `image_id_refs_id_a731fcd2` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`),
@@ -4699,8 +4920,8 @@ ALTER TABLE `languages_sites`
 ALTER TABLE `megamenu`
   ADD CONSTRAINT `category_id_refs_id_d6c0494a` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `menu_id_refs_id_91e2d43b` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`),
-  ADD CONSTRAINT `module_id_refs_id_1c16c6e` FOREIGN KEY (`module_id`) REFERENCES `module_registered` (`id`),
   ADD CONSTRAINT `owner_id_refs_id_b7b56dba` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`),
+  ADD CONSTRAINT `registered_module_id_refs_id_1c16c6e` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`),
   ADD CONSTRAINT `rootmenu_id_refs_id_91e2d43b` FOREIGN KEY (`rootmenu_id`) REFERENCES `menu` (`id`);
 
 ALTER TABLE `megamenu_active`
@@ -4711,8 +4932,8 @@ ALTER TABLE `megamenu_lang`
   ADD CONSTRAINT `language_id_refs_id_6a49f184` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `megamenu_languages`
-  ADD CONSTRAINT `megamenu_id_refs_id_a540fd4b` FOREIGN KEY (`megamenu_id`) REFERENCES `megamenu` (`id`),
-  ADD CONSTRAINT `megamenulanguage_id_refs_id_219fca07` FOREIGN KEY (`megamenulanguage_id`) REFERENCES `megamenu_lang` (`id`);
+  ADD CONSTRAINT `megamenulanguage_id_refs_id_219fca07` FOREIGN KEY (`megamenulanguage_id`) REFERENCES `megamenu_lang` (`id`),
+  ADD CONSTRAINT `megamenu_id_refs_id_a540fd4b` FOREIGN KEY (`megamenu_id`) REFERENCES `megamenu` (`id`);
 
 ALTER TABLE `megamenu_permissions`
   ADD CONSTRAINT `megamenu_id_refs_id_e957e504` FOREIGN KEY (`megamenu_id`) REFERENCES `megamenu` (`id`),
@@ -4724,14 +4945,14 @@ ALTER TABLE `megamenu_sites`
 
 ALTER TABLE `menu`
   ADD CONSTRAINT `owner_id_refs_id_8fe44a04` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`),
-  ADD CONSTRAINT `module_id_refs_id_c5896330` FOREIGN KEY (`module_id`) REFERENCES `module_registered` (`id`),
-  ADD CONSTRAINT `parent_id_refs_id_2ff559ed` FOREIGN KEY (`parent_id`) REFERENCES `menu` (`id`);
+  ADD CONSTRAINT `parent_id_refs_id_2ff559ed` FOREIGN KEY (`parent_id`) REFERENCES `menu` (`id`),
+  ADD CONSTRAINT `registered_module_id_refs_id_c5896330` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
 
 ALTER TABLE `menuitem`
   ADD CONSTRAINT `menu_id_refs_id_1e6573e0` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`),
-  ADD CONSTRAINT `module_id_refs_id_d86a01c3` FOREIGN KEY (`module_id`) REFERENCES `module_registered` (`id`),
   ADD CONSTRAINT `owner_id_refs_id_85d9bf71` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`),
-  ADD CONSTRAINT `parent_id_refs_id_93836093` FOREIGN KEY (`parent_id`) REFERENCES `menuitem` (`id`);
+  ADD CONSTRAINT `parent_id_refs_id_93836093` FOREIGN KEY (`parent_id`) REFERENCES `menuitem` (`id`),
+  ADD CONSTRAINT `registered_module_id_refs_id_d86a01c3` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
 
 ALTER TABLE `menuitem_active`
   ADD CONSTRAINT `menuitem_id_refs_id_77d9ac57` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`),
@@ -4741,8 +4962,8 @@ ALTER TABLE `menuitem_lang`
   ADD CONSTRAINT `language_id_refs_id_4fd5574f` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `menuitem_languages`
-  ADD CONSTRAINT `menuitem_id_refs_id_e4a82099` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`),
-  ADD CONSTRAINT `menuitemlanguage_id_refs_id_98a21747` FOREIGN KEY (`menuitemlanguage_id`) REFERENCES `menuitem_lang` (`id`);
+  ADD CONSTRAINT `menuitemlanguage_id_refs_id_98a21747` FOREIGN KEY (`menuitemlanguage_id`) REFERENCES `menuitem_lang` (`id`),
+  ADD CONSTRAINT `menuitem_id_refs_id_e4a82099` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`);
 
 ALTER TABLE `menuitem_permissions`
   ADD CONSTRAINT `menuitem_id_refs_id_3e77aff6` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`),
@@ -4764,19 +4985,55 @@ ALTER TABLE `menu_sites`
   ADD CONSTRAINT `menu_id_refs_id_608f4d9e` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`),
   ADD CONSTRAINT `site_id_refs_id_7d5cdf7b` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
+ALTER TABLE `module_adv_option`
+  ADD CONSTRAINT `advgroup_id_refs_id_17b8be30` FOREIGN KEY (`advgroup_id`) REFERENCES `adv_groups` (`id`),
+  ADD CONSTRAINT `adv_id_refs_id_60258c44` FOREIGN KEY (`adv_id`) REFERENCES `adv` (`id`),
+  ADD CONSTRAINT `module_id_refs_id_9f6d65e8` FOREIGN KEY (`module_id`) REFERENCES `module_type` (`id`),
+  ADD CONSTRAINT `registered_module_id_refs_id_ea9a60a2` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
+
+ALTER TABLE `module_adv_option_sites`
+  ADD CONSTRAINT `advmoduleoption_id_refs_id_64683cda` FOREIGN KEY (`advmoduleoption_id`) REFERENCES `module_adv_option` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_925e0091` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+
 ALTER TABLE `module_article_list_option`
   ADD CONSTRAINT `category_id_refs_id_afaf25e9` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `menuitem_id_refs_id_d15289db` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`),
-  ADD CONSTRAINT `module_id_refs_id_373ffb25` FOREIGN KEY (`module_id`) REFERENCES `module_registered` (`id`);
+  ADD CONSTRAINT `registered_module_id_refs_id_373ffb25` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
 
 ALTER TABLE `module_article_option`
-  ADD CONSTRAINT `module_id_refs_id_5654e2a3` FOREIGN KEY (`module_id`) REFERENCES `module_registered` (`id`),
   ADD CONSTRAINT `article_id_refs_id_4a0d21e8` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
-  ADD CONSTRAINT `menuitem_id_refs_id_845e1a33` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`);
+  ADD CONSTRAINT `menuitem_id_refs_id_845e1a33` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`),
+  ADD CONSTRAINT `registered_module_id_refs_id_5654e2a3` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
+
+ALTER TABLE `module_htmlbox_option`
+  ADD CONSTRAINT `module_id_refs_id_fa878041` FOREIGN KEY (`module_id`) REFERENCES `module_type` (`id`),
+  ADD CONSTRAINT `registered_module_id_refs_id_9872b383` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
+
+ALTER TABLE `module_htmlbox_option_sites`
+  ADD CONSTRAINT `htmlboxmoduleoption_id_refs_id_12e66068` FOREIGN KEY (`htmlboxmoduleoption_id`) REFERENCES `module_htmlbox_option` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_d126699e` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+
+ALTER TABLE `module_link_option`
+  ADD CONSTRAINT `menuitem_id_refs_id_62d5904` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`),
+  ADD CONSTRAINT `module_id_refs_id_fc2200c8` FOREIGN KEY (`module_id`) REFERENCES `module_type` (`id`),
+  ADD CONSTRAINT `registered_module_id_refs_id_d4cf7cae` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
+
+ALTER TABLE `module_link_option_sites`
+  ADD CONSTRAINT `linkmoduleoption_id_refs_id_e0f9fd9e` FOREIGN KEY (`linkmoduleoption_id`) REFERENCES `module_link_option` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_13ef6d37` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `module_menu_option`
   ADD CONSTRAINT `menu_id_refs_id_61eca25c` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`),
-  ADD CONSTRAINT `module_id_refs_id_1a6f2f79` FOREIGN KEY (`module_id`) REFERENCES `module_registered` (`id`);
+  ADD CONSTRAINT `registered_module_id_refs_id_1a6f2f79` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
+
+ALTER TABLE `module_newsflash_c_option`
+  ADD CONSTRAINT `category_id_refs_id_2c9c8c56` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `module_id_refs_id_1f4e1984` FOREIGN KEY (`module_id`) REFERENCES `module_type` (`id`),
+  ADD CONSTRAINT `registered_module_id_refs_id_ddc9cdf2` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
+
+ALTER TABLE `module_newsflash_c_option_sites`
+  ADD CONSTRAINT `newsflashcolumnmoduleoption_id_refs_id_45927eda` FOREIGN KEY (`newsflashcolumnmoduleoption_id`) REFERENCES `module_newsflash_c_option` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_5e45345d` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `module_position`
   ADD CONSTRAINT `owner_id_refs_id_a68935cc` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`);
@@ -4794,12 +5051,21 @@ ALTER TABLE `module_position_sites`
   ADD CONSTRAINT `site_id_refs_id_c2833c3d` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `module_registered_permissions`
-  ADD CONSTRAINT `registeredmodule_id_refs_id_7df1ceea` FOREIGN KEY (`registeredmodule_id`) REFERENCES `module_registered` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_54124c6d` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_54124c6d` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `registeredmodule_id_refs_id_7df1ceea` FOREIGN KEY (`registeredmodule_id`) REFERENCES `module_registered` (`id`);
 
 ALTER TABLE `module_registered_sites`
   ADD CONSTRAINT `registeredmodule_id_refs_id_c5c1f594` FOREIGN KEY (`registeredmodule_id`) REFERENCES `module_registered` (`id`),
   ADD CONSTRAINT `site_id_refs_id_79209df0` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+
+ALTER TABLE `module_sitemap_option`
+  ADD CONSTRAINT `menu_id_refs_id_a69303dd` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`),
+  ADD CONSTRAINT `module_id_refs_id_ca7b1ab6` FOREIGN KEY (`module_id`) REFERENCES `module_type` (`id`),
+  ADD CONSTRAINT `registered_module_id_refs_id_150aadc0` FOREIGN KEY (`registered_module_id`) REFERENCES `module_registered` (`id`);
+
+ALTER TABLE `module_sitemap_option_sites`
+  ADD CONSTRAINT `sitemapmoduleoption_id_refs_id_c0236bb6` FOREIGN KEY (`sitemapmoduleoption_id`) REFERENCES `module_sitemap_option` (`id`),
+  ADD CONSTRAINT `site_id_refs_id_de33bf53` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `module_type_active`
   ADD CONSTRAINT `moduletype_id_refs_id_2d05261d` FOREIGN KEY (`moduletype_id`) REFERENCES `module_type` (`id`),
@@ -4813,24 +5079,24 @@ ALTER TABLE `module_visibility`
   ADD CONSTRAINT `model_id_refs_id_519a5e75` FOREIGN KEY (`model_id`) REFERENCES `module_registered` (`id`);
 
 ALTER TABLE `module_visibility_menuitem`
-  ADD CONSTRAINT `modulevisibility_id_refs_id_73af97d5` FOREIGN KEY (`modulevisibility_id`) REFERENCES `module_visibility` (`id`),
-  ADD CONSTRAINT `menuitem_id_refs_id_8b148c19` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`);
+  ADD CONSTRAINT `menuitem_id_refs_id_8b148c19` FOREIGN KEY (`menuitem_id`) REFERENCES `menuitem` (`id`),
+  ADD CONSTRAINT `modulevisibility_id_refs_id_73af97d5` FOREIGN KEY (`modulevisibility_id`) REFERENCES `module_visibility` (`id`);
 
 ALTER TABLE `module_visibility_sites`
   ADD CONSTRAINT `modulevisibility_id_refs_id_1b67e784` FOREIGN KEY (`modulevisibility_id`) REFERENCES `module_visibility` (`id`),
   ADD CONSTRAINT `site_id_refs_id_19386aac` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `profiles_permissions`
-  ADD CONSTRAINT `userprofile_id_refs_id_391ded56` FOREIGN KEY (`userprofile_id`) REFERENCES `profiles` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_bda9a079` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_bda9a079` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `userprofile_id_refs_id_391ded56` FOREIGN KEY (`userprofile_id`) REFERENCES `profiles` (`id`);
 
 ALTER TABLE `profiles_sites`
-  ADD CONSTRAINT `userprofile_id_refs_id_1c504d5c` FOREIGN KEY (`userprofile_id`) REFERENCES `profiles` (`id`),
-  ADD CONSTRAINT `site_id_refs_id_1eb5f9d4` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+  ADD CONSTRAINT `site_id_refs_id_1eb5f9d4` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`),
+  ADD CONSTRAINT `userprofile_id_refs_id_1c504d5c` FOREIGN KEY (`userprofile_id`) REFERENCES `profiles` (`id`);
 
 ALTER TABLE `profile_data`
-  ADD CONSTRAINT `profile_id_refs_id_b37e1f` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`),
   ADD CONSTRAINT `country_id_refs_id_a96ef35c` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`),
+  ADD CONSTRAINT `profile_id_refs_id_b37e1f` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`),
   ADD CONSTRAINT `sex_id_refs_id_776a0b5c` FOREIGN KEY (`sex_id`) REFERENCES `sex` (`id`),
   ADD CONSTRAINT `state_id_refs_id_9fce2f9d` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`);
 
@@ -4838,12 +5104,12 @@ ALTER TABLE `repetitio_answers`
   ADD CONSTRAINT `question_id_refs_id_22080e77` FOREIGN KEY (`question_id`) REFERENCES `repetitio_questions` (`id`);
 
 ALTER TABLE `repetitio_answers_languages`
-  ADD CONSTRAINT `repetitioanswer_id_refs_id_a8715abd` FOREIGN KEY (`repetitioanswer_id`) REFERENCES `repetitio_answers` (`id`),
-  ADD CONSTRAINT `repetitioanswerlanguage_id_refs_id_d7850f31` FOREIGN KEY (`repetitioanswerlanguage_id`) REFERENCES `rep_answer_lang` (`id`);
+  ADD CONSTRAINT `repetitioanswerlanguage_id_refs_id_d7850f31` FOREIGN KEY (`repetitioanswerlanguage_id`) REFERENCES `rep_answer_lang` (`id`),
+  ADD CONSTRAINT `repetitioanswer_id_refs_id_a8715abd` FOREIGN KEY (`repetitioanswer_id`) REFERENCES `repetitio_answers` (`id`);
 
 ALTER TABLE `repetitio_answers_permissions`
-  ADD CONSTRAINT `repetitioanswer_id_refs_id_239a10d6` FOREIGN KEY (`repetitioanswer_id`) REFERENCES `repetitio_answers` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_71070d69` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_71070d69` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `repetitioanswer_id_refs_id_239a10d6` FOREIGN KEY (`repetitioanswer_id`) REFERENCES `repetitio_answers` (`id`);
 
 ALTER TABLE `repetitio_answers_sites`
   ADD CONSTRAINT `repetitioanswer_id_refs_id_7436e7b0` FOREIGN KEY (`repetitioanswer_id`) REFERENCES `repetitio_answers` (`id`),
@@ -4853,8 +5119,8 @@ ALTER TABLE `repetitio_course`
   ADD CONSTRAINT `owner_id_refs_id_a5def3fe` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`);
 
 ALTER TABLE `repetitio_courseusers`
-  ADD CONSTRAINT `user_id_refs_id_44ac5e6d` FOREIGN KEY (`user_id`) REFERENCES `profiles` (`id`),
-  ADD CONSTRAINT `course_id_refs_id_15d254a2` FOREIGN KEY (`course_id`) REFERENCES `repetitio_course` (`id`);
+  ADD CONSTRAINT `course_id_refs_id_15d254a2` FOREIGN KEY (`course_id`) REFERENCES `repetitio_course` (`id`),
+  ADD CONSTRAINT `user_id_refs_id_44ac5e6d` FOREIGN KEY (`user_id`) REFERENCES `profiles` (`id`);
 
 ALTER TABLE `repetitio_courseusers_sites`
   ADD CONSTRAINT `repetitiocourseuser_id_refs_id_cb1926c0` FOREIGN KEY (`repetitiocourseuser_id`) REFERENCES `repetitio_courseusers` (`id`),
@@ -4865,32 +5131,32 @@ ALTER TABLE `repetitio_course_active`
   ADD CONSTRAINT `site_id_refs_id_b220446e` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `repetitio_course_languages`
-  ADD CONSTRAINT `repetitiocourse_id_refs_id_7f5dd695` FOREIGN KEY (`repetitiocourse_id`) REFERENCES `repetitio_course` (`id`),
-  ADD CONSTRAINT `repetitiocourselanguage_id_refs_id_54c5370b` FOREIGN KEY (`repetitiocourselanguage_id`) REFERENCES `rep_course_lang` (`id`);
+  ADD CONSTRAINT `repetitiocourselanguage_id_refs_id_54c5370b` FOREIGN KEY (`repetitiocourselanguage_id`) REFERENCES `rep_course_lang` (`id`),
+  ADD CONSTRAINT `repetitiocourse_id_refs_id_7f5dd695` FOREIGN KEY (`repetitiocourse_id`) REFERENCES `repetitio_course` (`id`);
 
 ALTER TABLE `repetitio_course_permissions`
-  ADD CONSTRAINT `repetitiocourse_id_refs_id_ccb16894` FOREIGN KEY (`repetitiocourse_id`) REFERENCES `repetitio_course` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_93d8a6a6` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_93d8a6a6` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `repetitiocourse_id_refs_id_ccb16894` FOREIGN KEY (`repetitiocourse_id`) REFERENCES `repetitio_course` (`id`);
 
 ALTER TABLE `repetitio_course_sites`
   ADD CONSTRAINT `repetitiocourse_id_refs_id_506ec10a` FOREIGN KEY (`repetitiocourse_id`) REFERENCES `repetitio_course` (`id`),
   ADD CONSTRAINT `site_id_refs_id_aa5ebe57` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `repetitio_questions`
-  ADD CONSTRAINT `test_id_refs_id_60853fc1` FOREIGN KEY (`test_id`) REFERENCES `repetitio_tests` (`id`),
-  ADD CONSTRAINT `owner_id_refs_id_5ce77645` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`);
+  ADD CONSTRAINT `owner_id_refs_id_5ce77645` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`),
+  ADD CONSTRAINT `test_id_refs_id_60853fc1` FOREIGN KEY (`test_id`) REFERENCES `repetitio_tests` (`id`);
 
 ALTER TABLE `repetitio_questions_active`
   ADD CONSTRAINT `repetitioquestion_id_refs_id_984c9623` FOREIGN KEY (`repetitioquestion_id`) REFERENCES `repetitio_questions` (`id`),
   ADD CONSTRAINT `site_id_refs_id_b31d006b` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `repetitio_questions_languages`
-  ADD CONSTRAINT `repetitioquestion_id_refs_id_d7dcdf4d` FOREIGN KEY (`repetitioquestion_id`) REFERENCES `repetitio_questions` (`id`),
-  ADD CONSTRAINT `repetitioquestionlanguage_id_refs_id_1eb16943` FOREIGN KEY (`repetitioquestionlanguage_id`) REFERENCES `rep_question_lang` (`id`);
+  ADD CONSTRAINT `repetitioquestionlanguage_id_refs_id_1eb16943` FOREIGN KEY (`repetitioquestionlanguage_id`) REFERENCES `rep_question_lang` (`id`),
+  ADD CONSTRAINT `repetitioquestion_id_refs_id_d7dcdf4d` FOREIGN KEY (`repetitioquestion_id`) REFERENCES `repetitio_questions` (`id`);
 
 ALTER TABLE `repetitio_questions_permissions`
-  ADD CONSTRAINT `repetitioquestion_id_refs_id_4f697cf6` FOREIGN KEY (`repetitioquestion_id`) REFERENCES `repetitio_questions` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_8e873121` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_8e873121` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `repetitioquestion_id_refs_id_4f697cf6` FOREIGN KEY (`repetitioquestion_id`) REFERENCES `repetitio_questions` (`id`);
 
 ALTER TABLE `repetitio_questions_sites`
   ADD CONSTRAINT `repetitioquestion_id_refs_id_ac63a50` FOREIGN KEY (`repetitioquestion_id`) REFERENCES `repetitio_questions` (`id`),
@@ -4905,22 +5171,22 @@ ALTER TABLE `repetitio_tests_active`
   ADD CONSTRAINT `site_id_refs_id_3ac50a61` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `repetitio_tests_languages`
-  ADD CONSTRAINT `repetitiotest_id_refs_id_be682555` FOREIGN KEY (`repetitiotest_id`) REFERENCES `repetitio_tests` (`id`),
-  ADD CONSTRAINT `repetitiotestlanguage_id_refs_id_308e9d75` FOREIGN KEY (`repetitiotestlanguage_id`) REFERENCES `rep_test_lang` (`id`);
+  ADD CONSTRAINT `repetitiotestlanguage_id_refs_id_308e9d75` FOREIGN KEY (`repetitiotestlanguage_id`) REFERENCES `rep_test_lang` (`id`),
+  ADD CONSTRAINT `repetitiotest_id_refs_id_be682555` FOREIGN KEY (`repetitiotest_id`) REFERENCES `repetitio_tests` (`id`);
 
 ALTER TABLE `repetitio_tests_permissions`
-  ADD CONSTRAINT `repetitiotest_id_refs_id_bd2921a6` FOREIGN KEY (`repetitiotest_id`) REFERENCES `repetitio_tests` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_e78a42bd` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_e78a42bd` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `repetitiotest_id_refs_id_bd2921a6` FOREIGN KEY (`repetitiotest_id`) REFERENCES `repetitio_tests` (`id`);
 
 ALTER TABLE `repetitio_tests_sites`
   ADD CONSTRAINT `repetitiotest_id_refs_id_1f824a58` FOREIGN KEY (`repetitiotest_id`) REFERENCES `repetitio_tests` (`id`),
   ADD CONSTRAINT `site_id_refs_id_b3424d22` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `repetitio_useranswers`
-  ADD CONSTRAINT `user_id_refs_id_dbb6eec2` FOREIGN KEY (`user_id`) REFERENCES `profiles` (`id`),
   ADD CONSTRAINT `answer_id_refs_id_9b517f80` FOREIGN KEY (`answer_id`) REFERENCES `repetitio_answers` (`id`),
   ADD CONSTRAINT `question_id_refs_id_e465affc` FOREIGN KEY (`question_id`) REFERENCES `repetitio_questions` (`id`),
-  ADD CONSTRAINT `test_id_refs_id_31056650` FOREIGN KEY (`test_id`) REFERENCES `repetitio_tests` (`id`);
+  ADD CONSTRAINT `test_id_refs_id_31056650` FOREIGN KEY (`test_id`) REFERENCES `repetitio_tests` (`id`),
+  ADD CONSTRAINT `user_id_refs_id_dbb6eec2` FOREIGN KEY (`user_id`) REFERENCES `profiles` (`id`);
 
 ALTER TABLE `repetitio_useranswers_sites`
   ADD CONSTRAINT `repetitiotestanswer_id_refs_id_6db0aefa` FOREIGN KEY (`repetitiotestanswer_id`) REFERENCES `repetitio_useranswers` (`id`),
@@ -4949,8 +5215,8 @@ ALTER TABLE `sheetlanguages`
   ADD CONSTRAINT `language_id_refs_id_13e38c25` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `sheetlanguages_permissions`
-  ADD CONSTRAINT `portalsiteconstlanguage_id_refs_id_a35bad42` FOREIGN KEY (`portalsiteconstlanguage_id`) REFERENCES `sheetlanguages` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_2620ebfb` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_2620ebfb` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `portalsiteconstlanguage_id_refs_id_a35bad42` FOREIGN KEY (`portalsiteconstlanguage_id`) REFERENCES `sheetlanguages` (`id`);
 
 ALTER TABLE `sheetlanguages_sites`
   ADD CONSTRAINT `portalsiteconstlanguage_id_refs_id_4c8b95b8` FOREIGN KEY (`portalsiteconstlanguage_id`) REFERENCES `sheetlanguages` (`id`),
@@ -4964,8 +5230,8 @@ ALTER TABLE `sheets_active`
   ADD CONSTRAINT `site_id_refs_id_4d1f0791` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `sheets_permissions`
-  ADD CONSTRAINT `sheet_id_refs_id_4094cde` FOREIGN KEY (`sheet_id`) REFERENCES `sheets` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_56d8fd85` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_56d8fd85` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `sheet_id_refs_id_4094cde` FOREIGN KEY (`sheet_id`) REFERENCES `sheets` (`id`);
 
 ALTER TABLE `sheets_sites`
   ADD CONSTRAINT `sheet_id_refs_id_3d5718e4` FOREIGN KEY (`sheet_id`) REFERENCES `sheets` (`id`),
@@ -4980,16 +5246,16 @@ ALTER TABLE `site_portal_active`
   ADD CONSTRAINT `site_id_refs_id_be0aa76c` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `site_portal_permissions`
-  ADD CONSTRAINT `siteportal_id_refs_id_9dcb3d88` FOREIGN KEY (`siteportal_id`) REFERENCES `site_portal` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_5d8d1844` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_5d8d1844` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `siteportal_id_refs_id_9dcb3d88` FOREIGN KEY (`siteportal_id`) REFERENCES `site_portal` (`id`);
 
 ALTER TABLE `site_portal_stat`
   ADD CONSTRAINT `owner_id_refs_id_99c34bae` FOREIGN KEY (`owner_id`) REFERENCES `profiles` (`id`),
   ADD CONSTRAINT `site_id_refs_id_b2d7806a` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
 
 ALTER TABLE `site_portal_stat_permissions`
-  ADD CONSTRAINT `siteportalstat_id_refs_id_f24e506c` FOREIGN KEY (`siteportalstat_id`) REFERENCES `site_portal_stat` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_2aff856` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_2aff856` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `siteportalstat_id_refs_id_f24e506c` FOREIGN KEY (`siteportalstat_id`) REFERENCES `site_portal_stat` (`id`);
 
 ALTER TABLE `taggit_taggeditem`
   ADD CONSTRAINT `content_type_id_refs_id_5a2b7711` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
@@ -5000,21 +5266,21 @@ ALTER TABLE `wiki`
   ADD CONSTRAINT `parent_id_refs_id_5713793d` FOREIGN KEY (`parent_id`) REFERENCES `wiki` (`id`);
 
 ALTER TABLE `wiki_active`
-  ADD CONSTRAINT `wiki_id_refs_id_c00e8741` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`),
-  ADD CONSTRAINT `site_id_refs_id_8eb253c3` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+  ADD CONSTRAINT `site_id_refs_id_8eb253c3` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`),
+  ADD CONSTRAINT `wiki_id_refs_id_c00e8741` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`);
 
 ALTER TABLE `wiki_lang`
   ADD CONSTRAINT `language_id_refs_id_246ed0f1` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`);
 
 ALTER TABLE `wiki_languages`
-  ADD CONSTRAINT `wiki_id_refs_id_6558939f` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`),
-  ADD CONSTRAINT `wikilanguage_id_refs_id_1ab7e709` FOREIGN KEY (`wikilanguage_id`) REFERENCES `wiki_lang` (`id`);
+  ADD CONSTRAINT `wikilanguage_id_refs_id_1ab7e709` FOREIGN KEY (`wikilanguage_id`) REFERENCES `wiki_lang` (`id`),
+  ADD CONSTRAINT `wiki_id_refs_id_6558939f` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`);
 
 ALTER TABLE `wiki_permissions`
-  ADD CONSTRAINT `wiki_id_refs_id_dcd8f6c6` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`),
-  ADD CONSTRAINT `permisiongroup_id_refs_id_e9a0e5cf` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`);
+  ADD CONSTRAINT `permisiongroup_id_refs_id_e9a0e5cf` FOREIGN KEY (`permisiongroup_id`) REFERENCES `permission_groups` (`id`),
+  ADD CONSTRAINT `wiki_id_refs_id_dcd8f6c6` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`);
 
 ALTER TABLE `wiki_sites`
-  ADD CONSTRAINT `wiki_id_refs_id_48119700` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`),
-  ADD CONSTRAINT `site_id_refs_id_471baf82` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`);
+  ADD CONSTRAINT `site_id_refs_id_471baf82` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`),
+  ADD CONSTRAINT `wiki_id_refs_id_48119700` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`);
 SET FOREIGN_KEY_CHECKS=1;

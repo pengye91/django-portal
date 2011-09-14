@@ -27,7 +27,13 @@ from core.model.megamenu import MegaMenuItemLanguageModel, MegaMenuItemModel
 from core.model.modules.artykul_module import ArticleOptionsModel
 from core.model.modules.article_list_module import ArticleListModuleOptionModel
 from core.model.modules.menu_module import MenuOptionsModel
+from core.model.modules.newsflash_column_module import NewsFlashColumnModuleModel
+from core.model.modules.htmlbox_module import HTMLBoxModuleOptionModel
+from core.model.modules.link_module import LinkModuleOptionModel
+from core.model.modules.sitemap_module import SiteMapOptionModel
 from core.model.permissions import PermissionGroupModel
+from core.model.adv import AdvClientModel, AdvGroupModel, AdvModel
+from core.model.modules.adv_module import AdvModuleOptionModel
 
 """ Permissions
 """
@@ -183,6 +189,17 @@ class Article(ArticleModel):
 
     def get_permissions(self):
         return self.permissions
+
+    def get_slug(self, language_id):
+        self.get_language(language_id)
+        return "%s" % self.language.slug
+
+    def get_url_prefix(self):
+        return 'cms/article'
+
+    def get_object_id(self):
+        return self.id
+
 
 """ Sheet
 """
@@ -431,10 +448,11 @@ class RegisteredModule(RegisteredModuleModel):
 
 class Menu(MenuModel):
     active = models.ManyToManyField(Site, related_name='menu_activ')
-    module = models.ForeignKey(RegisteredModule, null=True, blank=True, related_name='menu_module')
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True, related_name='menu_module')
     owner = models.ForeignKey(UserProfile, null=True, blank=True)
     permissions = models.ManyToManyField(PermisionGroup, null=True, blank=True)
     parent = models.ForeignKey('self', null=True, blank=True)
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True)
 
     def get_parent(self):
         return self.parent
@@ -451,7 +469,7 @@ class MenuItemLanguage(MenuItemLanguageModel):
 class MenuItem(MenuItemModel):
     active = models.ManyToManyField(Site, related_name='menuitem_activ')
     languages = models.ManyToManyField(MenuItemLanguage, blank=True, null=True)
-    module = models.ForeignKey(RegisteredModule, null=True, blank=True)
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True)
     menu = models.ForeignKey(Menu, null=True, blank=True)
     owner = models.ForeignKey(UserProfile, null=True, blank=True)
     permissions = models.ManyToManyField(PermisionGroup, null=True, blank=True)
@@ -467,7 +485,7 @@ class MegaMenuLanguage(MegaMenuItemLanguageModel):
 class MegaMenu(MegaMenuItemModel):
     active = models.ManyToManyField(Site, related_name='megamenu_activ')
     languages = models.ManyToManyField(MegaMenuLanguage, blank=True, null=True)
-    module = models.ForeignKey(RegisteredModule, null=True, blank=True)
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True)
     menu = models.ForeignKey(Menu, null=True, blank=True)
     rootmenu = models.ForeignKey(Menu, null=True, blank=True, related_name='rel_menu', verbose_name=u'Powiązane menu główne')
     category = models.ForeignKey(Category, null=True, blank=True)
@@ -478,13 +496,27 @@ class MegaMenu(MegaMenuItemModel):
     def get_permissions(self):
         return self.permissions
 
+""" Adv
+"""
+
+class AdvClient(AdvClientModel):
+    active = models.ManyToManyField(Site, related_name='advclient_activ', blank = True, null=True)
+
+class AdvGroup(AdvGroupModel):
+    active = models.ManyToManyField(Site, related_name='advgroup_activ', blank = True, null=True)
+
+class Adv(AdvModel):
+    group = models.ForeignKey(AdvGroup, null=True, blank=True)
+    active = models.ManyToManyField(Site, related_name='adv_activ', blank = True, null=True)
+    menuitem = models.ManyToManyField(MenuItem, related_name='adv_menuitem', blank = True, null=True)
+
 """ Specific modules
 """
 
 class ArticleModuleOption(ArticleOptionsModel):
     menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
     article = models.ForeignKey(Article, null=True, blank=True)
-    module = models.ForeignKey(RegisteredModule, null=True, blank=True, related_name='art_module')
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True, related_name='art_module')
 
     def get_slug(self, language_id):
         if self.article is not None:
@@ -505,7 +537,7 @@ class ArticleModuleOption(ArticleOptionsModel):
 class ArticleListModuleOption(ArticleListModuleOptionModel):
     menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
     category = models.ForeignKey(Category, null=True, blank=True)
-    module = models.ForeignKey(RegisteredModule, null=True, blank=True, related_name='art_list_module')
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True, related_name='art_list_module')
 
     def get_slug(self, language_id):
         if self.category is not None:
@@ -527,8 +559,100 @@ class ArticleListModuleOption(ArticleListModuleOptionModel):
 class MenuModuleOption(MenuOptionsModel):
     #menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
     menu = models.ForeignKey(Menu, null=True, blank=True)
-    module = models.ForeignKey(RegisteredModule, null=True, blank=True)
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True)
 
+class NewsFlashColumnModuleOption(NewsFlashColumnModuleModel):
+    category = models.ForeignKey(Category, null=True, blank=True)
+    module = models.ForeignKey(ModuleType, null=True, blank=True, related_name='nfc_module')
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True)
+
+    def get_slug(self, language_id):
+        if self.category is not None:
+            self.category.get_language(language_id)
+            return "%s" % self.category.language.slug
+        else:
+            return None
+
+    def get_url_prefix(self):
+        return 'cms/category/list'
+
+    def get_object_id(self):
+        if self.category is not None:
+            return self.category.id
+        else:
+            return 0
+
+class HTMLBoxModuleOption(HTMLBoxModuleOptionModel):
+    menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
+    module = models.ForeignKey(ModuleType, null=True, blank=True, related_name='htmlbox_module')
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True)
+    #permissions = models.ManyToManyField(PermisionGroup, null=True, blank=True)
+
+    def get_slug(self, language_id):
+        return "%s" % self.slug
+
+    def get_url_prefix(self):
+        return 'cms/html'
+
+    def get_object_id(self):
+        return self.id
+
+    def get_permissions(self):
+        return None
+
+class LinkModuleOption(LinkModuleOptionModel):
+    menuitem = models.ForeignKey(MenuItem, null=True, blank=True)
+    module = models.ForeignKey(ModuleType, null=True, blank=True, related_name='link_module')
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True)
+    #permissions = models.ManyToManyField(PermisionGroup, null=True, blank=True)
+
+    def get_slug(self, language_id):
+        return "%s" % self.slug
+
+    def get_url_prefix(self):
+        return 'external_link'
+
+    def get_object_id(self):
+        return self.id
+
+    def get_permissions(self):
+        return None #self.permissions
+
+class AdvModuleOption(AdvModuleOptionModel):
+    advgroup = models.ForeignKey(AdvGroup, null=True, blank=True)
+    adv = models.ForeignKey(Adv, null=True, blank=True)
+    module = models.ForeignKey(ModuleType, null=True, blank=True, related_name='adv_module')
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True)
+
+    def get_slug(self, language_id):
+        return "%s" % self.slug
+
+    def get_url_prefix(self):
+        return 'cms/html'
+
+    def get_object_id(self):
+        return self.id
+
+    def get_permissions(self):
+        return None
+
+class SiteMapModuleOption(SiteMapOptionModel):
+    menu = models.ForeignKey(Menu, null=True, blank=True)
+    module = models.ForeignKey(ModuleType, null=True, blank=True, related_name='sitemap_module')
+    registered_module = models.ForeignKey(RegisteredModule, null=True, blank=True)
+    #permissions = models.ManyToManyField(PermisionGroup, null=True, blank=True)
+
+    def get_slug(self, language_id):
+        return "%s" % self.slug
+
+    def get_url_prefix(self):
+        return 'sitemap'
+
+    def get_object_id(self):
+        return self.id
+
+    def get_permissions(self):
+        return None #self.permissions
 
 def get_module_options_model(moduleId):
     try:
@@ -541,6 +665,13 @@ def get_module_options_model(moduleId):
     cl = eval(module.type.options_modelname)
     return cl()
 
+def get_module_type_options_model(module_type):
+    cl = eval(module_type.options_modelname)
+    return cl()
+
+def get_module_options_by_type(module_type):
+    cl = eval(module_type.options_modelname)
+    return cl()
 
 """ Visibility
 """

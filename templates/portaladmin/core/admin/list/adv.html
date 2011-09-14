@@ -1,0 +1,66 @@
+{% extends "core/admin/list.html" %}
+
+{% load portaltags %}
+{% load thumbnail %}
+
+{% block paneltitle %}
+    {% getlang '__adm_Advertisement__'%}
+{% endblock %}
+
+{% block urladdbutton %}
+    {% url core.view.adv_admin.add_item %}
+{% endblock %}
+
+{% block listheader %}
+    <th>{% getlang '__adm_Lp__' %}
+    <th>{% getlang '__adm_Title__' %}
+    <th>{% getlang '__adm_Active__' %}
+    <th>{% getlang '__adm_Preview__' %}
+    <th>{% getlang '__adm_Groups__' %}
+    <th>{% getlang '__adm_Create_date__' %}
+    <th>{% getlang '__adm_Id__' %}
+    <th>{% getlang '__adm_Delete__' %}
+{% endblock %}
+
+{% block listcontent %}
+    {% for item in data %}
+    <tr class="tablecontent" id="row{{ item.id }}">
+        <td>{{ forloop.counter }}
+        <td class="tdtitle"><a href="{% url core.view.adv_admin.edit_item item.id %}">{{ item.name }}</a>
+        <td class="tdactive">
+            {% if activesiteobject in item.active.all %}
+                <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/yes.gif" width="24" id="imgyes{{ item.id }}" onclick="changeactivity({{ item.id }},0,'adv/adv')" />
+                <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" onclick="changeactivity({{ item.id }},1,'adv/adv')" class="hiddenitem" />
+            {% else %}
+                <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/yes.gif" width="24" id="imgyes{{ item.id }}" onclick="changeactivity({{ item.id }},0,'adv/adv')" class="hiddenitem" />
+                <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" onclick="changeactivity({{ item.id }},1,'adv/adv')" />
+            {% endif %}
+        <td><div style="width: 200px; height: 50px;">
+        {% if item.file %}
+            <object codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="200" height="50">
+                <param name="movie" value="/site_media/{{ item.file }}">
+                <param name="quality" value="high">
+                <param name="wmode" value="transparent">
+                <embed src="/site_media/{{ item.file }}" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash">
+            </object>
+        {% else %}
+            {% if item.code %}
+                Kod
+            {% else %}
+                {% if item.mainimage %}
+                    {% thumbnail item.mainimage "190x48" crop="center" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+                    {% endthumbnail %}
+                {% else %}
+                    
+                {% endif %}
+            {% endif %}
+        {% endif %}
+        </div>
+        <td class="tdsites">{{ item.group.name }}
+        <td>{{ item.date|date:"d-m-Y H:i:s" }}
+        <td class="tdid">{{ item.id }}
+        <td class="tddelete"><img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/delete.gif" width="24" onclick="deleteitem({{ item.id }},'adv/adv')" />
+    </tr>
+    {% endfor %}
+{% endblock %}

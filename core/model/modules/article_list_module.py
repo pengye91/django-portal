@@ -15,6 +15,7 @@ class ArticleListModuleOptionModel(models.Model):
     show_footer = models.BooleanField(default = True)
     show_info = models.BooleanField(default = True)
     show_more = models.BooleanField(default = True)
+    small = models.BooleanField(default = False)
     fetch_subcategories = models.BooleanField(default = False)
     subcategories_depth = models.IntegerField(blank=True, null=True)
     link_title = models.BooleanField(default = True)

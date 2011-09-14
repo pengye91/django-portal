@@ -45,7 +45,7 @@ class AdminManager(BaseManager):
                 self.set_form(self.item.language, request)
 
             if self.modelOptions is not None:
-                self.set_options_form(self.options_item, request)
+                self.set_options_form(self.options_item, request, prefix='opt')
 
             """ jesli wszystko ok to zapisz obiekty"""
             validate = False
@@ -77,7 +77,7 @@ class AdminManager(BaseManager):
             if self.modelLanguage is not None:
                 self.set_form(self.item.language)
             if self.modelOptions is not None:
-                self.set_options_form(self.options_item)
+                self.set_options_form(self.options_item, prefix='opt')
 
         return False
 
@@ -88,10 +88,13 @@ class AdminManager(BaseManager):
             return True
         return False
 
-    def set_form(self, item, request=None):
+    def set_form(self, item, request=None, prefix=None):
         """ Ustawia formularza
         """
-        kwargs = { 'instance':item, 'prefix':type(item).__name__}
+        if prefix is None:
+            kwargs = { 'instance':item, 'prefix':type(item).__name__}
+        else:
+            kwargs = { 'instance':item, 'prefix': prefix}
 
         if request is not None:
             args = (request.POST,request.FILES)
@@ -117,10 +120,13 @@ class AdminManager(BaseManager):
         else:
             self.form = None
 
-    def set_options_form(self, item, request=None):
+    def set_options_form(self, item, request=None, prefix=None):
         """ Ustawia formularza
         """
-        kwargs = { 'instance':item, 'prefix':type(item).__name__}
+        if prefix is None:
+            kwargs = { 'instance':item, 'prefix':type(item).__name__}
+        else:
+            kwargs = { 'instance':item, 'prefix': prefix }
 
         if request is not None:
             args = (request.POST,request.FILES)
@@ -131,10 +137,11 @@ class AdminManager(BaseManager):
             model_type = ContentType.objects.get_for_model(self.modelOptions)
         except Exception, e:
             self.debugger.catch_error('set_options_form: ', e)
+            model_type = None
 
         if isinstance(item, model_type.model_class()):
             self.options_form = self.form_options_class(*args, **kwargs)
-            self.options_form = self.form_options_class(*args, instance=item)
+            #self.options_form = self.form_options_class(*args, instance=item)
         else:
             self.options_form = None
 

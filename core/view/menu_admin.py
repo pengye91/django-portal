@@ -11,6 +11,8 @@ from core.manager.system import SystemManager
 from core.models import Menu, MenuModuleOption, RegisteredModule, ModuleType
 from core.form.menu import MenuForm as AdmItemForm
 from core.form.module.menu_module import MenuOptionForm
+from core.form.modules import get_module_options, get_module_type_options
+from core.models import get_module_options_model, get_module_type_options_model
 
 from core.models import MenuItem, MenuItemLanguage
 
@@ -49,67 +51,45 @@ def edit_item(request, itemId):
     system = SystemObject(request)
     if system.permission.user is None:
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
+
     system.manager.fetch_item(itemId)
     system.manager.set_language(system.language.currentLanguage)
 
+    menuoption = MenuModuleOption.objects.filter(menu=system.manager.item)
+    if len(menuoption) > 0:
+        menuoption = menuoption[0]
+    else:
+        type_module = ModuleType.objects.get(name='Menu')
+        rmodule = RegisteredModule()
+        rmodule.owner = system.permission.user
+        rmodule.name = ' (Pozycja menu)'
+        rmodule.type = type_module
+        rmodule.order = 0
+        rmodule.menu = 0
+        rmodule.save()
+        rmodule.sites.add(system.portal.get_active_site())
+        rmodule.active.add(system.portal.get_active_site())
+        rmodule.save()
+        menuoption = MenuModuleOption()
+        menuoption.menu = system.manager.item
+        menuoption.registered_module = rmodule
+        menuoption.save()
+
+    system.manager.options_item = menuoption
     system.manager.form_options_class = MenuOptionForm().__class__
-    system.manager.modelOptions = MenuModuleOption()
-    try:
-        mtype = ModuleType.objects.get(name='Menu')
-    except Exception, e:
-        print e
-        mtype = None
 
-    try:
-        options = system.manager.modelOptions.__class__.objects.filter(menu=system.manager.item)
-        if len(options) == 0:
-            system.manager.options_item = system.manager.modelOptions
-            system.manager.options_item.menu = system.manager.item
-            system.manager.options_item.save()
-            module = RegisteredModule()
-            module.name = 'new menu module'
-            if mtype is not None:
-                module.type = mtype
-            module.save()
-            system.manager.options_item.module = module
-            system.manager.options_item.save()
-        else:
-            system.manager.options_item = options[0]
-    except Exception, e:
-        system.debugger.catch_error('edit_item: ', e)
-        system.manager.options_item = system.manager.modelOptions
-        system.manager.options_item.save()
-        module = RegisteredModule()
-        module.name = 'new menu module'
-        if mtype is not None:
-            module.type = mtype
-        module.save()
-        system.manager.options_item.module = module
-        system.manager.options_item.save()
-
+    system.manager.modelOptions = menuoption
     result = system.edit_item(request, itemId)
 
-    if result is not None:
-        system.manager.item.sites.add(system.portal.get_active_site())
-        system.manager.item.active.add(system.portal.get_active_site())
-        try:
-            module = RegisteredModule.objects.get(id=system.manager.options_item.module.id)
+    system.manager.options_form.choices(system)
 
-        except Exception, e:
-            print e
-            module = RegisteredModule()
-        module.name = system.manager.item.name
-        if mtype is not None:
-            module.type = mtype
-        module.save()
-        module.sites.add(system.portal.get_active_site())
-        module.active.add(system.portal.get_active_site())
-        system.manager.options_item.module = module
-        system.manager.options_item.save()
+    if result is not None:
+        menuoption.registered_module.name = system.manager.item.name + u' (Menu)'
+        menuoption.registered_module.save()
         return result
 
-    if system.manager.form is not None:
-        system.manager.form.choices(system, 'parent')
+    system.manager.options_form.choices(system, edit_menu=True)
+    system.manager.form.choices(system)
 
     system.template = loader.get_template(system.sheet.get_sheet_file('admin_menu_edit'))
     c = RequestContext(request, system.get_context())
@@ -122,6 +102,21 @@ def add_item(request):
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
     system.new()
 
+    type_module = ModuleType.objects.get(name='Menu')
+    rmodule = RegisteredModule()
+    rmodule.type = type_module
+    rmodule.owner = system.permission.user
+    rmodule.name = ' (Menu)'
+    rmodule.order = 0
+    rmodule.save()
+    rmodule.sites.add(system.portal.get_active_site())
+    rmodule.active.add(system.portal.get_active_site())
+
+    menuoption = MenuModuleOption()
+    menuoption.menu = system.manager.item
+    menuoption.registered_module = rmodule
+    menuoption.save()
+    """
     rootmenuitem = MenuItem()
     rootmenuitem.noedit = True
     rootmenuitem.save()
@@ -132,7 +127,7 @@ def add_item(request):
     for l in rootmenuitem.languages.all():
         l.name = 'Root'
         l.save()
-
+    """
     return HttpResponseRedirect(reverse('core.view.menu_admin.edit_item', args=(system.manager.item.id,)))
 
 

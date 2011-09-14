@@ -46,6 +46,15 @@ class ArticleManager(models.Manager):
         if options.has_key('temp'):
             kwargs['temp'] = options['temp']
 
+        if options.has_key('category__id'):
+            kwargs['category__id'] = options['category__id']
+
+        if options.has_key('category'):
+            kwargs['category__in'] = options['category']
+
+        if options.has_key('not_dentoimage'):
+            kwargs['dentomainimage__isnull'] = False
+
         if options.has_key('extra'):
             kwargs.update(options['extra'])
 
@@ -55,6 +64,7 @@ class ArticleModel(BaseModel,Preferences):
     path = str(datetime.now().year) + '/' + str(datetime.now().month)
     fullpath = 'images/articles/' + path
     author = models.CharField(max_length=255, verbose_name=u'Autor',blank = True, null=True)
+    dentomainimage = models.TextField(blank = True, null=True)
     mainimage = models.ImageField(verbose_name=u'Zdjęcie główne', upload_to=fullpath, null=True, blank=True)
     mimage_info = models.CharField(max_length=255, verbose_name='Info o zdjeciu',blank = True, null=True)
     pathinfo  = models.CharField(max_length=255, blank=False, null=False, editable=False, default=path)

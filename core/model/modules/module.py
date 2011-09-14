@@ -35,6 +35,9 @@ class ModelModuleManager(models.Manager):
         if options.has_key('extra'):
             kwargs.update(options['extra'])
 
+        if options.has_key('notmenumodule'):
+            exclude['type__menu'] = True
+
         return self.filter(**kwargs).exclude(**exclude)
 
 class ModulePositionModel(BaseModel):
@@ -64,7 +67,7 @@ class ModuleTypeModel(BaseModel):
     filemodel = models.CharField(max_length=255, verbose_name=u'Plik z modelem', blank=True, null=True)
     fileform = models.CharField(max_length=255, verbose_name=u'Plik z formularzem', blank=True, null=True)
     filetemplate = models.CharField(max_length=255, verbose_name=u'Plik szablonu', blank=True, null=True)
-    fileview = models.CharField(max_length=255, verbose_name=u'Plik szablonu', blank=True, null=True)
+    fileview = models.CharField(max_length=255, verbose_name=u'Plik widoku', blank=True, null=True)
     objects = ModelModuleManager()
 
     class Meta:

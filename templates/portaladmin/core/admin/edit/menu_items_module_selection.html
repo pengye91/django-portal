@@ -19,13 +19,13 @@
                 <th>{% getlang '__adm_Module__' %}
                 <th>{% getlang '__adm_Action__' %}
             </tr>
-            {% for module in modules %}
-                {% if module.type.menu %}
+            {% for module in module_types %}
+                {% if module.menu %}
                     <tr class="tablecontent" id="row{{ module.id }}">
                         <td class="tdid">{{ forloop.counter }}
                         <td class="tdtitle">
                                     {{ module.name }}
-                        <td class="tdid"><a href="{% url core.view.menu_item_admin.edit_item menuitemid %}?module={{ module.id }}">{% getlang '__adm_Select_module__' %}</a>
+                        <td class="tdid"><a href="{% url core.view.menu_item_admin.edit_item menuitemid %}?module={{ module.id }}{% if changetype %}&changetype=1&rid={{ rid }}{% endif %}">{% getlang '__adm_Select_module__' %}</a>
                     </tr>
                 {% endif %}
             {% endfor %}

@@ -3,7 +3,8 @@
 {% load portaltags %}
 
 {% block paneltitle %}
-    {% getlang '__adm_Menu_items__'%}
+    {% getlang '__adm_Menu_item__'%} - {{ module_type.name }}
+    <br /><a href="{% url core.view.menu_item_admin.edit_item data.id %}?changetype=1&rid={{ rid }}" style="font-size: 10px; color: #f00;">{% getlang '__adm_Change__' %}</a>
 {% endblock %}
 
 {% block formurl %}
@@ -23,3 +24,4 @@
        <a href="{% url core.view.menu_item_admin.edit_item data.id %}">{% getlang '__adm_Change__'%}</a>
     {% endif %}
 {% endblock %}
+

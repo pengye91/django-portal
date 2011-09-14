@@ -47,3 +47,12 @@ def show_item_by_id(request, itemId):
     c = RequestContext(request, system.data)
     return HttpResponse(t.render(c))
 
+
+def show_item_by_slug(request, slug):
+    system = SystemObject(request)
+    system.show_item_by_slug(request, slug, system.language.currentLanguage)
+    t = loader.get_template(system.sheet.get_sheet_file('article'))
+
+    system.data.update(system.get_context())
+    c = RequestContext(request, system.data)
+    return HttpResponse(t.render(c))

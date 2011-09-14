@@ -31,6 +31,7 @@ class SystemObject(SystemManager):
         toppanel = {}
         self.data.update({ 'toppanel': toppanel })
         self.data.update({ 'savebutton': 1, 'saveaddbutton': 1, 'copybutton': 1, 'addbutton': 1 })
+        self.requester.rData['selectedmenu'] = -1
 
 def show_items(request):
     system = SystemObject(request)
@@ -68,20 +69,9 @@ def edit_item(request, itemId):
     result = system.edit_item(request, itemId)
 
     if result is not None:
-        system.portal.fetch_active_site(system.requester.rData['activesite'])
-        system.manager.item.sites.add(system.portal.get_active_site())
-        system.manager.item.active.add(system.portal.get_active_site())
         return result
-    """
-    if system.manager.form is not None:
-        items = system.manager.get_items()
-        choices = []
-        for il in items:
-            choices.append((il.id,il.language))
-        system.manager.form.fields['parent'].choices = choices
-    """
+
     system.manager.form.choices(system)
-    #cccc()
 
     system.template = loader.get_template(system.sheet.get_sheet_file('admin_categories_edit'))
     c = RequestContext(request, system.get_context())

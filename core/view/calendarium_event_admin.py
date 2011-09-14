@@ -17,7 +17,7 @@ class SystemObject(SystemManager):
     def __init__(self, request, *args, **kwargs):
         super(SystemObject, self).__init__(request, *args, **kwargs)
         self.manager = AdminManager()
-        self.manager.fetchOptions = { 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
+        self.manager.fetchOptions = { 'site': int(self.portal.activeSite.id), 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
         self.urls.add = 'core.view.calendarium_event_admin.add_item'
         self.urls.edit = 'core.view.calendarium_event_admin.edit_item'
         self.urls.show_items = 'core.view.calendarium_event_admin.show_items'

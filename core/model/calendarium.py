@@ -34,6 +34,12 @@ class CalendariumManager(models.Manager):
         if options.has_key('temp'):
             kwargs['temp'] = options['temp']
 
+        if options.has_key('startdate_gte'):
+            kwargs['startdate__gte'] = options['startdate_gte']
+
+        if options.has_key('startdate_lte'):
+            kwargs['startdate__lte'] = options['startdate_lte']
+
         if options.has_key('extra'):
             kwargs.update(options['extra'])
 
@@ -90,6 +96,10 @@ class CalendarEventModel(BaseModel,Preferences):
     formMail = models.CharField(max_length=32, null=True, blank=True)
     profesor = models.CharField(max_length=128, null=True, blank=True)
     dentocountryid = models.CharField(max_length=32, null=True, blank=True)
+    textcolor = models.CharField(max_length=255, verbose_name='Kolor tekstu', null=True, blank=True)
+    dentois = models.TextField(null=True, blank=True)
+    dentoim = models.TextField(null=True, blank=True)
+    dentoih = models.TextField(null=True, blank=True)
     objects = CalendariumManager()
 
     class Meta:

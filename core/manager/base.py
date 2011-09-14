@@ -37,6 +37,26 @@ class BaseManager(object):
         except Exception,e:
             self.debugger.catch_error('fetch_item: ',e)
 
+    def fetch_item_by_slug(self, slug, lang):
+        """Pobiera element
+        """
+        model_class = self.model.__class__
+        model_language_class = self.modelLanguage.__class__
+
+        try:
+            item = model_language_class.objects.filter(slug=slug, language=lang)
+        except Exception,e:
+            self.debugger.catch_error('fetch_item_by_slug: ',e)
+
+        try:
+            self.item = model_class.objects.filter(languages__in=item)
+            if len(self.item) > 0:
+                self.item = self.item[0]
+            else:
+                self.item = None
+        except Exception,e:
+            self.debugger.catch_error('fetch_item_by_slug: ',e)
+
     def fetch_items(self, default_filter=False, database='', for_select=False):
         """Pobiera elementy
         """
@@ -59,6 +79,7 @@ class BaseManager(object):
                     self.items = model_class.objects.using(database).all().order_by(self.order)[self.rangeItemsStart:self.rangeItemsEnd]
         except Exception,e:
             self.debugger.catch_error('fetch_items: ',e)
+
 
     def count_items(self, default_filter=False, database=''):
         """Pobiera elementy
@@ -86,7 +107,6 @@ class BaseManager(object):
         return self.items
 
     def set_language(self, currentLanguage):
-
         if self.item is not None:
             try:
                 self.item.get_language(currentLanguage)
@@ -100,6 +120,7 @@ class BaseManager(object):
 
                 except Exception,e:
                     self.debugger.catch_error('set_language: ',e)
+
 
 
     def get_items_as_tree(self, request, items = None, parentId = None, depth = 0, result = None, for_select=False):

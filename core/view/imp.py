@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import urllib
 from django.template import loader, RequestContext
 from django.http import HttpResponse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -20,26 +21,45 @@ class SystemObject(SystemManager):
         super(SystemObject, self).__init__(request, *args, **kwargs)
 
 def events(request):
+
+    textcolors = {
+        'black': 'color: #FFFFFF;',
+        '#000000': 'color: #FFFFFF;',
+        '#00548E': 'color: #FFFFFF;',
+        '#304594': 'color: #FFFFFF;',
+        '#004080': 'color: #FFFFFF;',
+        '#0083FA': 'color: #FFFFFF;',
+        '#0477BC': 'color: #FFFFFF;',
+        '#102D95': 'color: #FFFFFF;',
+        '#002060': 'color: #FFFFFF;',
+        '#005800': 'color: #005800;',
+        '#00457C': 'color: #00457C;',
+        '#3F3F3F': 'color: #9FC905;'
+    }
+
     system = SystemObject(request)
     data = dict()
-    rootcalendar = Calendar.objects.get(id=2)
+    rootcalendar = Calendar.objects.get(id=1)
+    site = SitePortal.objects.get(id=1)
     """ Event types """
-    """
+
     items = DentoEventType.objects.using('dento').all()
     for item in items:
         et = CalendarEventType()
         et.calendar = rootcalendar
         et.dentoid = item.schedule_typeID
         et.save()
+        et.active.add(site.site)
+        et.sites.add(site.site)
         system.language.set_non_existent_language_items(et, CalendarEventTypeLanguage)
         if et is not None:
             et.get_language(system.language.currentLanguage.id)
             et.language.name = item.name
             et.language.save()
-    """
-    """ end Event types """
-    """ Events """
-    """
+
+    # end Event types
+    # Events
+
     items = DentoEvent.objects.using('dento').all()
     for item in items:
         e = CalendarEvent()
@@ -72,14 +92,32 @@ def events(request):
         e.profesor = item.profesor
         e.town = item.city
         order = int(item.ord)
+        if textcolors.has_key(item.backgroundColor):
+            e.textcolor = textcolors[item.backgroundColor]
+
+        f = urllib.urlopen('http://www.dentonet.pl/others/schd/banners/mini/' + item.bannerLink)
+        if f.info().gettype() != 'text/html':
+            e.dentois = 'http://www.dentonet.pl/others/schd/banners/mini/' + item.bannerLink
+
+        f = urllib.urlopen('http://www.dentonet.pl/others/schd/banners/med/' + item.bannerLink)
+        if f.info().gettype() != 'text/html':
+            e.dentoim = 'http://www.dentonet.pl/others/schd/banners/med/' + item.bannerLink
+
+        f = urllib.urlopen('http://www.dentonet.pl/others/schd/banners/' + item.bannerLink)
+        if f.info().gettype() != 'text/html':
+            e.dentoih = 'http://www.dentonet.pl/others/schd/banners/' + item.bannerLink
+
+
         e.save()
+        e.active.add(site.site)
+        e.sites.add(site.site)
         system.language.set_non_existent_language_items(e, CalendarEventLanguage)
         if e is not None:
             e.get_language(system.language.currentLanguage.id)
             e.language.title = item.title
             e.language.text = item.description
             e.language.save()
-    """
+
     """ end Events """
 
         #time_format = "%Y-%m-%d %H:%M:%S"
@@ -155,100 +193,92 @@ def cats(request):
 
     return HttpResponse(t.render(c))
 
+def change_image(id, content, item, only_main=False, show=False):
+    for i in range(0,10):
+        f = content.find('<' + str(i) + '>')
+        if f != -1:
+            if show:
+                print 'Przed: ', content
+            image = None
+            try:
+                image = DentoArtImage.objects.using('dento').get(dataID=id, pictureNumber=i)
+            except Exception, e:
+                print 'change_image: ', e
+
+            if image is not None:
+                if not image.picturePath:
+                    image.picturePath = ''
+                if not image.pictureAlign:
+                    image.pictureAlign = 'left'
+                mr = 'margin-right: 8px;'
+                if image.pictureAlign == 'left':
+                    mr = 'margin-right: 8px;'
+                if image.pictureAlign == 'right':
+                    mr = 'margin-left: 8px;'
+                if only_main == False:
+                    content = content.replace('<' + str(i) + '>',u'<img style="margin-top:5px; margin-bottom: 3px; ' + mr + '" src="http://dentonet.pl/imagesArticles/' + image.picturePath + '" align="' + image.pictureAlign +'">')
+
+                if i==0:
+                    item.dentomainimage = 'http://dentonet.pl/imagesArticles/' + image.picturePath
+            else:
+                print 'jest image a nie ma: ', id
+            if show:
+                print 'Po: ', content
+
+    return content
+
 def arts(request):
     system = SystemObject(request)
     data = dict()
-    items = DentoData.objects.using('dento').all().order_by('-added')
-    gallery = Gallery.objects.get(id=2)
+    fw = []
+    #items = DentoData.objects.using('dento').all().order_by('-added')
+    #gallery = Gallery.objects.get(id=2)
 
-    for item in items:
-        cat = None
-        try:
-            cat = Category.objects.get(dentoid=item.linkID)
-        except Exception, e:
-            print e
-
-        if item.body is not None:
-            item.body = item.body.replace('\n',u'<br />')
-
-        if item.intro is not None:
-            item.intro = item.intro.replace('\n',u'<br />')
-        """ This is import from dento
-
-        if cat is not None:
-            art = Article()
-            art.save()
-            system.language.set_non_existent_language_items(art, ArticleLanguage)
-            art.get_language(system.language.currentLanguage.id)
-            art.language.title = item.title
+    site = SitePortal.objects.get(id=1) # lekarze
+    items = Category.objects.optfilter({ 'site': site.id })
 
 
-            for i in range(0,10):
-                if item.body:
-                    f = item.body.find('<' + str(i) + '>')
-                    if f != -1:
-                        image = None
-                        try:
-                            image = DentoArtImage.objects.using('dento').get(dataID=item.ID, pictureNumber=i)
-                        except Exception, e:
-                            print e
-                        if image is not None:
-                            if not image.picturePath:
-                                image.picturePath = ''
-                            if not image.pictureAlign:
-                                image.pictureAlign = 'left'
-                            mr = 'margin-right: 8px;'
-                            if image.pictureAlign == 'left':
-                                mr = 'margin-right: 8px;'
-                            if image.pictureAlign == 'right':
-                                mr = 'margin-left: 8px;'
-                            if item.body:
-                                item.body = item.body.replace('<' + str(i) + '>',u'<img style="margin-top:5px; margin-bottom: 3px; ' + mr + '" src="http://dentonet.pl/imagesArticles/' + image.picturePath + '" align="' + image.pictureAlign +'">')
-                            if i==0:
-                                art.mainimage = 'http://dentonet.pl/imagesArticles/' + image.picturePath
+    for cat in items:
+        if cat.dentoid is not None:
+            arts = DentoData.objects.using('dento').filter(linkID=cat.dentoid).order_by('-added')
 
-                if item.intro:
-                    f = item.intro.find('<' + str(i) + '>')
-                    if f != -1:
-                        image = None
-                        try:
-                            image = DentoArtImage.objects.using('dento').get(dataID=item.ID, pictureNumber=i)
-                        except Exception, e:
-                            print e
-                        if image is not None:
-                            if not image.picturePath:
-                                image.picturePath = ''
-                            if not image.pictureAlign:
-                                image.pictureAlign = 'left'
-                            if image.pictureAlign == 'left':
-                                mr = 'margin-right: 8px;'
-                            if image.pictureAlign == 'right':
-                                mr = 'margin-left: 8px;'
-                            if item.intro:
-                                item.intro = item.intro.replace('<' + str(i) + '>',u'<img style="margin-top:5px; margin-bottom: 3px; ' + mr + '" src="http://dentonet.pl/imagesArticles/' + image.picturePath + '" align="' + image.pictureAlign +'">')
-                            if i==0:
-                                art.mainimage = 'old_dento/imagesArticles/' + image.picturePath
+            for item in arts:
+                text = ''
+                art = Article()
+                art.save()
+                system.language.set_non_existent_language_items(art, ArticleLanguage)
+                art.get_language(system.language.currentLanguage.id)
 
+                if item.intro is not None:
+                    item.intro = item.intro.replace('\n',u'</p><p>')
+                    item.intro = change_image(item.ID, item.intro, art)
+                    text = text + '<p>' + item.intro + '</p>'
 
-            text = ''
-            if item.intro:
-                text = text + item.intro + '<br /><br />'
-            if item.body:
-                text = text + item.body
-            art.language.text = text
-            art.visits = item.displayCount
-            if item.added:
-                art.date = item.added
+                if item.body is not None:
+                    item.body = item.body.replace('\n',u'</p><p>')
+                    item.body = change_image(item.ID, item.body, art)
+                    text = text + '<p>' + item.body + '</p>'
 
-            art.category = cat
-            art.save()
-            art.language.save()
-            art.sites.add(system.portal.get_active_site())
-            if item.active:
-                art.active.add(system.portal.get_active_site())
-            
-            """
-    data.update({ 'data': items })
+                if item.title is not None:
+                    item.title = item.title.replace('\n\n',u'')
+                    item.title = change_image(item.ID, item.title, art, only_main=True, show=True)
+                    art.language.title = item.title
+
+                fw.append(art.dentomainimage)
+                art.language.text = text
+                art.visits = item.displayCount
+                if item.added:
+                    art.date = item.added
+
+                art.category = cat
+                art.save()
+                art.language.save()
+                art.sites.add(site.site)
+                if item.active:
+                    art.active.add(site.site)
+                time.sleep(0.2)
+
+    data.update({ 'data': fw })
     t = loader.get_template('imp/impart.html')
     c = RequestContext(request, data)
 

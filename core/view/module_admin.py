@@ -10,13 +10,15 @@ from core.manager.baseadmin import AdminManager
 from core.manager.system import SystemManager
 from core.models import RegisteredModule, ModuleVisibility
 from core.form.modules import AdmItemForm, VisItemForm
+from core.form.modules import get_module_options, get_module_type_options, get_module_options_form_by_type
+from core.models import get_module_options_model, get_module_type_options_model, get_module_options_by_type, ModuleType
 
 class SystemObject(SystemManager):
 
     def __init__(self, request, *args, **kwargs):
         super(SystemObject, self).__init__(request, *args, **kwargs)
         self.manager = AdminManager()
-        self.manager.fetchOptions = { 'site': self.portal.activeSite.id, 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
+        self.manager.fetchOptions = { 'notmenumodule': 1, 'site': self.portal.activeSite.id, 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
         self.shee_files = AdminManager()
         self.urls.add = 'core.view.module_admin.add_item'
         self.urls.edit = 'core.view.module_admin.edit_item'
@@ -51,30 +53,65 @@ def edit_item(request, itemId):
     system = SystemObject(request)
     if system.permission.user is None:
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
-    system.manager.form_options_class = VisItemForm().__class__
-    system.manager.modelOptions = ModuleVisibility()
+
     system.manager.fetch_item(itemId)
-    try:
-        options = system.manager.modelOptions.__class__.objects.filter(menuitem=system.manager.item)
-        if len(options) == 0:
-            system.manager.options_item = system.manager.modelOptions
-            system.manager.options_item.menuitem = system.manager.item
-            system.manager.options_item.save()
+
+    moduleId = None
+    if request.method == 'GET':
+        if request.GET.has_key('module'):
+            moduleId = request.GET['module']
+
+    if request.method == 'POST':
+        if request.POST.has_key('opt-module'):
+            moduleId = request.POST['opt-module']
+
+    if request.method == 'POST':
+        if request.POST.has_key('opt-registered_module'):
+            #moduleId = request.POST['opt-registered_module']
+            #registered_module_id = request.POST['opt-registered_module']
+            #registered_module =
+            moduleId = system.manager.item.type.id
+
+    if moduleId is None:
+        system.portal.fetchOptions = { 'site': system.portal.activeSite.id, 'active': '1', 'activesite': system.portal.activeSite.id }
+        system.portal.fetch_module_types()
+        system.template = loader.get_template(system.sheet.get_sheet_file('admin_module_edit_module_selection'))
+    else:
+        if system.manager.item.type is not None:
+            # registeredmodule utworzony np z menuitem
+            options_model = get_module_options_by_type(system.manager.item.type)
+            options_form = get_module_options_form_by_type(system.manager.item.type).__class__
         else:
-            system.manager.options_item = options[0]
-    except Exception, e:
-        system.debugger.catch_error('edit_item: ', e)
-        system.manager.options_item = system.manager.modelOptions
-        system.manager.options_item.save()
-    result = system.edit_item(request, itemId)
+            # registeredmodule utworzony bez innych informacji
+            type_module = ModuleType.objects.get(id=moduleId)
+            options_model = get_module_options_by_type(type_module)
+            options_form = get_module_options_form_by_type(type_module).__class__
+            option = options_model
+            option.registered_module = system.manager.item
+            option.save()
 
-    if result is not None:
-        system.portal.fetch_active_site(system.requester.rData['activesite'])
-        system.manager.item.sites.add(system.portal.get_active_site())
-        system.manager.item.active.add(system.portal.get_active_site())
-        return result
+            system.manager.item.type = type_module
+            system.manager.item.save()
 
-    system.template = loader.get_template(system.sheet.get_sheet_file('admin_modules_edit'))
+        options = options_model.__class__.objects.filter(registered_module=system.manager.item)
+        if len(options) > 0:
+            options = options[0]
+
+        system.manager.form_options_class = options_form
+        system.manager.modelOptions = options_model
+        system.manager.options_item = options
+
+        result = system.edit_item(request, itemId)
+        if result is not None:
+            return result
+
+        if system.manager.options_form is not None:
+            system.manager.options_form.choices(system)
+
+        system.template = loader.get_template(system.sheet.get_sheet_file('admin_modules_edit'))
+
+    system.data.update({ 'moduleid': moduleId })
+    system.data.update({ 'regmoduleid': itemId })
     c = RequestContext(request, system.get_context())
     return HttpResponse(system.template.render(c))
 
@@ -84,6 +121,8 @@ def add_item(request):
     if system.permission.user is None:
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
     system.manager.new()
+    system.manager.item.sites.add(system.portal.get_active_site())
+    system.manager.item.active.add(system.portal.get_active_site())
     return HttpResponseRedirect(reverse('core.view.module_admin.edit_item', args=(system.manager.item.id,)))
 
 

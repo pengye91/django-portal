@@ -2,6 +2,7 @@
 
 import os, imp
 import re
+#import babel.dates
 from datetime import datetime
 from django.conf import settings
 from django.template import Library, Node, Variable
@@ -10,6 +11,7 @@ from django.conf import settings
 from core.models import Language, PortalSiteConstLanguage, RegisteredModule, ModulePosition, Article, ArticleLanguage, Category, CategoryLanguage
 from django.template.defaultfilters import stringfilter
 from core.manager.base import BaseManager
+from core.manager.modules.content import ContentManager
 
 register = Library()
 
@@ -72,6 +74,7 @@ def getlang(obj, epk):
 
 def load_from_file(filepath, expected_class):
     class_inst = None
+    py_mod = None
 
     mod_name,file_ext = os.path.splitext(os.path.split(filepath)[-1])
 
@@ -81,25 +84,29 @@ def load_from_file(filepath, expected_class):
     elif file_ext.lower() == '.pyc':
         py_mod = imp.load_compiled(mod_name, filepath)
 
-    if expected_class in dir(py_mod):
-        return getattr(py_mod, expected_class)
+    if py_mod is not None:
+        if expected_class in dir(py_mod):
+            return getattr(py_mod, expected_class)
 
     return None
 
-def get_modules(string, lang):
+def get_modules(string, lang, site):
     pos = None
     posmod = []
     modules = None
 
     try:
-        pos = ModulePosition.objects.filter(name=string)[0]
+        pos = ModulePosition.objects.filter(name=string)
+        if len(pos) > 0:
+            pos = pos[0]
     except Exception, e:
-        print e
+        print 'portaltags.py, get_modules: ', e
 
     if pos is not None:
         try:
-            modules = RegisteredModule.objects.filter(position=pos)
+            modules = RegisteredModule.objects.filter(position=pos).order_by('order')
         except Exception,e:
+            print 'portaltags.py, get_modules: ', e
             modules = None
 
     if modules is not None:
@@ -108,17 +115,29 @@ def get_modules(string, lang):
                 mod.incl = 'core/portal/modules/' + mod.type.filetemplate + '.html'
                 imod = load_from_file(settings.PROJECT_ROOT + '/core/manager/modules/' + mod.type.fileview + '.py', 'ModuleManager')
                 module = imod()
-                module.fetch_registered_module(mod.id)
-                module.get_data(lang)
+                #module.fetch_registered_module(mod.id)
+                module.registered_module = mod
+                module.get_data(lang, site)
                 mod.data = module
                 mod.options = module.fetch_options()
                 posmod.append(mod)
 
     return { 'posmodules': posmod }
 
-@register.inclusion_tag('core/portal/modules/modules.html')
-def getmodules(token, lang):
-    return get_modules(token, lang)
+#@register.inclusion_tag('core/portal/modules/modules.html')
+#def getmodules(token, lang, site):
+#    return get_modules(token, lang, site)
+
+@register.inclusion_tag('core/portal/modules/modules.html', takes_context=True)
+def getmodules_context(context, token):
+    try:
+        lang = context['activelang']
+        site = context['activesiteobject']
+        return get_modules(token, lang, site)
+    except Exception, e:
+        print 'getmodules_context: ', e
+        return None
+
 
 def get_path(item, manager, items):
     manager.fetch_item(item.id)
@@ -160,3 +179,40 @@ def hash(object, attr):
 @register.filter
 def sub(value, arg):
     return int(value) - int(arg)
+
+@register.filter
+def plus(value, arg):
+    return int(value) + int(arg)
+
+@register.filter
+def mul(value, arg):
+    return int(value) * int(arg)
+
+def get_content(lang, site):
+    content = ContentManager()
+    return content.get_data(lang, site)
+
+@register.inclusion_tag('core/portal/modules/content.html')
+def getcontent(lang, site):
+    return get_content(lang, site)
+
+
+months = {
+    '01': 'Styczeń',
+    '02': 'Luty',
+    '03': 'Marzec',
+    '04': 'Kwiecień',
+    '05': 'Maj',
+    '06': 'Czerwiec',
+    '07': 'Lipiec',
+    '08': 'Sierpień',
+    '09': 'Wrzesień',
+    '10': 'Pażdziernik',
+    '11': 'Listopad',
+    '12': 'Grudzień'
+}
+
+@register.filter
+def namedate(value, arg):
+    if arg == 'm':
+        return months[value.strftime('%m')]

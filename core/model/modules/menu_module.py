@@ -18,6 +18,7 @@ class MenuOptionsModel(models.Model):
     show_page_title = models.BooleanField(default = False)
     class_prefix = models.CharField(max_length=255, verbose_name=u'prefix stylu',null=True, blank = True)
     date = models.DateTimeField(blank=True, verbose_name=u'Data dodania',default=datetime.now)
+    order = models.IntegerField(verbose_name=u'Kolejność', blank = True, null=True, default = 0)
     objects = ModelModuleManager()
 
     class Meta:

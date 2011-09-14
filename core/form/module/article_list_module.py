@@ -16,7 +16,7 @@ class ArticleListOptionForm(forms.ModelForm):
 
     class Meta:
         model = ArticleListModuleOption
-        fields = ('id', 'category', 'show_title', 'link_title', 'exposefirst', 'show_footer', 'show_info', 'page_title', 'show_page_title', 'show_mainimage', 'class_prefix')
+        #fields = ('id', 'category', 'show_title', 'link_title', 'exposefirst', 'show_footer', 'show_info', 'page_title', 'show_page_title', 'show_mainimage', 'class_prefix')
 
     def choices(self, system):
         manager = BaseManager()

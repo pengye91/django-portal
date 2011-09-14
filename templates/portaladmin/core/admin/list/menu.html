@@ -14,7 +14,7 @@
     <th>{% getlang '__adm_Lp__' %}
     <th>{% getlang '__adm_Name__' %}
     <th>{% getlang '__adm_Active__' %}
-    <th>{% getlang '__adm_Site__' %}
+    <th>{% getlang '__adm_Show__' %}
     <th>{% getlang '__adm_Create_date__' %}
     <th>{% getlang '__adm_Id__' %}
     <th>{% getlang '__adm_Delete__' %}
@@ -24,8 +24,14 @@
     {% for item in data %}
         <tr class="tablecontent" id="row{{ item.id }}">
             <td class="tdlp">{{ forloop.counter }}
-            <td class="tdtitle"><a href="{% url core.view.menu_admin.edit_item item.id %}" style="margin-left: {{ item.depth }}px; !important;">{% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.name }}</a>
+            <td class="tdtitle">
+                {% if not item.required %}
+                    <a href="{% url core.view.menu_admin.edit_item item.id %}" style="margin-left: {{ item.depth }}px; !important;">{% if item.depth > 0 %}<sup>|_</sup>&nbsp;{% endif %}{{ item.name }}</a>
+                {% else %}
+                    {{ item.name }}
+                {% endif %}
             <td class="tdactive">
+                {% if not item.required %}
                 {% if activesiteobject in item.active.all %}
                     <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/yes.gif" width="24" id="imgyes{{ item.id }}" onclick="changeactivity({{ item.id }},0,'menu/menus')" />
                     <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" onclick="changeactivity({{ item.id }},1,'menu/menus')" class="hiddenitem" />
@@ -33,10 +39,8 @@
                     <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/yes.gif" width="24" id="imgyes{{ item.id }}" onclick="changeactivity({{ item.id }},0,'menu/menus')" class="hiddenitem" />
                     <img src="/site_media/{{ PORTALSHEETPATH }}/admin/images/no.gif" width="24" id="imgno{{ item.id }}" onclick="changeactivity({{ item.id }},1,'menu/menus')" />
                 {% endif %}
-            <td class="tdsites">
-                {% for site in item.sites.all %}
-                    {{ site.name }}<br />
-                {% endfor %}
+                {% endif %}
+            <td class="tdsites"><a href="{% url core.view.menu_item_admin.show_items %}?selectedmenu={{ item.id }}">{% getlang '__adm_Show_items__' %}</a>
             <td class="tddate">{{ item.date|date:"d-m-Y H:i:s" }}
             <td class="tdid">{{ item.id }}
             <td class="tddelete">

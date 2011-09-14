@@ -91,11 +91,20 @@
                     {% if all_permissions.CatalogImage %}<!-- li><a href="{% url core.view.ads_image_admin.show_items %}">{% getlang '__adm_Catalogs_images__' %}</a></li -->{% endif %}
                 </ul>
             </li>
-            {% endif %}
+        {% endif %}
+        <!--
             {% if all_permissions.Wiki %}<li><a href="{% url core.view.wiki_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Wiki__' %}</a></li>{% endif %}
             <!-- li><a href="">{% getlang '__adm_Shop__' %}</a></li -->
-            <!-- li class="tnav">
-                <a href="">{% getlang '__adm_Advertisement__' %}</a>
+            <li>
+                <a>{% getlang '__adm_Advertisement__' %}</a>
+                <ul class="subnav">
+                    <li><a href="{% url core.view.adv_category_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Groups__' %}</a></li>
+                    <li><a href="{% url core.view.adv_client_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Clients__' %}</a></li>
+                    <li><a href="{% url core.view.adv_admin.show_items %}" onclick="progressbar()">{% getlang '__adm_Advertisement__' %}</a></li>
+                </ul>
+            </li>
+            <!--
+                <ul class="subnav">
 				<ul class="subnav">
 					<li><a href="">{% getlang '__adm_Advertisement__' %}</a></li>
             		<li><a href="">{% getlang '__adm_Mailing__' %}</a></li>

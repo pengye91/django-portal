@@ -15,7 +15,7 @@ class ArticleOptionForm(forms.ModelForm):
 
     class Meta:
         model = ArticleModuleOption
-        fields = ('id', 'article', 'show_title', 'show_footer', 'show_info', 'page_title', 'show_page_title', 'class_prefix')
+        fields = ('id', 'article', 'show_title', 'show_footer', 'show_info', 'page_title', 'show_page_title', 'class_prefix', 'registered_module')
 
     def choices(self, system):
         s = ((datetime.date.today() + datetime.timedelta(days=1)) - datetime.timedelta(6 * 365 / 12))

@@ -25,7 +25,7 @@ class UrlContener(object):
 class SystemManager(object):
 
     def __init__(self, request, *args, **kwargs):
-        self.portal = PortalManager()
+        self.portal = PortalManager(request)
         self.manager = None
         self.extramanager = None
         self.sheet = SheetManager()
@@ -49,6 +49,7 @@ class SystemManager(object):
 
         #self.get_active_root_menu()
         self.permission.check_logged_user(request)
+
 
     """ Dont need
     def get_active_root_menu(self):
@@ -85,6 +86,14 @@ class SystemManager(object):
         if itemId is not None:
             if itemId != -1:
                 self.manager.fetch_item(itemId)
+                self.manager.set_language(self.language.currentLanguage)
+                self.items = self.manager.item
+                self.permission.compare_permissions(self.manager.item, self.manager.model.__class__.__name__, admin)
+
+    def show_item_by_slug(self, request, slug, lang, admin=False):
+        if slug is not None:
+            if slug != -1:
+                self.manager.fetch_item_by_slug(slug, lang)
                 self.manager.set_language(self.language.currentLanguage)
                 self.items = self.manager.item
                 self.permission.compare_permissions(self.manager.item, self.manager.model.__class__.__name__, admin)
@@ -129,7 +138,7 @@ class SystemManager(object):
         if has_language is True:
             self.manager.set_language(self.language.currentLanguage)
 
-        self.template = loader.get_template(self.sheet.get_sheet_file('admin_list'))
+        #self.template = loader.get_template(self.sheet.get_sheet_file('admin_list'))
 
         if allow_tree is True:
             if int(self.requester.rData['selectedactivity']) == -1:
@@ -144,8 +153,6 @@ class SystemManager(object):
                 self.items = self.manager.get_items()
         else:
             self.items = self.manager.get_items()
-
-        print self.items
 
         self.permission.compare_permissions(None, self.manager.model.__class__.__name__, admin)
 

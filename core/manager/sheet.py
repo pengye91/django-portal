@@ -6,6 +6,7 @@ __MNAME__ = 'Core/Manager'  # nazwa modulu
 import os
 from django.conf import settings
 from core.debug.debug import Debugger
+from django.contrib.sites.models import Site
 from core.models import Sheet, SheetFiles
 from core.manager.base import BaseManager
 
@@ -51,8 +52,7 @@ class SheetManager(BaseManager):
         else:
             return err_template
 
-
-    def fetch_sheet(self):
+    def get_user_site(self):
         if self.request is not None:
             try:
                 if self.request.method == 'GET':
@@ -62,7 +62,56 @@ class SheetManager(BaseManager):
                     else:
                         self.reqsite = self.request.session['reqsite']
                 elif self.request.method == 'POST':
-                    if rself.equest.POST.has_key('reqsite'):
+                    if self.request.POST.has_key('reqsite'):
+                        self.reqsite = self.request.POST['reqsite']
+                        self.request.session['reqsite'] = self.reqsite
+                    else:
+                        self.reqsite = self.request.session['reqsite']
+                else:
+                    self.reqsite = self.request.session['reqsite']
+            except Exception,e:
+                self.debugger.catch_error('fetch_sheet: ',e)
+                self.request.session['reqsite'] = settings.SITE_ID
+                self.reqsite = settings.SITE_ID
+        else:
+            self.reqsite = settings.SITE_ID
+
+    def set_reqsite(self):
+        if self.request is not None:
+            try:
+                if self.request.method == 'GET':
+                    if self.request.GET.has_key('reqsite'):
+                        self.reqsite = self.request.GET['reqsite']
+                        self.request.session['reqsite'] = self.reqsite
+                    else:
+                        self.reqsite = self.request.session['reqsite']
+                elif self.request.method == 'POST':
+                    if self.request.POST.has_key('reqsite'):
+                        self.reqsite = self.request.POST['reqsite']
+                        self.request.session['reqsite'] = self.reqsite
+                    else:
+                        self.reqsite = self.request.session['reqsite']
+                else:
+                    self.reqsite = self.request.session['reqsite']
+            except Exception,e:
+                self.debugger.catch_error('fetch_sheet: ',e)
+                self.request.session['reqsite'] = settings.SITE_ID
+                self.reqsite = settings.SITE_ID
+        else:
+            self.reqsite = settings.SITE_ID
+
+    def fetch_sheet(self):
+        sheets = None
+        if self.request is not None:
+            try:
+                if self.request.method == 'GET':
+                    if self.request.GET.has_key('reqsite'):
+                        self.reqsite = self.request.GET['reqsite']
+                        self.request.session['reqsite'] = self.reqsite
+                    else:
+                        self.reqsite = self.request.session['reqsite']
+                elif self.request.method == 'POST':
+                    if self.request.POST.has_key('reqsite'):
                         self.reqsite = self.request.POST['reqsite']
                         self.request.session['reqsite'] = self.reqsite
                     else:
@@ -82,14 +131,13 @@ class SheetManager(BaseManager):
             self.sheet.sheetpath = 'default'
             self.debugger.catch_error('fetch_sheet: ',e)
 
-        if len(sheets) >0:
-            self.sheet = sheets[0]
-            self.sheets = sheets
-        else:
-            self.sheet = Sheet()
-            self.sheet.sheetpath = 'default'
-
-
+        if sheets is not None:
+            if len(sheets) >0:
+                self.sheet = sheets[0]
+                self.sheets = sheets
+            else:
+                self.sheet = Sheet()
+                self.sheet.sheetpath = 'default'
 
         self.fullpath = settings.PROJECT_ROOT + "/templates/" + self.sheet.sheetpath
         self.path = self.sheet.sheetpath

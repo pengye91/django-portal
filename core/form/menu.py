@@ -17,13 +17,13 @@ class AdmItemForm(forms.ModelForm):
     date.widget.widgets = (forms.TextInput({'class':'vDateField'}),forms.TextInput({'class':'vTimeField'}))
     image = forms.ImageField(widget=AdmImageWidget(), label=u'Zdjęcie kategorii', required=False)
     #parent = forms.ModelChoiceField(queryset=MenuItem.objects.all())
-    module = forms.ModelChoiceField(queryset=RegisteredModule.objects.all(), label=u'Moduł')
+    #module = forms.ModelChoiceField(queryset=RegisteredModule.objects.all(), label=u'Moduł')
     menu = forms.ModelChoiceField(queryset=Menu.objects.all(), label=u'Menu')
     tags = TagField(required=False)
 
     class Meta:
         model = MenuItem
-        fields = ('id', 'menu', 'parent', 'module', 'date', 'image', 'tags', 'permissions')
+        fields = ('id', 'menu', 'parent', 'registered_module', 'date', 'image', 'tags', 'permissions')
 
     def __init__(self, *args, **kwargs):
         super(AdmItemForm, self).__init__(*args, **kwargs)
@@ -61,7 +61,7 @@ class AdmItemForm(forms.ModelForm):
                 il.name = (prefix + il.name)
                 choices.append((il.id,mark_safe(il.name)))
         self.fields[field].choices = choices
-        
+
         manager.model = MenuItem()
         manager.modelLanguage = MenuItemLanguage()
         manager.order = 'parent'
