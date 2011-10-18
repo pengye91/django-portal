@@ -4,7 +4,6 @@ __FNAME__ = 'portal.py'
 __MNAME__ = 'Core/Manager'  # nazwa modulu
 
 from django.conf import settings
-from django.contrib.sessions.models import Session
 from core.debug.debug import Debugger
 from django.contrib.sites.models import Site
 from core.models import RegisteredModule, ModuleType
@@ -32,11 +31,20 @@ class PortalManager(object):
             self.debugger.catch_error('fetch_data: ', e)
 
     def fetch_active_site(self, pid):
+        error = 0
         try:
-            site = self.sites.filter(id=pid)
-            self.activeSite = site[0]
+            site = Site.objects.get(id=pid)
+            self.activeSite = site
         except Exception, e:
-            self.debugger.catch_error('get_active_site: ', e)
+            error = 1
+            self.debugger.catch_error('fetch_active_site: ', e)
+
+        if error == 1:
+            try:
+                site = Site.objects.get(id=settings.DEFAULT_SITE_ID)
+                self.activeSite = site
+            except Exception, e:
+                self.debugger.catch_error('fetch_active_site--: ', e)
 
     def get_active_site(self):
         return self.activeSite
@@ -107,8 +115,10 @@ class PortalManager(object):
                 else:
                     self.reqsite = self.request.session['reqsite']
             except Exception,e:
-                self.debugger.catch_error('fetch_sheet: ',e)
+                self.debugger.catch_error('get_user_site: ',e)
                 self.request.session['reqsite'] = settings.SITE_ID
                 self.reqsite = settings.SITE_ID
         else:
             self.reqsite = settings.SITE_ID
+
+        self.fetch_active_site(self.reqsite)

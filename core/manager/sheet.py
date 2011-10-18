@@ -6,7 +6,6 @@ __MNAME__ = 'Core/Manager'  # nazwa modulu
 import os
 from django.conf import settings
 from core.debug.debug import Debugger
-from django.contrib.sites.models import Site
 from core.models import Sheet, SheetFiles
 from core.manager.base import BaseManager
 
@@ -18,6 +17,7 @@ class SheetManager(BaseManager):
         """
         super(SheetManager, self).__init__(*args, **kwargs)
         self.debugger = Debugger(__MNAME__,__FNAME__)
+        self.admin_site = None
         self.sheet = None
         self.sheets = None
         self.fullpath = None
@@ -30,15 +30,23 @@ class SheetManager(BaseManager):
         self.reqsite = None
 
     def get_sheet_file(self, templatename):
-        self.fetch_sheet()
+        if self.sheet is None:
+            self.fetch_sheet()
+
         err_template = 'no_template.html'
 
         if not self.sheet:
             err_template = 'no_sheets.html'
         else:
             try:
-                templates = SheetFiles.objects.filter(name=templatename)
-                template = templates[0]
+                templates = SheetFiles.objects.filter(name=templatename, sheet=self.sheet)
+                if len(templates)==1:
+                    template = templates[0]
+                elif len(templates)>1:
+                    template = templates[0]
+                else:
+                    raise Exception('No template.')
+
                 err_template = None
                 absolutePath = settings.PROJECT_ROOT + 'templates/' + self.sheet.sheetpath + '/' + template.path
                 if not os.path.isfile(absolutePath):
@@ -51,7 +59,7 @@ class SheetManager(BaseManager):
             return template.path
         else:
             return err_template
-
+    """
     def get_user_site(self):
         if self.request is not None:
             try:
@@ -75,7 +83,8 @@ class SheetManager(BaseManager):
                 self.reqsite = settings.SITE_ID
         else:
             self.reqsite = settings.SITE_ID
-
+    """
+    """
     def set_reqsite(self):
         if self.request is not None:
             try:
@@ -99,33 +108,17 @@ class SheetManager(BaseManager):
                 self.reqsite = settings.SITE_ID
         else:
             self.reqsite = settings.SITE_ID
-
+    """
     def fetch_sheet(self):
         sheets = None
-        if self.request is not None:
-            try:
-                if self.request.method == 'GET':
-                    if self.request.GET.has_key('reqsite'):
-                        self.reqsite = self.request.GET['reqsite']
-                        self.request.session['reqsite'] = self.reqsite
-                    else:
-                        self.reqsite = self.request.session['reqsite']
-                elif self.request.method == 'POST':
-                    if self.request.POST.has_key('reqsite'):
-                        self.reqsite = self.request.POST['reqsite']
-                        self.request.session['reqsite'] = self.reqsite
-                    else:
-                        self.reqsite = self.request.session['reqsite']
-                else:
-                    self.reqsite = self.request.session['reqsite']
-            except Exception,e:
-                self.debugger.catch_error('fetch_sheet: ',e)
-                self.request.session['reqsite'] = settings.SITE_ID
-                self.reqsite = settings.SITE_ID
-        else:
-            self.reqsite = settings.SITE_ID
+
+        if self.reqsite == 0:
+            self.reqsite = settings.DEFAULT_SITE_ID
+        elif self.reqsite is None:
+            self.reqsite = settings.DEFAULT_SITE_ID
+
         try:
-            sheets = Sheet.objects.filter(sites__id=self.reqsite, default=1)
+            sheets = Sheet.objects.filter(sites__id__exact=self.reqsite, default=1)
         except Exception,e:
             self.sheet = Sheet()
             self.sheet.sheetpath = 'default'

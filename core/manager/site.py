@@ -3,7 +3,6 @@
 __FNAME__ = 'site.py'
 __MNAME__ = 'Core/Manager'  # nazwa modulu
 
-from django.conf import settings
 from django.contrib.sites.models import Site
 from core.manager.base import BaseManager
 from core.debug.debug import Debugger

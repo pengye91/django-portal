@@ -3,19 +3,18 @@
 __FNAME__ = 'megamenu.py'
 __MNAME__ = 'Core/Manager/Modules'  # nazwa modulu
 
-from django.conf import settings
 from core.debug.debug import Debugger
-from core.models import RegisteredModule, MegaMenu, get_module_options_model, Menu, MenuItem, Category, Article, ArticleLanguage
+from core.models import RegisteredModule, MegaMenu, get_module_options_model, MenuItem, Category, Article, ArticleLanguage
 from core.manager.base import BaseManager
-from core.manager.system import SystemManager
 
 class ModuleManager(object):
 
     def __init__(self, *args, **kwargs):
         self.registered_module = None
-        self.megamenu_items = None
+        self.megamenu_items = []
         self.options = None
         self.debugger = Debugger(__MNAME__,__FNAME__)
+        self.permissions = None
 
     def get_data(self, lang, site):
         self.language = lang
@@ -40,8 +39,8 @@ class ModuleManager(object):
         if item.category is not None:
             #item.category = self.get_category(item.category, lang, site)
             item.articles = self.get_articles(item.category, lang, site)
-            for items in item.articles:
-                item.get_language(lang.id)
+            for item_art in item.articles:
+                item_art.get_language(lang.id)
 
     def prepare_menu(self, item, lang):
         safemenuitems = []
@@ -90,7 +89,13 @@ class ModuleManager(object):
 
     def fetch_megamenu(self):
         try:
-            self.megamenu_items = MegaMenu.objects.all().order_by('order')
+            megamenu_items = MegaMenu.objects.all().order_by('order')
+            for item in megamenu_items:
+                if self.permissions is not None:
+                    self.permissions.prepare_permissions(item.permissions)
+                    self.permissions.compare_permissions(item, item.__class__.__name__, False)
+                    if self.permissions.permissions['public'] is True:
+                        self.megamenu_items.append(item)
         except Exception, e:
             self.debugger.catch_error('fetch_megamenu: ', e)
 

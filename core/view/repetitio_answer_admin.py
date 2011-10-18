@@ -17,7 +17,7 @@ class SystemObject(SystemManager):
     def __init__(self, request, *args, **kwargs):
         super(SystemObject, self).__init__(request, *args, **kwargs)
         self.manager = AdminManager()
-        self.manager.fetchOptions = { 'selectedquestion': self.requester.rData['selectedquestion'], 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
+        self.manager.fetchOptions = { 'question': self.requester.rData['selectedquestion'], 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
         self.urls.add = 'core.view.repetitio_answer_admin.add_item'
         self.urls.edit = 'core.view.repetitio_answer_admin.edit_item'
         self.urls.show_items = 'core.view.repetitio_answer_admin.show_items'

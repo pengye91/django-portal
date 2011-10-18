@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import re
 from django.template import loader, RequestContext
 from django.http import HttpResponse
-from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from django.conf import settings
 
 from core.manager.base import BaseManager as Manager
 from core.models import Article, ArticleLanguage, Category, CategoryLanguage
-from core.manager.system import SystemManager
+from core.manager.system_site import SystemManager
 
 class SystemObject(SystemManager):
 
@@ -34,9 +30,6 @@ def main_site(request):
     system = SystemObject(request)
     system.show_items(request)
     t = loader.get_template(system.sheet.get_sheet_file('mainsite'))
-
-    t = loader.get_template(system.sheet.get_sheet_file('mainsite'))
-    arts = []
 
     system.manager.fetchOptions.update({ 'not_dentoimage': '1' })
     system.manager.rangeItemsStart = None

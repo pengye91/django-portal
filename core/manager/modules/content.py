@@ -3,12 +3,9 @@
 __FNAME__ = 'content.py'
 __MNAME__ = 'Core/Manager/Modules'  # nazwa modulu
 
-from django.conf import settings
 from django.template import loader, RequestContext
 from django.http import HttpResponse
 from core.debug.debug import Debugger
-from core.models import RegisteredModule, MegaMenu, get_module_options_model, Menu, MenuItem, Category, Article, ArticleLanguage
-from core.manager.system import SystemManager
 
 class ContentManager(object):
 

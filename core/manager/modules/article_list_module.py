@@ -3,9 +3,8 @@
 __FNAME__ = 'article_list_module.py'
 __MNAME__ = 'Core/Manager/Modules'  # nazwa modulu
 
-from django.conf import settings
 from core.debug.debug import Debugger
-from core.models import RegisteredModule, Article, ArticleLanguage, ArticleListModuleOption, Category, get_module_options_model
+from core.models import RegisteredModule, Article, ArticleListModuleOption, Category
 
 class ModuleManager(object):
 
@@ -24,8 +23,8 @@ class ModuleManager(object):
             if self.options.category is not None:
                 self.category = self.options.category
                 self.fetch_items(lang)
-                for item in self.items:
-                    item.get_slug(lang.id)
+                #for item in self.items:
+                    
 
     def fetch_registered_module(self, rid):
         try:
@@ -41,9 +40,31 @@ class ModuleManager(object):
 
     def fetch_items(self, lang):
         try:
-            self.items = Article.objects.filter(category=self.category)[:10]
+            count = 10
+            if self.options.count is not None:
+                count = self.options.count
+            try:
+                count = int(count)
+            except Exception, e:
+                self.debugger.catch_error('fetch_items: ', e)
+                count = 10
+            
+            kwargs = dict()
+            excl = dict()
+            if self.options.only_with_image is True:
+                kwargs['mainimage__isnull'] = False
+                excl['mainimage'] = ''
+            
+            kwargs['category__id'] = self.category.id
+                    
+            if self.options.order is not None:
+                self.items = Article.objects.filter(**kwargs).exclude(**excl).order_by(self.options.order)[:count]
+            else:
+                self.items = Article.objects.filter(**kwargs).exclude(**excl)[:count]
+                
             for item in self.items:
                 item.get_language(lang.id)
+                item.get_slug(lang.id)
         except Exception, e:
             self.debugger.catch_error('fetch_items: ', e)
 

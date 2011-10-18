@@ -2,13 +2,10 @@
 
 from django.template import loader, RequestContext
 from django.http import HttpResponse
-from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from django.conf import settings
 
 from core.manager.base import BaseManager as Manager
-from core.models import Category, CategoryLanguage, Article, ArticleLanguage
-from core.manager.system import SystemManager
+from core.models import Category, CategoryLanguage, Article
+from core.manager.system_site import SystemManager
 from core.manager.modules.article_list_module import ModuleManager
 
 class SystemObject(SystemManager):
@@ -18,10 +15,11 @@ class SystemObject(SystemManager):
         self.manager = Manager()
         self.manager.model = Category()
         self.manager.order = 'parent'
-        self.manager.fetchOptions = { 'site': settings.SITE_ID }
+        self.manager.fetchOptions = { 'site': self.portal.reqsite, 'active': 1, 'activesite': self.portal.reqsite }
         self.manager.modelLanguage = CategoryLanguage()
         self.manager.moduleName = '__adm_Categories__'
         self.module = None
+
 
 def show_item(request, itemId, module_id):
     system = SystemObject(request)

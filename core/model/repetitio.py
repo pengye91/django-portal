@@ -10,6 +10,12 @@ from ckeditor.fields import RichTextField
 from core.model.basemodel import BaseModel
 from core.model.prefs import Preferences
 
+"""
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE `repetitio_answers`, `repetitio_answers_languages`, `repetitio_answers_permissions`, `repetitio_answers_sites`, `repetitio_course`, `repetitio_courseusers`, `repetitio_courseusers_sites`, `repetitio_course_active`, `repetitio_course_languages`, `repetitio_course_permissions`, `repetitio_course_sites`, `repetitio_questions`, `repetitio_questions_active`, `repetitio_questions_languages`, `repetitio_questions_permissions`, `repetitio_questions_sites`, `repetitio_tests`, `repetitio_tests_active`, `repetitio_tests_languages`, `repetitio_tests_permissions`, `repetitio_tests_sites`, `repetitio_useranswers`, `repetitio_useranswers_sites`, `rep_answer_lang`, `rep_course_lang`, `rep_question_lang`, `rep_test_lang`;
+SET FOREIGN_KEY_CHECKS=1;
+"""
+
 class RepetitioManager(models.Manager):
 
     def optfilter(self, options = dict()):
@@ -58,6 +64,7 @@ class RepetitioQuestionModel(BaseModel,Preferences):
     manyanswers = models.BooleanField(u'Wielokrotnego wyboru?', default = False)
     textanswers = models.BooleanField(u'Odpowiedź tekstowa?', default = False)
     points = models.IntegerField(max_length=255, verbose_name=u'Ilość punktów za odpowiedź', null=True, blank=True, default=0)
+    dento_id = models.IntegerField(null=True, blank=True)
     objects = RepetitioManager()
 
     class Meta:
@@ -75,7 +82,8 @@ class RepetitioQuestionModel(BaseModel,Preferences):
         return language.question
 
 class RepetitioQuestionLanguageModel(models.Model):
-    question = models.CharField(max_length=255, verbose_name=u'Pytanie', blank=True, null=True)
+    question = models.TextField(verbose_name=u'Pytanie', blank=True, null=True)
+    shortname = models.TextField(verbose_name=u'Nazwa krótka',  blank=True, null=True)
     description = RichTextField(verbose_name=u'Opis pytania', blank=True, null=True)
     slug = models.SlugField(max_length=900, blank=True, null=True)
     meta = models.CharField(max_length=255, verbose_name=u'Opis meta', blank=True, null=True)
@@ -106,6 +114,10 @@ class RepetitioQuestionLanguageModel(models.Model):
 class RepetitioAnswerModel(BaseModel,Preferences):
     textanswer = models.BooleanField(verbose_name=u'Odpowiedź tekstowa?', default = False)
     points = models.IntegerField(max_length=255, verbose_name=u'Ilość punktów za odpowiedź', null=True, blank=True, default=0)
+    nr = models.IntegerField(max_length=255, verbose_name=u'Numer', null=True, blank=True)
+    dento_id = models.IntegerField(null=True, blank=True)
+    correct_answer = models.BooleanField(verbose_name=u'Odpowiedź prawidłowa?', default = False)
+
     objects = RepetitioManager()
 
     class Meta:
@@ -119,7 +131,7 @@ class RepetitioAnswerModel(BaseModel,Preferences):
         self.language = self.languages.get(language=language_id)
 
 class RepetitioAnswerLanguageModel(models.Model):
-    answer = models.CharField(max_length=255, verbose_name=u'Odpowiedź', blank=True, null=True)
+    answer = models.TextField(verbose_name=u'Odpowiedź', blank=True, null=True)
     slug = models.SlugField(max_length=900, blank=True, null=True)
     meta = models.CharField(max_length=255, verbose_name=u'Opis meta', blank=True, null=True)
 
@@ -152,6 +164,17 @@ class RepetitioTestModel(BaseModel,Preferences):
     points = models.IntegerField(max_length=255, verbose_name=u'Ilość punktów za wypełnienie ankiety', null=True, blank=True, default=0)
     datapath = models.CharField(max_length=255, verbose_name=u'Ścieżka do pliku z materiałami', null=True, blank=True)
     file = models.FileField(verbose_name=u'plik z materiałami', upload_to=fullpath, null=True, blank=True)
+    datestart = models.DateTimeField(verbose_name=u'Data rozpoczęcia emisji',default=datetime.now, blank = True, null = True,)
+    dateend = models.DateTimeField(verbose_name=u'Data zakończenia emisji', blank = True, null = True)
+    eprice = models.IntegerField(max_length=255, verbose_name=u'Cena w dentonach', null=True, blank=True, default=0)
+    smsbuy = models.BooleanField(u'Płatność SMS-em?', default = False)
+    sponsored = models.BooleanField(u'Sponsorowany?', default = False)
+    dento_presenation_path = models.CharField(max_length=255)
+    dento_banner_path = models.CharField(max_length=255)
+    edentico = models.BooleanField(u'Edentico?', default = False)
+    visible = models.BooleanField(verbose_name=u'Widoczny?', default = False)
+    dento_id = models.IntegerField(null=True, blank=True)
+    author = models.CharField(max_length=255, verbose_name=u'Autor',  blank=True, null=True)
     objects = RepetitioManager()
 
     class Meta:
@@ -169,7 +192,8 @@ class RepetitioTestModel(BaseModel,Preferences):
         return language.name
 
 class RepetitioTestLanguageModel(models.Model):
-    name = models.CharField(max_length=255, verbose_name=u'Nazwa ankiety',  blank=True, null=True)
+    name = models.TextField(verbose_name=u'Nazwa ankiety',  blank=True, null=True)
+    shortname = models.CharField(max_length=255, verbose_name=u'Nazwa krótka',  blank=True, null=True)
     description = RichTextField(verbose_name=u'Opis',  blank=True, null=True)
     slug = models.SlugField(max_length=900, blank=True, null=True)
     meta = models.CharField(max_length=255, verbose_name=u'Opis meta', blank=True, null=True)
@@ -201,6 +225,8 @@ class RepetitioCourseModel(BaseModel,Preferences):
     datestart = models.DateTimeField(verbose_name=u'Data rozpoczęcia', default=datetime.now)
     dateend = models.DateTimeField(verbose_name=u'Data zakończenia', blank=True, null=True)
     points = models.IntegerField(max_length=255, verbose_name=u'Suma punktów', null=True, blank=True, default=0, editable=False)
+    visible = models.BooleanField(verbose_name=u'Widoczny?', default = False)
+    smsbuy = models.BooleanField(u'Płatność SMS-em?', default = False)
     complete = models.BooleanField(u'Zakończony?', default = False)
     objects = RepetitioManager()
 
@@ -219,7 +245,7 @@ class RepetitioCourseModel(BaseModel,Preferences):
         return language.name
 
 class RepetitioCourseLanguageModel(models.Model):
-    name = models.CharField(max_length=255, verbose_name=u'Nazwa',  blank=True, null=True)
+    name = models.TextField(verbose_name=u'Nazwa',  blank=True, null=True)
     description = RichTextField(verbose_name=u'Opis',  blank=True, null=True)
     law = RichTextField(verbose_name=u'Regulamin', blank=True, null=True)
     slug = models.SlugField(max_length=900, blank=True, null=True)

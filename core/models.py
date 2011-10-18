@@ -2,9 +2,10 @@
 
 import os, imp
 
-from django.conf import settings
-from django.db import models
-from django.contrib.sites.models import Site
+#from django.conf import settings
+#from django.db import models
+#from django.contrib.sites.models import Site
+from core.model.basemodel import BaseModel
 from core.model.others import StateModel, CountryModel, SexModel
 from core.model.category import CategoryModel, CategoryLanguageModel
 from core.model.article import ArticleModel, ArticleLanguageModel
@@ -12,8 +13,8 @@ from core.model.image import ImageModel, ImageLanguageModel
 from core.model.gallery import GalleryModel, GalleryLanguageModel
 from core.model.language import LanguageModel, PortalSiteConstLanguageModel
 from core.model.sheet import SheetModel, SheetFilesModel
-from core.model.calendarium import *
-from core.model.users import ProfileModel, ProfileDataModel, ProfileGroupModel, ProfilePermissionModel
+from core.model.calendarium import CalendarEventLanguageModel, CalendarEventModel, CalendarEventTypeLanguageModel, CalendarEventTypeModel, CalendarLanguageModel, CalendarModel
+from core.model.users import ProfileModel, ProfileDataModel #, ProfileGroupModel, ProfilePermissionModel
 from core.model.forum import *
 from core.model.repetitio import RepetitioQuestionModel, RepetitioAnswerModel, RepetitioTestModel, RepetitioCourseModel, RepetitioTestAnswerModel, RepetitioCourseUserModel
 from core.model.repetitio import RepetitioQuestionLanguageModel, RepetitioAnswerLanguageModel, RepetitioTestLanguageModel, RepetitioCourseLanguageModel
@@ -658,7 +659,7 @@ def get_module_options_model(moduleId):
     try:
         module = RegisteredModule.objects.get(id=moduleId)
     except Exception, e:
-        self.debugger.catch_error('get_module_options_model: ', e)
+        print 'get_module_options_model: ', e
         return None
 
     #return getattr(models, module.type.options_modelname)
@@ -687,10 +688,9 @@ class ModuleVisibility(BaseModel):
         return "ModuleVisibility"
 
 
-from core.model.imp.imp import ImpModel, ImpCat, ImpArtImage, ImpEvent, ImpEventSpecial, ImpEventType
-
-""" Forum
-"""
+#
+# Forum
+#
 
 class ForumPost(ForumPostModel):
     pass
@@ -701,8 +701,11 @@ class ForumPostText(ForumPostTextModel):
 class ForumTopic(ForumTopicModel):
     pass
 
-""" Dento
-"""
+#
+# Dento
+#
+
+from core.model.myimp.myimp import ImpModel, ImpCat, ImpArtImage, ImpEvent, ImpEventSpecial, ImpEventType, ImpRep, ImpRepAns, ImpRepCourse1, ImpRepCourse2
 
 class DentoData(ImpModel):
     pass
@@ -721,6 +724,20 @@ class DentoEventSpecial(ImpEventSpecial):
 
 class DentoEvent(ImpEvent):
     pass
+
+class DentoRep(ImpRep):
+    pass
+
+class DentoRepAns(ImpRepAns):
+    pass
+
+class DentoCourse1(ImpRepCourse1):
+    pass
+
+class DentoCourse2(ImpRepCourse2):
+    pass
+
+
 
 if settings.ENABLEDAFAULTADMIN:
     from django.contrib import admin

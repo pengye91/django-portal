@@ -86,7 +86,7 @@ class RepetitioAnswerForm(forms.ModelForm):
         model = RepetitioAnswer
 
     def __init__(self, *args, **kwargs):
-        super(RepetitioQuestionForm, self).__init__(*args, **kwargs)
+        super(RepetitioAnswerForm, self).__init__(*args, **kwargs)
         try:
             root_pgroup = PermisionGroup.objects.filter(model='RepetitioAnswer')
         except Exception, e:

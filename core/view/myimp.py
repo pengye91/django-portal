@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import urllib
+from phpserialize import *
 from django.template import loader, RequestContext
 from django.http import HttpResponse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -13,12 +14,130 @@ from core.manager.baseadmin import AdminManager
 from core.manager.system import SystemManager
 from core.models import Article, ArticleLanguage, Category, CategoryLanguage, DentoData, DentoCat, Gallery, Image, ImageLanguage, DentoArtImage
 from core.models import Calendar, CalendarEvent, CalendarEventLanguage, CalendarEventType, CalendarEventTypeLanguage, CalendarLanguage, DentoEvent, DentoEventSpecial, DentoEventType
+from core.models import DentoCourse1, DentoCourse2, DentoRep, DentoRepAns
+from core.models import RepetitioAnswer, RepetitioAnswerLanguage, RepetitioCourse, RepetitioCourseLanguage, RepetitioQuestion, RepetitioQuestionLanguage, RepetitioTest, RepetitioTestAnswer, RepetitioTestLanguage
 from core.models import SitePortal
 
 class SystemObject(SystemManager):
 
     def __init__(self, request, *args, **kwargs):
         super(SystemObject, self).__init__(request, *args, **kwargs)
+
+
+def users(request):
+    system = SystemObject(request)
+    data = dict()
+
+    t = loader.get_template('imp/impu.html')
+    c = RequestContext(request, data)
+
+    return HttpResponse(t.render(c))
+
+def repetitio(request):
+    system = SystemObject(request)
+    data = dict()
+
+    # testy 1
+    t1 = DentoCourse1.objects.using('dento').all()
+    for item in t1:
+        questions = DentoRep.objects.using('dento').filter(rep_ID=item.rep_ID)
+        item.questions = questions
+        for q in questions:
+            answers = DentoRepAns.objects.using('dento').filter(rep_ID=item.rep_ID, quizID=q.queryID)
+            q.answers = answers
+
+    course = RepetitioCourse.objects.get(id=1)
+    put_tests(system, course, t1, False)
+
+    # testy 2
+    t2 = DentoCourse2.objects.using('dento').all()
+    for item in t2:
+        questions = DentoRep.objects.using('dento').filter(rep_ID=item.rep_ID)
+        item.questions = questions
+        for q in questions:
+            answers = DentoRepAns.objects.using('dento').filter(rep_ID=item.rep_ID, quizID=q.queryID)
+            q.answers = answers
+
+    course = RepetitioCourse.objects.get(id=2)
+    put_tests(system, course, t2, True)
+
+    data.update({ 'tests1': t1 })
+    data.update({ 'tests2': t2 })
+    t = loader.get_template('imp/imprep.html')
+    c = RequestContext(request, data)
+
+    return HttpResponse(t.render(c))
+
+def put_tests(system, course, tests, edentico):
+    sites = Site.objects.all()
+    for item in tests:
+        t = RepetitioTest()
+
+        t.course = course
+        t.dento_id = item.rep_ID
+
+        if edentico is False:
+            t.author = item.rep_author
+            t.datestart = item.rep_start
+            t.dateend = item.rep_end
+            t.eprice = item.rep_dentons
+            if item.rep_dentons == -1:
+                t.smsbuy = True
+            t.dento_presenation_path = 'http://pacjenci.dentonet.pl/prezentacje/' + item.presentationPath
+            if item.extraBanner != '':
+                data = item.extraBanner
+                banner = loads(data, object_hook=phpobject)
+                t.dento_banner_path = item.extraBanner
+            if item.isSponsored == 1:
+                t.sponsored = True
+            else:
+                t.sponsored = False
+        else:
+            t.edentico = True
+        t.save()
+        for site in sites:
+            t.sites.add(site)
+            t.active.add(site)
+
+        system.language.set_non_existent_language_items(t, RepetitioTestLanguage)
+        if t is not None:
+            t.get_language(system.language.currentLanguage.id)
+            t.language.name = item.rep_name
+            t.language.shortname = item.rep_short
+            t.language.save()
+
+            for tq in item.questions:
+                q = RepetitioQuestion()
+                q.dento_id = tq.queryID
+                q.test = t
+                q.save()
+                for site in sites:
+                    q.sites.add(site)
+                    q.active.add(site)
+                correct_answer = tq.correctAnswer
+
+                system.language.set_non_existent_language_items(q, RepetitioQuestionLanguage)
+                if q is not None:
+                    q.get_language(system.language.currentLanguage.id)
+                    q.language.question = tq.query
+                    q.language.save()
+
+                    for tqa in tq.answers:
+                        a = RepetitioAnswer()
+                        a.dento_id = tqa.ID
+                        a.question = q
+                        a.nr = tqa.answer_nr
+                        if correct_answer == tqa.answer_nr:
+                            a.correct_answer = True
+                        else:
+                            a.correct_answer = False
+                        a.save()
+
+                        system.language.set_non_existent_language_items(a, RepetitioAnswerLanguage)
+                        if a is not None:
+                            a.get_language(system.language.currentLanguage.id)
+                            a.language.answer = tqa.answer
+                            a.language.save()
 
 def events(request):
 
@@ -142,6 +261,7 @@ def show_items(request, link_id):
     c = RequestContext(request, data)
 
     return HttpResponse(t.render(c))
+
 
 def cats(request):
     system = SystemObject(request)

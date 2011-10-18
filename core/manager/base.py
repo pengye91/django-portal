@@ -3,7 +3,6 @@
 __FNAME__ = 'base.py'
 __MNAME__ = 'Core/Manager'  # nazwa modulu
 
-from copy import deepcopy
 from core.debug.debug import Debugger
 
 class BaseManager(object):

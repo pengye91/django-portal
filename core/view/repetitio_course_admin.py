@@ -47,11 +47,11 @@ def show_items(request):
     return HttpResponse(system.template.render(c))
 
 
-def edit_item(request, itemId):
+def edit_item(request, itemId, new=False):
     system = SystemObject(request)
     if system.permission.user is None:
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
-    result = system.edit_item(request, itemId)
+    result = system.edit_item(request, itemId, new)
 
     if result is not None:
         return result
@@ -66,7 +66,7 @@ def add_item(request):
     if system.permission.user is None:
         return HttpResponseRedirect(reverse('core.view.userprofileadmin.login'))
     system.manager.new()
-    return HttpResponseRedirect(reverse('core.view.repetitio_course_admin.edit_item', args=(system.manager.item.id,)))
+    return HttpResponseRedirect(reverse('core.view.repetitio_course_admin.edit_item', args=(system.manager.item.id, True,)))
 
 
 def copy_item(request, itemId):

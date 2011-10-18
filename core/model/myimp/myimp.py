@@ -121,22 +121,68 @@ class ImpEventSpecial(models.Model):
     def __unicode__(self):
         return "%s" % (self.desc)
 
-"""
+# repetitio
 
-	description	text	latin2_general_ci		Tak	NULL
-	countrydistinctsID	tinyint(4)			Nie	0
-	schedule_typeID	int(11)			Nie	17
-	bannerLink	varchar(100)	latin2_general_ci		Nie
-	infoLink	varchar(255)	latin2_general_ci		Nie
-	support	enum('0','1','2','3','4')	latin2_general_ci		Nie	0
-	backgroundColor	varchar(10)	latin2_general_ci		Tak	NULL
-	borderColor	varchar(10)	latin2_general_ci		Tak	NULL
-	borderWidth	tinyint(2)			Tak	0
-	title	varchar(128)	latin2_general_ci		Nie	Brak
-	promotor	varchar(128)	latin2_general_ci		Nie	Brak
-	formMail	varchar(32)	latin2_general_ci		Nie	Brak
-	profesor	varchar(128)	latin2_general_ci		Nie	Brak
-	city	varchar(32)	latin2_general_ci		Nie	Brak
-	date	varchar(64)	latin2_general_ci		Nie	Brak
-	ord	smallint(6)
-"""
+class ImpRepAns(models.Model):
+    using = 'dento'
+    ID = models.AutoField(primary_key=True, db_column='ID')
+    rep_ID = models.IntegerField()
+    quizID = models.IntegerField()
+    answer_nr = models.IntegerField()
+    answer = models.TextField()
+
+    class Meta:
+        db_table = 'repetitioAnswers'
+        abstract = True
+
+    def __unicode__(self):
+        return "%s" % (self.answer)
+
+class ImpRep(models.Model):
+    using = 'dento'
+    queryID = models.AutoField(primary_key=True, db_column='queryID')
+    rep_ID = models.IntegerField()
+    query = models.TextField()
+    correctAnswer = models.IntegerField()
+
+    class Meta:
+        db_table = 'repetitio'
+        abstract = True
+
+    def __unicode__(self):
+        return "%s" % (self.query)
+
+class ImpRepCourse1(models.Model):
+    using = 'dento'
+    rep_ID = models.AutoField(primary_key=True, db_column='rep_ID')
+    rep_name = models.CharField(max_length=128)
+    rep_short = models.CharField(max_length=16)
+    rep_author = models.CharField(max_length=64)
+    rep_start = models.DateTimeField()
+    rep_end = models.DateTimeField()
+    rep_dentons = models.IntegerField()
+    isDentonBuy = models.CharField(max_length=122,choices=(('0','0'),('1','1'),))
+    presentationPath = models.CharField(max_length=32)
+    extraBanner = models.CharField(max_length=128)
+    isSponsored = models.CharField(max_length=122,choices=(('0','0'),('1','1'),))
+
+    class Meta:
+        db_table = 'repetitioIssues'
+        abstract = True
+
+    def __unicode__(self):
+        return "%s" % (self.rep_name)
+
+class ImpRepCourse2(models.Model):
+    using = 'dento'
+    rep_ID = models.AutoField(primary_key=True, db_column='rep_ID')
+    rep_name = models.CharField(max_length=128)
+    rep_short = models.CharField(max_length=16)
+    is_active = models.IntegerField()
+
+    class Meta:
+        db_table = 'repetitioEdentico'
+        abstract = True
+
+    def __unicode__(self):
+        return "%s" % (self.rep_name)

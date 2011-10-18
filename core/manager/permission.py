@@ -4,15 +4,10 @@ __FNAME__ = 'permission.py'
 __MNAME__ = 'Core/Manager'  # nazwa modulu
 
 import md5 as md5mod
-import re
-from copy import deepcopy
 from datetime import datetime
-from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from core.debug.debug import Debugger
-from core.models import PermisionGroup, UserProfile, UserProfileData
+from core.models import PermisionGroup, UserProfile
 
 
 class PermissionManager(object):
@@ -110,7 +105,7 @@ class PermissionManager(object):
         permissions = None
         user_permissions = None
         op = None
-        user_perm_dict = { 'public': False, 'read': False, 'write': False, 'delete': False, 'add': False, 'own': False }
+        user_perm_dict = { 'public': True, 'read': False, 'write': False, 'delete': False, 'add': False, 'own': False }
 
         if item is not None:
             op = item.get_permissions()
@@ -122,6 +117,7 @@ class PermissionManager(object):
                     permissions = PermisionGroup.objects.filter(model=modelname).exclude(parent=2)
             except Exception,e:
                 self.debugger.catch_error('compare_permissions: ',e)
+
             if permissions is not None:
                 if len(permissions) == 1:
                     permissions = permissions[0]
@@ -150,11 +146,81 @@ class PermissionManager(object):
                             if perm.own_only is True:
                                 if permissions.own_only is True:
                                     user_perm_dict['own'] = True
+                            if perm.login is True:
+                                user_perm_dict['public'] = False
 
             if admin is True:
                 self.admin_permissions = user_perm_dict
             else:
                 self.permissions = user_perm_dict
+        else:
+            for permissions in op.all():
+                try:
+                    if self.user_permissions is not None:
+                        user_permissions = self.user_permissions.filter(id=permissions.parent)
+                    else:
+                        user_permissions = []
+                        user_permissions.append(PermisionGroup())
+                        user_permissions[0].public = True
+                        user_permissions[0].read = False
+                        user_permissions[0].write = False
+                        user_permissions[0].delete = False
+                        user_permissions[0].add = False
+                        user_permissions[0].own = False
+                except Exception,e:
+                    self.debugger.catch_error('compare_permissions: ',e)
+
+                if user_permissions is not None:
+                    for perm in user_permissions:
+                        if perm.public is True:
+                            if permissions.public is True:
+                                user_perm_dict['public'] = True
+                        if perm.read is True:
+                            if permissions.read is True:
+                                user_perm_dict['read'] = True
+                        if perm.write is True:
+                            if permissions.write is True:
+                                user_perm_dict['write'] = True
+                        if perm.delete is True:
+                            if permissions.delete is True:
+                                user_perm_dict['delete'] = True
+                        if perm.add is True:
+                            if permissions.add is True:
+                                user_perm_dict['add'] = True
+                        if perm.own_only is True:
+                            if permissions.own_only is True:
+                                user_perm_dict['own'] = True
+                        if perm.login is True:
+                            user_perm_dict['public'] = False
+            if admin is True:
+                self.admin_permissions = user_perm_dict
+            else:
+                self.permissions = user_perm_dict
+            #print modelname, user_perm_dict
+    """
+    def compare(self, permissions):
+        user_perm_dict = { 'public': True, 'read': False, 'write': False, 'delete': False, 'add': False, 'own': False }
+        for perm in self.user_permissions:
+            if perm['public'] is True:
+                if permissions['public'] is True:
+                    user_perm_dict['public'] = True
+            if perm.read is True:
+                if permissions['read'] is True:
+                    user_perm_dict['read'] = True
+            if perm.write is True:
+                if permissions['write'] is True:
+                    user_perm_dict['write'] = True
+            if perm.delete is True:
+                if permissions['delete'] is True:
+                    user_perm_dict['delete'] = True
+            if perm.add is True:
+                if permissions['add'] is True:
+                    user_perm_dict['add'] = True
+            if perm.own_only is True:
+                if permissions['own'] is True:
+                    user_perm_dict['own'] = True
+        self.permissions = user_perm_dict
+    """
 
     def prepare_all_user_permissions(self):
         perm_dict = dict()
@@ -207,27 +273,6 @@ class PermissionManager(object):
     def get_context(self):
         self.context.update({ 'all_permissions': self.all_user_permissions, 'permissions': self.permissions, 'admin_permissions': self.admin_permissions })
         self.context.update({ 'profileuser': self.user })
+        self.context.update({ 'permission': self })
         return self.context
 
-    def checkEmail(self, data):
-        try:
-            if len(data) > 5:
-                if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", data) == None:
-                    return True
-            else:
-                return True
-            email = ProfileUsers.objects.get(email=data)
-            if(email):
-                return True
-            return False
-        except:
-            return False
-
-    def checkLoginName(self, login):
-        try:
-            username = ProfileUsers.objects.get(username=login)
-            if(username):
-                return True
-            return False
-        except:
-            return False

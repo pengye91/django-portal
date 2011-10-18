@@ -3,7 +3,7 @@
 __FNAME__ = 'system.py'
 __MNAME__ = 'Core/Manager'  # nazwa modulu
 
-from django.template import loader
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from core.manager.portal import PortalManager
@@ -13,7 +13,7 @@ from core.manager.requester import Requester
 from core.manager.permission import PermissionManager
 from core.debug.debug import Debugger
 from core.utils import ranged_pages
-from core.models import Menu
+
 
 class UrlContener(object):
 
@@ -28,10 +28,11 @@ class SystemManager(object):
         self.portal = PortalManager(request)
         self.manager = None
         self.extramanager = None
+        self.requester = Requester(request)
         self.sheet = SheetManager()
         self.sheet.request = request
+        self.sheet.admin_site = settings.DEFAULT_SITE_ID
         self.language = LanguageManager(request)
-        self.requester = Requester(request)
         self.data = dict()
         self.items = None
         self.urls = UrlContener()
@@ -42,6 +43,8 @@ class SystemManager(object):
         self.language.fetch_active_languages()
         self.language.fetch_current_language(request)
         self.requester.get_messages(request)
+        self.sheet.reqsite = settings.DEFAULT_SITE_ID
+        self.portal.reqsite = settings.DEFAULT_SITE_ID
         self.portal.fetch_active_site(self.requester.rData['activesite'])
         self.portal.fetchOptions = { 'site': self.portal.activeSite.id, 'active': '1', 'activesite': self.portal.activeSite.id }
         self.portal.fetch_modules()
@@ -73,8 +76,11 @@ class SystemManager(object):
         if block is True:
             self.data.update({ 'nochanges': True })
 
-        if self.manager.model is not None:
-            self.data.update({ 'model': self.manager.model.__class__.__name__ })
+        if self.manager is not None:
+            if self.manager.model is not None:
+                self.data.update({ 'model': self.manager.model.__class__.__name__ })
+            else:
+                self.data.update({ 'model': None })
         else:
             self.data.update({ 'model': None })
         #key = str(self.manager.moduleName)
@@ -157,7 +163,7 @@ class SystemManager(object):
         self.permission.compare_permissions(None, self.manager.model.__class__.__name__, admin)
 
 
-    def edit_item(self, request, itemId, set_owner=True):
+    def edit_item(self, request, itemId, set_owner=True, new_item=False):
         self.manager.fetch_item(itemId)
         self.manager.fetch_items()
         self.items = self.manager.item
@@ -166,7 +172,7 @@ class SystemManager(object):
             self.language.set_non_existent_language_items(self.manager.item, self.manager.modelLanguage.__class__)
             self.manager.set_language(self.language.currentLanguage)
 
-        t = loader.get_template(self.sheet.get_sheet_file('admin_edit'))
+        #t = loader.get_template(self.sheet.get_sheet_file('admin_edit'))
 
         if self.manager.edit_item(request):
 
@@ -178,6 +184,8 @@ class SystemManager(object):
             except Exception,e:
                 self.debugger.catch_error('edit_item', e)
             try:
+                #sites = self.manager.item.sites.all()
+                #actives = self.manager.item.active.all()
                 self.manager.item.active.add(self.portal.get_active_site())
             except Exception,e:
                 self.debugger.catch_error('edit_item', e)

@@ -3,9 +3,6 @@
 __FNAME__ = 'system.py'
 __MNAME__ = 'Core/Manager'  # nazwa modulu
 
-from django.template import loader
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from core.manager.portal import PortalManager
 from core.manager.sheet import SheetManager
 from core.manager.language import LanguageManager
@@ -13,7 +10,7 @@ from core.manager.requester_site import Requester
 from core.manager.permission import PermissionManager
 from core.debug.debug import Debugger
 from core.utils import ranged_pages
-from core.models import Menu
+
 
 class UrlContener(object):
 
@@ -22,16 +19,17 @@ class UrlContener(object):
         self.edit = ''
         self.show_items = ''
 
+
 class SystemManager(object):
 
     def __init__(self, request, *args, **kwargs):
         self.portal = PortalManager(request)
         self.manager = None
         self.extramanager = None
+        self.requester = Requester(request)
         self.sheet = SheetManager()
         self.sheet.request = request
         self.language = LanguageManager(request)
-        self.requester = Requester(request)
         self.data = dict()
         self.items = None
         self.urls = UrlContener()
@@ -42,7 +40,9 @@ class SystemManager(object):
         self.language.fetch_active_languages()
         self.language.fetch_current_language(request)
         self.requester.get_messages(request)
-        self.portal.fetch_active_site(self.requester.rData['activesite'])
+        self.sheet.reqsite = self.requester.rData['reqsite']
+        self.portal.reqsite = self.requester.rData['reqsite']
+        self.portal.fetch_active_site(self.requester.rData['reqsite'])
         self.portal.fetchOptions = { 'site': self.portal.activeSite.id, 'active': '1', 'activesite': self.portal.activeSite.id }
         self.portal.fetch_modules()
         self.permission = PermissionManager()
@@ -98,7 +98,7 @@ class SystemManager(object):
                 self.items = self.manager.item
                 self.permission.compare_permissions(self.manager.item, self.manager.model.__class__.__name__, admin)
 
-    def show_items(self, request, default_filter=False, allow_tree=False, has_language=True, admin=False, paginate=True):
+    def show_items(self, request, default_filter=False, allow_tree=False, has_language=True, admin=False):
         key = self.manager.moduleName
         self.requester.pages(key, request)
 
@@ -130,18 +130,15 @@ class SystemManager(object):
                 self.manager.rangeItemsStart = None
                 self.manager.rangeItemsEnd = None
 
-        if paginate is False:
-            self.manager.rangeItemsStart = None
-            self.manager.rangeItemsEnd = None
-
         if default_filter is False:
             self.manager.fetch_items(default_filter=False)
         else:
             self.manager.fetch_items(default_filter=True)
 
-
         if has_language is True:
             self.manager.set_language(self.language.currentLanguage)
+
+        #self.template = loader.get_template(self.sheet.get_sheet_file('admin_list'))
 
         if allow_tree is True:
             if int(self.requester.rData['selectedactivity']) == -1:
@@ -158,13 +155,3 @@ class SystemManager(object):
             self.items = self.manager.get_items()
 
         self.permission.compare_permissions(None, self.manager.model.__class__.__name__, admin)
-
-
-    def edit_item(self, request, itemId, set_owner=True):
-        """ Edit in site side
-        """
-        return None
-
-    def new(self):
-        """ New
-        """

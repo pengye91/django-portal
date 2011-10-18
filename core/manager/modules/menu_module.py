@@ -3,13 +3,14 @@
 __FNAME__ = 'menu_module.py'
 __MNAME__ = 'Core/Manager/Modules'  # nazwa modulu
 
-from django.conf import settings
 from core.debug.debug import Debugger
 from core.models import RegisteredModule, Menu, MenuItem, MenuModuleOption, get_module_options_model
+from core.manager.modules.module import ModuleBaseManager
 
-class ModuleManager(object):
+class ModuleManager(ModuleBaseManager):
 
     def __init__(self, *args, **kwargs):
+        super(ModuleBaseManager, self).__init__(*args, **kwargs)
         self.registered_module = None
         self.menu = None
         self.menuitems = []
@@ -17,6 +18,7 @@ class ModuleManager(object):
         self.options = None
         self.language = None
         self.debugger = Debugger(__MNAME__,__FNAME__)
+        self.permissions = None
 
     def get_data(self, lang, site):
         self.language = lang
@@ -35,10 +37,17 @@ class ModuleManager(object):
         safemenuitems = []
         if self.menuitems is not None:
             for item in self.menuitems:
+                if self.permissions is not None:
+                    self.permissions.permissions = None
                 err = 0
                 if item is not None:
+
                     item.get_language(lang.id)
                     item.module_model = get_module_options_model(item.registered_module.id)
+
+                    if self.permissions is not None:
+                        self.permissions.prepare_permissions(item.permissions)
+                        self.permissions.compare_permissions(item, item.__class__.__name__, False)
 
                     options = None
                     try:
@@ -65,7 +74,12 @@ class ModuleManager(object):
                     else:
                         err = 1
                 if err == 0:
-                    safemenuitems.append(item)
+                    if self.permissions is not None:
+                        if self.permissions.permissions['public'] is True:
+                            safemenuitems.append(item)
+                    # chwilowo!!! usunac
+                    #else:
+                    #    safemenuitems.append(item)
             self.menuitems = safemenuitems
 
         newitems = []
@@ -92,18 +106,28 @@ class ModuleManager(object):
             self.debugger.catch_error('fetch_options: ', e)
 
     def fetch_menu_items(self):
-        try:
-            items = MenuItem.objects.filter(menu=self.options.menu)
-            root = MenuItem.objects.filter(parent=None)[0]
-            self.menuitems.append(root)
-            for item in items:
-                self.menuitems.append(item)
-        except Exception, e:
-            self.debugger.catch_error('fetch_options: ', e)
+        if self.menu is not None:
+            try:
+                items = MenuItem.objects.filter(menu=self.menu) #options.menu)
+                root = MenuItem.objects.filter(parent=None)[0]
+                self.menuitems.append(root)
+                for item in items:
+                    if self.permissions is not None:
+                        self.permissions.prepare_permissions(item.permissions)
+                        self.permissions.compare_permissions(item, item.__class__.__name__, False)
+                        if self.permissions.permissions['public'] is True:
+                            self.menuitems.append(item)
+            except Exception, e:
+                self.debugger.catch_error('fetch_options: ', e)
 
     def fetch_menu(self):
         try:
-            self.menu = Menu.objects.filter(id=self.options.menu.id)[0]
+            menu = Menu.objects.filter(id=self.options.menu.id)[0]
+            if self.permissions is not None:
+                self.permissions.prepare_permissions(menu.permissions)
+                self.permissions.compare_permissions(menu, menu.__class__.__name__, False)
+                if self.permissions.permissions['public'] is True:
+                    self.menu = menu
         except Exception, e:
             self.debugger.catch_error('fetch_menu: ', e)
 

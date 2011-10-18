@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from django.template import loader, RequestContext
-from django.http import HttpResponse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.conf import settings
-
+#from django.conf import settings
 from core.manager.baseadmin import AdminManager
 from core.manager.system import SystemManager
 from core.models import Menu, MenuModuleOption, RegisteredModule, ModuleType
 from core.form.menu import MenuForm as AdmItemForm
 from core.form.module.menu_module import MenuOptionForm
-from core.form.modules import get_module_options, get_module_type_options
-from core.models import get_module_options_model, get_module_type_options_model
-
-from core.models import MenuItem, MenuItemLanguage
+#from core.form.modules import get_module_options, get_module_type_options
+#from core.models import get_module_options_model, get_module_type_options_model
+#from core.models import MenuItem, MenuItemLanguage
 
 class SystemObject(SystemManager):
 

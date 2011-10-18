@@ -8,14 +8,14 @@ from django.conf import settings
 
 from core.manager.base import BaseManager as Manager
 from core.models import Article, ArticleLanguage, Category, CategoryLanguage
-from core.manager.system import SystemManager
+from core.manager.system_site import SystemManager
 
 class SystemObject(SystemManager):
 
     def __init__(self, request, *args, **kwargs):
         super(SystemObject, self).__init__(request, *args, **kwargs)
         self.manager = Manager()
-        self.manager.fetchOptions = { 'site': settings.SITE_ID, 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
+        self.manager.fetchOptions = { 'site': self.portal.reqsite, 'active': 1, 'activesite': self.portal.reqsite }
         self.urls.show_items = 'core.view.articleadmin.show_items'
         self.manager.model = Article()
         self.manager.modelLanguage = ArticleLanguage()
@@ -25,7 +25,7 @@ class SystemObject(SystemManager):
         self.category = Manager()
         self.category.model = Category()
         self.category.order = 'parent'
-        self.category.fetchOptions = { 'site': settings.SITE_ID, 'active': self.requester.rData['selectedactivity'], 'activesite': self.requester.rData['activesite'] }
+        self.category.fetchOptions = { 'site': self.portal.reqsite, 'active': 1, 'activesite': self.portal.reqsite }
         self.category.modelLanguage = CategoryLanguage()
 
 

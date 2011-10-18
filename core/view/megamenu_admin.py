@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from copy import deepcopy
+#from copy import deepcopy
 from django.template import loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.conf import settings
+#from django.conf import settings
 
 from core.manager.baseadmin import AdminManager
 from core.manager.system import SystemManager
 from core.models import MegaMenu, MegaMenuLanguage
 from core.form.megamenu import AdmItemForm, AdmItemLanguageForm
-from core.form.modules import get_module_options
-from core.models import get_module_options_model
+#from core.form.modules import get_module_options
+#from core.models import get_module_options_model
 
 class SystemObject(SystemManager):
 
@@ -56,7 +56,7 @@ def change_item(request):
                     system.manager.item.active.add(system.portal.get_active_site())
                 return HttpResponse('0');
             except Exception,e:
-                debugger.catch_error('change_item', e)
+                print 'change_item', e
                 return HttpResponse('1');
     else:
         return HttpResponse('1');

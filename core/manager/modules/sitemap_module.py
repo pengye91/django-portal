@@ -3,7 +3,6 @@
 __FNAME__ = 'menu_module.py'
 __MNAME__ = 'Core/Manager/Modules'  # nazwa modulu
 
-from django.conf import settings
 from core.debug.debug import Debugger
 from core.models import RegisteredModule, Menu, MenuItem, MenuModuleOption, get_module_options_model
 

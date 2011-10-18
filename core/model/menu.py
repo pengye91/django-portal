@@ -2,14 +2,12 @@
 
 from django.db import models
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify, striptags
 from datetime import datetime
 from time import time
 from ckeditor.fields import RichTextField
 from core.model.basemodel import BaseModel
 from core.model.prefs import Preferences
-from core.model.language import LanguageModel
 
 class MenuManager(models.Manager):
 

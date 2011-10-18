@@ -90,7 +90,7 @@ def load_from_file(filepath, expected_class):
 
     return None
 
-def get_modules(string, lang, site):
+def get_modules(string, lang, site, permission):
     pos = None
     posmod = []
     modules = None
@@ -104,7 +104,7 @@ def get_modules(string, lang, site):
 
     if pos is not None:
         try:
-            modules = RegisteredModule.objects.filter(position=pos).order_by('order')
+            modules = RegisteredModule.objects.filter(position=pos).filter(sites__id__exact=site.id).order_by('order')
         except Exception,e:
             print 'portaltags.py, get_modules: ', e
             modules = None
@@ -117,6 +117,7 @@ def get_modules(string, lang, site):
                 module = imod()
                 #module.fetch_registered_module(mod.id)
                 module.registered_module = mod
+                module.permissions = permission
                 module.get_data(lang, site)
                 mod.data = module
                 mod.options = module.fetch_options()
@@ -133,7 +134,9 @@ def getmodules_context(context, token):
     try:
         lang = context['activelang']
         site = context['activesiteobject']
-        return get_modules(token, lang, site)
+        permission = context['permission']
+        #print token, permission
+        return get_modules(token, lang, site, permission)
     except Exception, e:
         print 'getmodules_context: ', e
         return None

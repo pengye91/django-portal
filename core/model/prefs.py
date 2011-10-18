@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.conf import settings
-from django.contrib.sites.models import Site
+#from django.conf import settings
+#from django.contrib.sites.models import Site
 #from tagging.fields import TagField
 from taggit.managers import TaggableManager
 

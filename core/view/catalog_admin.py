@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.template import loader, RequestContext
-from django.http import HttpResponse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.conf import settings
 
 from core.manager.baseadmin import AdminManager
 from core.manager.system import SystemManager

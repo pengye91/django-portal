@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls.defaults import *
-from django.conf import settings
+#from django.conf import settings
 
 #from core.utils import Perm
 #Perm()
@@ -15,4 +15,5 @@ urlpatterns += patterns('',
     url(r'^kategoria/', include('core.url.category')),
     url(r'^html/', include('core.url.html_module')),
     url(r'^kalendarium/', include('core.url.calendarium')),
+    url(r'^module/', include('core.url.module')),
 )

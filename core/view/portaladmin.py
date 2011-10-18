@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from copy import deepcopy
 from django.template import loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.conf import settings
 
 from core.manager.system import SystemManager
 
@@ -16,7 +14,7 @@ class SystemObject(SystemManager):
             '': '__adm_Statistics__',
             reverse('core.view.siteadmin.show_items'): '__adm_Sites__',
             reverse('core.view.sheetadmin.show_items'): '__adm_Sheets__',
-            '': '__adm_Users__'
+            reverse('core.view.userprofileadmin.show_items'): '__adm_Users__'
         }
         self.data.update({ 'toppanel': toppanel })
 

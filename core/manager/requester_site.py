@@ -5,7 +5,6 @@ __MNAME__ = 'Core/Manager'  # nazwa modulu
 
 from datetime import datetime
 from django.conf import settings
-from django.contrib.sessions.models import Session
 from core.debug.debug import Debugger
 
 class Requester(object):
@@ -22,7 +21,7 @@ class Requester(object):
         self.request = request
         self.rData = {
             'selectedactivity': -1,
-            'activesite': None,
+            'reqsite': None,
             'pni': 10,
             'pages': [],
             'page': 0,
@@ -79,7 +78,8 @@ class Requester(object):
         if settings.ADMINALLSITES is False:
             self.activeSite = settings.SITE_ID
         else:
-            self.get_option('activesite', request, True)
+            #self.get_option('reqsite', request, True)
+            self.get_session_active_site(request)
         self.get_option('selectedcategory', request)
         self.get_option('pni', request)
         self.get_option('pages', request)
@@ -93,14 +93,15 @@ class Requester(object):
         self.get_session_active_site(request)
         self.set_session_values(request)
         self.get_option('rm', request)
+        #self.get_session_active_site(request)
 
     def get_page(self, request):
-        if rData['page'] == 1:
-                rData['pprev'] = None
+        if self.rData['page'] == 1:
+                self.rData['pprev'] = None
         else:
-                rData['pprev'] = int(rData['page']) - 1
+                self.rData['pprev'] = int(self.rData['page']) - 1
 
-        rData['pnext'] = int(rData['page']) + 1
+        self.rData['pnext'] = int(self.rData['page']) + 1
 
         #data.update({ 'page': page, 'prevpage': prevpage, 'nextpage': nextpage })
 
@@ -132,13 +133,29 @@ class Requester(object):
 
 
     def get_session_active_site(self, request):
-        if not self.rData.has_key('activesite'):
-            self.rData['activesite'] = settings.SITE_ID
+        data = None
+
+        if not self.rData.has_key('reqsite'):
+            self.rData['reqsite'] = 4 #settings.SITE_ID
         else:
-            if self.rData['activesite'] == None:
-                self.rData['activesite'] = settings.SITE_ID
-            elif self.rData['activesite'] == '':
-                self.rData['activesite'] = settings.SITE_ID
+            if self.rData['reqsite'] == None:
+                self.rData['reqsite'] = 4 #settings.SITE_ID
+            elif self.rData['reqsite'] == '':
+                self.rData['reqsite'] = settings.SITE_ID
+
+        try:
+            data = request.session['reqsite']
+        except Exception,e:
+            self.debugger.catch_error('get_option: ', e)
+
+        try:
+            data = request.GET['reqsite']
+        except Exception,e:
+            self.debugger.catch_error('get_session_active_site: ', e)
+
+        if data is not None:
+            if data != '':
+                self.rData['reqsite'] = data
 
     def set_session_values(self, request):
         for key, value in self.rData.items():

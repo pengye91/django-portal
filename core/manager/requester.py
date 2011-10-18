@@ -5,7 +5,6 @@ __MNAME__ = 'Core/Manager'  # nazwa modulu
 
 from datetime import datetime
 from django.conf import settings
-from django.contrib.sessions.models import Session
 from core.debug.debug import Debugger
 
 class Requester(object):
@@ -31,7 +30,7 @@ class Requester(object):
             'pagesinfo': {},
             #'paginateni': 10,
             'rm': None,
-            'selectedmenu': None,
+            'selectedmenu': -1,
             'selectedcategory': None,
             'selectedtest': None,
             'selectedcourse': None,
@@ -54,32 +53,36 @@ class Requester(object):
                 self.rData[key+'page'] = 0
         self.set_session_values(request)
 
+
     def get_opt_pages(self, key1, key2, request, default, integer):
-        if not self.rData.has_key(key1+key2):
-            if request.session.has_key(key1+key2):
-                self.rData[key1+key2] = request.session[key1+key2]
-            else:
-                self.rData.update({ key1+key2: default })
+        if key1 is not None:
+            if key2 is not None:
+                if not self.rData.has_key(key1+key2):
+                    if request.session.has_key(key1+key2):
+                        self.rData[key1+key2] = request.session[key1+key2]
+                    else:
+                        self.rData.update({ key1+key2: default })
 
-        if self.rData.has_key(key1+key2):
-            if request.method == 'GET':
-                if request.GET.has_key(key2):
-                    self.rData[key1+key2] = request.GET[key2]
-                else:
-                    if self.rData[key1+key2] == '':
-                        self.rData[key1+key2] = default
-                    self.rData[key2] = self.rData[key1+key2]
+                if self.rData.has_key(key1+key2):
+                    if request.method == 'GET':
+                        if request.GET.has_key(key2):
+                            self.rData[key1+key2] = request.GET[key2]
+                        else:
+                            if self.rData[key1+key2] == '':
+                                self.rData[key1+key2] = default
+                            self.rData[key2] = self.rData[key1+key2]
 
-        if integer is True:
-            if self.rData.has_key(key2):
-                self.rData[key2] = int(self.rData[key2])
+                if integer is True:
+                    if self.rData.has_key(key2):
+                        self.rData[key2] = int(self.rData[key2])
 
 
     def get_messages(self, request):
         if settings.ADMINALLSITES is False:
             self.activeSite = settings.SITE_ID
         else:
-            self.get_option('activesite', request, True)
+            #self.get_option('activesite', request, True)
+            self.get_session_active_site(request)
         self.get_option('selectedcategory', request)
         self.get_option('pni', request)
         self.get_option('pages', request)
@@ -90,17 +93,18 @@ class Requester(object):
         self.get_option('selectedactivity', request)
         self.get_option('selectedtest', request, True)
         self.get_option('selectedcourse', request, True)
+        self.get_option('selectedquestion', request, True)
         self.get_session_active_site(request)
         self.set_session_values(request)
         self.get_option('rm', request)
 
     def get_page(self, request):
-        if rData['page'] == 1:
-                rData['pprev'] = None
+        if self.rData['page'] == 1:
+                self.rData['pprev'] = None
         else:
-                rData['pprev'] = int(rData['page']) - 1
+                self.rData['pprev'] = int(self.rData['page']) - 1
 
-        rData['pnext'] = int(rData['page']) + 1
+        self.rData['pnext'] = int(self.rData['page']) + 1
 
         #data.update({ 'page': page, 'prevpage': prevpage, 'nextpage': nextpage })
 
@@ -132,17 +136,38 @@ class Requester(object):
 
 
     def get_session_active_site(self, request):
+        data = None
+
         if not self.rData.has_key('activesite'):
-            self.rData['activesite'] = settings.SITE_ID
+            self.rData['activesite'] = 1 #settings.SITE_ID
         else:
             if self.rData['activesite'] == None:
-                self.rData['activesite'] = settings.SITE_ID
+                self.rData['activesite'] = 1 #settings.SITE_ID
             elif self.rData['activesite'] == '':
                 self.rData['activesite'] = settings.SITE_ID
+
+        try:
+            data = request.session['activesite']
+        except Exception,e:
+            self.debugger.catch_error('get_option: ', e)
+
+        try:
+            if request.GET['activesite'] == 0:
+                del request.session['activesite']
+            else:
+                data = request.GET['activesite']
+        except Exception,e:
+            self.debugger.catch_error('get_session_active_site: ', e)
+
+        if data is not None:
+            if data != '':
+                self.rData['activesite'] = int(data)
 
     def set_session_values(self, request):
         for key, value in self.rData.items():
             request.session[key] = value
+            #del request.session[key]
+            #print key, ': ', request.session[key]
 
     def get_context(self):
         if self.request.method == 'GET':

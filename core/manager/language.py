@@ -66,7 +66,7 @@ class LanguageManager(object):
     def get_context(self):
         return { 'languages': self.activeLanguages, 'activelanguage': self.currentLanguage.symbol, 'activelang': self.currentLanguage }
 
-    def set_non_existent_language_items(self, item, object):
+    def set_non_existent_language_items(self, item, obj):
         """ Jesli nie ma elementu w danym jezyku to go stworz """
         if item is not None:
             if self.activeLanguages is not None:
@@ -77,13 +77,13 @@ class LanguageManager(object):
                             if activeLanguage.symbol == languageItem.language.symbol:
                                 itIs = True
                         if itIs == False:
-                            newLanguage = object()
+                            newLanguage = obj()
                             if newLanguage is not None:
                                 newLanguage.language = activeLanguage
                                 newLanguage.save()
                                 item.languages.add(newLanguage)
                     else:
-                        newLanguage = object()
+                        newLanguage = obj()
                         if newLanguage is not None:
                             newLanguage.language = activeLanguage
                             newLanguage.save()
